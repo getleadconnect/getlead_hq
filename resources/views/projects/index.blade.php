@@ -248,6 +248,83 @@ textarea.fi { resize:vertical; }
 @@keyframes sk { 0%{opacity:.5} 100%{opacity:1} }
 .skel { animation:sk 1.4s infinite alternate; }
 .back-desc { font-size:.82rem; color:var(--txm); margin-bottom:16px; line-height:1.6; }
+
+/* ── Responsive: Tablet (≤1024px) ── */
+@media (max-width:1024px) {
+    .kpi-row { grid-template-columns:repeat(2,1fr); }
+    .dash-cols { grid-template-columns:1fr; }
+}
+
+/* ── Responsive: Mobile (≤768px) ── */
+@media (max-width:768px) {
+    .p-head { padding:10px 14px; gap:8px; position:sticky; top:0; }
+    .p-head-right { gap:6px; }
+    .p-body { padding:14px 12px; }
+    .kpi-row { grid-template-columns:repeat(2,1fr); gap:10px; margin-bottom:16px; }
+    .kpi-val { font-size:1.4rem; }
+    .kpi-card { padding:13px 14px; }
+    .dash-cols { grid-template-columns:1fr; gap:12px; }
+
+    /* Filter bar: stretch inputs full width */
+    .fbar { gap:8px; }
+    .fsel { flex:1; min-width:120px; }
+    .finp { min-width:0; flex:1; width:100%; }
+
+    /* Board: horizontal scroll instead of 4-col grid */
+    .board-grid {
+        display:flex !important;
+        overflow-x:auto;
+        gap:12px;
+        padding-bottom:12px;
+        -webkit-overflow-scrolling:touch;
+    }
+    .kb-col { min-width:260px; flex-shrink:0; }
+
+    /* Modals → bottom sheet */
+    .modal-overlay { padding:0; align-items:flex-end; }
+    .modal { border-radius:14px 14px 0 0; max-height:92vh; }
+    .alert-overlay { padding:16px; }
+    .alert-box { max-width:100%; }
+
+    /* Modal form rows: stack */
+    .frow { flex-direction:column; gap:0; }
+
+    /* Detail: header actions wrap */
+    .det-acts { flex-wrap:wrap; gap:6px; }
+    .meta-grid { grid-template-columns:repeat(2,1fr); gap:10px; }
+}
+
+/* ── Responsive: Small (≤560px) ── */
+@media (max-width:560px) {
+    .p-head { padding:9px 12px; }
+    .p-title { font-size:.9rem; }
+    .p-tabs .p-tab { padding:5px 10px; font-size:.75rem; }
+    .vm-toggle { display:none; }
+    .p-body { padding:12px 10px; }
+    .kpi-row { gap:8px; }
+    .kpi-lbl { font-size:.68rem; }
+    .kpi-val { font-size:1.25rem; }
+    .kpi-card { padding:11px 12px; }
+
+    /* Table: horizontal scroll */
+    .tbl-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+    .p-tbl { min-width:560px; }
+
+    /* Detail */
+    .det-title { font-size:1rem; }
+    .meta-grid { grid-template-columns:repeat(2,1fr); }
+
+    /* Btn text on New Project */
+    .btn-new-text { display:none; }
+}
+
+/* ── Responsive: XSmall (≤380px) ── */
+@media (max-width:380px) {
+    .kpi-row { grid-template-columns:1fr 1fr; gap:6px; }
+    .p-body { padding:10px 8px; }
+    .meta-grid { grid-template-columns:1fr; }
+    .p-head-right { gap:4px; }
+}
 </style>
 @endpush
 
@@ -276,7 +353,7 @@ textarea.fi { resize:vertical; }
         @if($isAdmin)
         <button class="btn btn-primary btn-sm" id="btnNewProj" onclick="openCreateModal()">
             <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            New Project
+            <span class="btn-new-text">New Project</span>
         </button>
         @endif
     </div>

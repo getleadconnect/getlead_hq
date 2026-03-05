@@ -352,6 +352,70 @@
         transition: background 0.15s;
     }
     .dr-btn-secondary:hover { background: #f8fafc; }
+
+    /* ── Responsive: Mobile (≤600px) ── */
+    @media (max-width: 600px) {
+        .dr-outer {
+            padding: 20px 12px 40px;
+        }
+        .dr-card,
+        .dr-step-card {
+            padding: 28px 20px 22px;
+            border-radius: 12px;
+        }
+        .dr-success-card {
+            padding: 36px 20px 28px;
+            border-radius: 12px;
+        }
+        .dr-card h2, .dr-success-card h2 {
+            font-size: 20px;
+        }
+        .dr-step-card h2 {
+            font-size: 17px;
+            margin-bottom: 16px;
+        }
+        .dr-btn-next, .dr-btn-back, .dr-btn-skip {
+            height: 44px;
+            font-size: 14px;
+        }
+        .dr-btn-next { padding: 0 18px; }
+        .dr-btn-back { padding: 0 14px; }
+    }
+
+    /* ── Responsive: Small (≤420px) ── */
+    @media (max-width: 420px) {
+        .dr-outer { padding: 14px 10px 36px; }
+        .dr-card, .dr-step-card { padding: 24px 16px 20px; }
+        .dr-success-card { padding: 30px 16px 22px; }
+        .dr-emoji { font-size: 38px; margin-bottom: 10px; }
+        .dr-card h2, .dr-success-card h2 { font-size: 19px; }
+        .dr-step-card h2 { font-size: 16px; margin-bottom: 14px; }
+
+        /* Stack dual inputs vertically */
+        .dr-dual { flex-direction: column; gap: 10px; }
+        .dr-dual-field { width: 100%; }
+
+        /* Repeatable rows: let fields wrap */
+        .dr-repeatable-row { flex-wrap: wrap; gap: 6px; }
+        .dr-repeatable-row .dr-wizard-input { flex: 1; min-width: 80px; }
+        .dr-remove-btn { margin-left: auto; }
+
+        /* Nav buttons: spread full row */
+        .dr-nav { gap: 8px; }
+        .dr-btn-next { flex: 1; justify-content: center; }
+    }
+
+    /* ── Responsive: XSmall (≤360px) ── */
+    @media (max-width: 360px) {
+        .dr-outer { padding: 12px 8px 32px; }
+        .dr-card, .dr-step-card { padding: 20px 14px 18px; }
+        .dr-wizard-input, .dr-wizard-textarea { font-size: 15px; }
+        .dr-recent-item { padding: 8px 10px; }
+        .dr-nav { flex-direction: row; flex-wrap: wrap; gap: 8px; }
+        .dr-btn-back { order: 2; }
+        .dr-nav-right { order: 1; flex: 1; }
+        .dr-btn-next { flex: 1; }
+    }
 </style>
 @endpush
 

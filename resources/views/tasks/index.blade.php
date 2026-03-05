@@ -591,16 +591,103 @@
         font-size: 13px; font-weight: 600;
         color: var(--erp-text); margin: 16px 0 10px;
     }
+
+    /* ── Mobile Filter Button (hidden on desktop) ── */
+    .mobile-filter-btn { display: none; }
+
+    /* ── Filter Overlay ── */
+    .filter-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.45);
+        z-index: 299;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+    }
+    .filter-overlay.open {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    /* ── Responsive: Tablet (≤1024px) ── */
+    @media (max-width: 1024px) {
+        .erp-sort-sel { display: none; }
+    }
+
+    /* ── Responsive: Mobile (≤768px) ── */
+    @media (max-width: 768px) {
+        .erp-filters {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            z-index: 300;
+            transform: translateX(-100%);
+            transition: transform 0.25s ease;
+            box-shadow: 4px 0 24px rgba(0,0,0,0.15);
+        }
+        .erp-filters.open { transform: translateX(0); }
+        .mobile-filter-btn { display: inline-flex; }
+        .erp-main { width: 100%; }
+        .erp-titlebar { padding: 12px 14px; gap: 8px; }
+        .erp-title { font-size: 17px; }
+        .erp-toolbar { padding: 8px 14px; }
+        .erp-toolbar-right { flex-wrap: wrap; width: 100%; }
+        .erp-search-wrap { flex: 1; min-width: 0; }
+        .erp-search-wrap input { width: 100%; }
+
+        /* Hide project & due date columns */
+        table.dataTable .col-project,
+        table.dataTable .col-due,
+        table.dataTable thead th.col-project,
+        table.dataTable thead th.col-due { display: none; }
+
+        /* Modals → bottom sheet */
+        .modal-backdrop { padding: 0; align-items: flex-end; }
+        .modal-box, .modal-box.modal-lg {
+            max-width: 100%;
+            border-radius: 12px 12px 0 0;
+            max-height: 92vh;
+        }
+
+        #boardView { padding: 12px; }
+    }
+
+    /* ── Responsive: Small (≤560px) ── */
+    @media (max-width: 560px) {
+        .erp-titlebar { flex-direction: column; align-items: flex-start; gap: 10px; }
+        .erp-view-tabs .erp-tab { padding: 5px 10px; font-size: 12px; }
+        .erp-btn-add-text { display: none; }
+        .erp-toolbar-right { gap: 6px; }
+        .erp-mode-toggle { display: none; }
+        .f-row { flex-direction: column; gap: 0; }
+        .f-row .f-group { flex: none; }
+        table.dataTable .col-priority,
+        table.dataTable thead th.col-priority { display: none; }
+    }
+
+    /* ── Responsive: XSmall (≤380px) ── */
+    @media (max-width: 380px) {
+        .erp-titlebar { padding: 10px 12px; }
+        .erp-toolbar { padding: 8px 12px; }
+        table.dataTable tbody td { padding: 8px 8px; }
+        table.dataTable thead th { padding: 8px 8px; }
+    }
 </style>
 @endpush
 
+<div class="filter-overlay" id="filterOverlay" onclick="closeFilters()"></div>
 <div class="erp-wrap">
 
     {{-- ── Filter Sidebar ── --}}
     <aside class="erp-filters" id="filterSidebar">
         <div class="erp-filters-head">
             <span>Filters</span>
-            <button class="erp-filters-clear" onclick="clearFilters()">Clear</button>
+            <div style="display:flex;align-items:center;gap:8px;">
+                <button class="erp-filters-clear" onclick="clearFilters()">Clear</button>
+                <button class="erp-filters-clear" onclick="closeFilters()" style="font-size:18px;line-height:1;padding:0 2px;" title="Close">×</button>
+            </div>
         </div>
 
         {{-- Status --}}
@@ -699,6 +786,10 @@
         {{-- Title bar --}}
         <div class="erp-titlebar">
             <div class="erp-title-left">
+                <button class="mobile-filter-btn erp-btn erp-btn-ghost" onclick="openFilters()" title="Filters" style="gap:5px;">
+                    <svg viewBox="0 0 24 24" style="width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+                    <span>Filters</span>
+                </button>
                 <h1 class="erp-title" id="pageTitle">{{ request()->routeIs('my-tasks') ? 'My Tasks' : 'All Tasks' }}</h1>
                 <span class="erp-count" id="taskCount"></span>
             </div>
@@ -711,7 +802,7 @@
                 @endif
                 <button class="erp-btn-add" onclick="openCreate()">
                     <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                    Add Task
+                    <span class="erp-btn-add-text">Add Task</span>
                 </button>
             </div>
         </div>
@@ -773,10 +864,10 @@
                         <th style="width:40px;"><input type="checkbox" id="selAll" onchange="toggleAll()"></th>
                         <th>Task</th>
                         <th style="width:110px;">Status</th>
-                        <th style="width:100px;">Priority</th>
+                        <th class="col-priority" style="width:100px;">Priority</th>
                         @if($isAdmin)<th style="width:150px;">Assignee</th>@endif
-                        <th style="width:150px;">Project</th>
-                        <th style="width:100px;">Due Date</th>
+                        <th class="col-project" style="width:150px;">Project</th>
+                        <th class="col-due" style="width:100px;">Due Date</th>
                     </tr>
                 </thead>
             </table>
@@ -963,6 +1054,11 @@ $(function(){
                 }
             }
         },
+        columnDefs: [
+            { className: 'col-priority', targets: IS_ADMIN ? 3 : 3 },
+            { className: 'col-project',  targets: IS_ADMIN ? 5 : 4 },
+            { className: 'col-due',      targets: IS_ADMIN ? 6 : 5 },
+        ],
         columns: [
             { data: 'id',            orderable: false, searchable: false,
               render: (d,t,r) => `<input type="checkbox" ${selected.has(r.id)?'checked':''} onchange="toggleRow(${r.id},this)" onclick="event.stopPropagation()" style="width:14px;height:14px;accent-color:var(--erp-primary);">` },
@@ -1294,6 +1390,20 @@ async function loadBoard(){
     }).join('');
 }
 function borderColor(p){ return {urgent:'#dc2626',high:'#f97316',normal:'#3b82f6',low:'#94a3b8'}[p]||'#94a3b8'; }
+
+/* ── Filter drawer (mobile) ── */
+function openFilters(){
+    document.getElementById('filterSidebar').classList.add('open');
+    document.getElementById('filterOverlay').classList.add('open');
+}
+function closeFilters(){
+    document.getElementById('filterSidebar').classList.remove('open');
+    document.getElementById('filterOverlay').classList.remove('open');
+}
+// Close filter drawer on resize to desktop
+window.addEventListener('resize',()=>{
+    if(window.innerWidth > 768) closeFilters();
+});
 
 /* ── Close on backdrop ── */
 document.querySelectorAll('.modal-backdrop').forEach(m=>{

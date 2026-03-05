@@ -27,7 +27,7 @@
             margin-bottom: 24px;
         }
         .page-greeting h1 {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: #0f172a;
             letter-spacing: -0.02em;
@@ -41,6 +41,7 @@
             display: flex;
             gap: 10px;
             align-items: center;
+            flex-shrink: 0;
         }
 
         /* Buttons */
@@ -48,7 +49,7 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 9px 18px;
+            padding: 9px 16px;
             border-radius: 8px;
             font-family: inherit;
             font-size: 0.82rem;
@@ -57,23 +58,13 @@
             border: none;
             text-decoration: none;
             transition: all 0.15s ease;
+            white-space: nowrap;
         }
-        .btn-outline {
-            background: white;
-            color: #0f172a;
-            border: 1px solid #e2e8f0;
-        }
+        .btn-outline { background: white; color: #0f172a; border: 1px solid #e2e8f0; }
         .btn-outline:hover { border-color: #0d9488; color: #0d9488; }
-        .btn-dark {
-            background: #0f172a;
-            color: white;
-        }
+        .btn-dark    { background: #0f172a; color: white; }
         .btn-dark:hover { background: #1e293b; }
-        .btn svg {
-            width: 14px; height: 14px;
-            stroke: currentColor; fill: none;
-            stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
-        }
+        .btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
         /* ── Stat Cards ── */
         .stats-grid {
@@ -86,10 +77,10 @@
             background: white;
             border: 1px solid #e2e8f0;
             border-radius: 12px;
-            padding: 18px 20px;
+            padding: 16px 18px;
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 14px;
             transition: box-shadow 0.2s ease;
         }
         .stat-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
@@ -99,36 +90,15 @@
             display: flex; align-items: center; justify-content: center;
             flex-shrink: 0;
         }
-        .stat-icon svg {
-            width: 22px; height: 22px;
-            stroke: currentColor; fill: none;
-            stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
-        }
+        .stat-icon svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
         .stat-icon-blue   { background: #eff6ff; color: #3b82f6; }
         .stat-icon-teal   { background: #f0fdfa; color: #0d9488; }
         .stat-icon-orange { background: #fff7ed; color: #f97316; }
         .stat-icon-purple { background: #f5f3ff; color: #8b5cf6; }
-
         .stat-body { flex: 1; min-width: 0; }
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #0f172a;
-            line-height: 1.1;
-        }
-        .stat-label {
-            font-size: 0.65rem;
-            font-weight: 600;
-            color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            margin-top: 2px;
-        }
-        .stat-sub {
-            font-size: 0.72rem;
-            color: #64748b;
-            margin-top: 4px;
-        }
+        .stat-value { font-size: 1.5rem; font-weight: 700; color: #0f172a; line-height: 1.1; }
+        .stat-label { font-size: 0.65rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
+        .stat-sub   { font-size: 0.72rem; color: #64748b; margin-top: 4px; }
 
         /* ── 3-column widget grid ── */
         .widget-grid {
@@ -158,62 +128,22 @@
             font-weight: 600;
             color: #0f172a;
         }
-        .widget-title svg {
-            width: 15px; height: 15px;
-            stroke: currentColor; fill: none;
-            stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
-            color: #0d9488;
-        }
-        .widget-action {
-            color: #94a3b8;
-            cursor: pointer;
-            background: none;
-            border: none;
-            padding: 4px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-        }
+        .widget-title svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; color: #0d9488; }
+        .widget-action { color: #94a3b8; cursor: pointer; background: none; border: none; padding: 4px; border-radius: 6px; display: flex; align-items: center; }
         .widget-action:hover { background: #f1f5f9; color: #0f172a; }
-        .widget-action svg {
-            width: 14px; height: 14px;
-            stroke: currentColor; fill: none;
-            stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
-        }
+        .widget-action svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
         .widget-body { padding: 16px 18px; }
 
         /* Empty state */
-        .empty-state {
-            text-align: center;
-            padding: 36px 20px;
-            color: #94a3b8;
-        }
-        .empty-state svg {
-            width: 36px; height: 36px;
-            stroke: currentColor; fill: none;
-            stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
-            margin-bottom: 12px;
-            opacity: 0.5;
-        }
+        .empty-state { text-align: center; padding: 32px 16px; color: #94a3b8; }
+        .empty-state svg { width: 32px; height: 32px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; margin-bottom: 10px; opacity: 0.5; display: block; margin-left: auto; margin-right: auto; }
         .empty-state p { font-size: 0.85rem; font-weight: 500; color: #64748b; }
         .empty-state small { font-size: 0.72rem; color: #94a3b8; }
 
         /* Task items */
-        .task-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            padding: 10px 0;
-            border-bottom: 1px solid #f1f5f9;
-        }
+        .task-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid #f1f5f9; }
         .task-item:last-child { border-bottom: none; }
-        .task-dot {
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            background: #e2e8f0;
-            flex-shrink: 0;
-            margin-top: 5px;
-        }
+        .task-dot { width: 8px; height: 8px; border-radius: 50%; background: #e2e8f0; flex-shrink: 0; margin-top: 5px; }
         .task-dot.high   { background: #ef4444; }
         .task-dot.medium { background: #f97316; }
         .task-dot.low    { background: #22c55e; }
@@ -221,207 +151,106 @@
         .task-meta  { font-size: 0.7rem; color: #94a3b8; margin-top: 2px; }
 
         /* Activity items */
-        .activity-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            padding: 8px 0;
-            border-bottom: 1px solid #f1f5f9;
-        }
+        .activity-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid #f1f5f9; }
         .activity-item:last-child { border-bottom: none; }
         .act-avatar {
-            width: 28px; height: 28px;
-            border-radius: 50%;
+            width: 28px; height: 28px; border-radius: 50%;
             background: linear-gradient(135deg, #14b8a6, #0d9488);
             display: flex; align-items: center; justify-content: center;
-            font-size: 0.6rem;
-            font-weight: 700;
-            color: white;
-            flex-shrink: 0;
+            font-size: 0.6rem; font-weight: 700; color: white; flex-shrink: 0;
         }
         .act-text { font-size: 0.78rem; color: #0f172a; line-height: 1.4; }
         .act-text strong { font-weight: 600; }
         .act-time { font-size: 0.68rem; color: #94a3b8; margin-top: 2px; }
 
         /* ── Calendar widget ── */
-        .cal-nav {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .cal-month {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #0f172a;
-        }
-        .cal-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: #94a3b8;
-            padding: 4px;
-            border-radius: 6px;
-            display: flex; align-items: center;
-        }
+        .cal-nav { display: flex; align-items: center; justify-content: space-between; }
+        .cal-month { font-size: 0.85rem; font-weight: 600; color: #0f172a; }
+        .cal-btn { background: none; border: none; cursor: pointer; color: #94a3b8; padding: 4px; border-radius: 6px; display: flex; align-items: center; }
         .cal-btn:hover { background: #f1f5f9; color: #0f172a; }
-        .cal-btn svg {
-            width: 14px; height: 14px;
-            stroke: currentColor; fill: none;
-            stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
-        }
-        .cal-grid {
-            margin-top: 12px;
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 2px;
-            text-align: center;
-        }
-        .cal-day-header {
-            font-size: 0.62rem;
-            font-weight: 600;
-            color: #94a3b8;
-            padding: 4px 0;
-        }
-        .cal-day {
-            font-size: 0.72rem;
-            padding: 5px 2px;
-            border-radius: 6px;
-            cursor: pointer;
-            color: #0f172a;
-            transition: background 0.15s;
-        }
+        .cal-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .cal-grid { margin-top: 12px; display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; }
+        .cal-day-header { font-size: 0.62rem; font-weight: 600; color: #94a3b8; padding: 4px 0; }
+        .cal-day { font-size: 0.72rem; padding: 5px 2px; border-radius: 6px; cursor: pointer; color: #0f172a; transition: background 0.15s; }
         .cal-day:hover { background: #f1f5f9; }
         .cal-day.empty { color: transparent; cursor: default; }
-        .cal-day.today {
-            background: #0d9488;
-            color: white;
-            font-weight: 700;
-        }
+        .cal-day.today { background: #0d9488; color: white; font-weight: 700; }
         .cal-day.other-month { color: #cbd5e1; }
 
         /* ── Projects section ── */
-        .section-card {
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-        .project-row {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 12px 18px;
-            border-bottom: 1px solid #f1f5f9;
-        }
+        .section-card { background: white; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; margin-bottom: 20px; }
+        .project-row { display: flex; align-items: center; gap: 12px; padding: 12px 18px; border-bottom: 1px solid #f1f5f9; flex-wrap: wrap; }
         .project-row:last-child { border-bottom: none; }
-        .project-dot {
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-        .project-name { flex: 1; font-size: 0.82rem; font-weight: 500; color: #0f172a; }
-        .project-status {
-            font-size: 0.68rem;
-            font-weight: 600;
-            padding: 3px 9px;
-            border-radius: 20px;
-        }
-        .status-active   { background: #f0fdfa; color: #0d9488; }
-        .status-pending  { background: #fff7ed; color: #f97316; }
-        .status-done     { background: #f0fdf4; color: #16a34a; }
-        .status-paused   { background: #f8fafc; color: #64748b; }
+        .project-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .project-name { flex: 1; font-size: 0.82rem; font-weight: 500; color: #0f172a; min-width: 100px; }
+        .project-status { font-size: 0.68rem; font-weight: 600; padding: 3px 9px; border-radius: 20px; white-space: nowrap; }
+        .status-active  { background: #f0fdfa; color: #0d9488; }
+        .status-pending { background: #fff7ed; color: #f97316; }
+        .status-done    { background: #f0fdf4; color: #16a34a; }
+        .status-paused  { background: #f8fafc; color: #64748b; }
         .project-progress { font-size: 0.72rem; color: #94a3b8; min-width: 32px; text-align: right; }
 
         /* ── Bottom 2-col row ── */
-        .bottom-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-            margin-bottom: 20px;
-        }
+        .bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
 
         /* Asset alert rows */
-        .alert-row {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            padding: 9px 0;
-            border-bottom: 1px solid #f1f5f9;
-        }
+        .alert-row { display: flex; align-items: flex-start; gap: 10px; padding: 9px 0; border-bottom: 1px solid #f1f5f9; }
         .alert-row:last-child { border-bottom: none; }
-        .alert-dot {
-            width: 8px; height: 8px;
-            background: #ef4444;
-            border-radius: 50%;
-            flex-shrink: 0;
-            margin-top: 5px;
-        }
+        .alert-dot { width: 8px; height: 8px; background: #ef4444; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
         .alert-name  { font-size: 0.8rem; font-weight: 500; color: #0f172a; }
         .alert-issue { font-size: 0.7rem; color: #64748b; margin-top: 2px; }
 
-        /* TouchPoint 2×2 stat grid */
-        .tp-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 14px;
-        }
-        .tp-cell {
-            background: #f8fafc;
-            border-radius: 10px;
-            padding: 16px 14px;
-            text-align: center;
-        }
-        .tp-value {
-            font-size: 1.8rem;
-            font-weight: 800;
-            line-height: 1;
-            margin-bottom: 6px;
-        }
-        .tp-label {
-            font-size: 0.6rem;
-            font-weight: 700;
-            color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: 0.07em;
-        }
+        /* TouchPoint */
+        .tp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+        .tp-cell { background: #f8fafc; border-radius: 10px; padding: 16px 14px; text-align: center; }
+        .tp-value { font-size: 1.8rem; font-weight: 800; line-height: 1; margin-bottom: 6px; }
+        .tp-label { font-size: 0.6rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.07em; }
         .tp-red    { color: #ef4444; }
         .tp-orange { color: #f97316; }
         .tp-green  { color: #22c55e; }
         .tp-blue   { color: #3b82f6; }
-
-        /* TouchPoint action buttons */
-        .tp-actions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-        .tp-btn {
-            padding: 10px;
-            border: none;
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 0.78rem;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            text-align: center;
-            transition: opacity 0.15s;
-        }
+        .tp-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .tp-btn { padding: 10px; border: none; border-radius: 8px; font-family: inherit; font-size: 0.78rem; font-weight: 600; cursor: pointer; text-decoration: none; text-align: center; transition: opacity 0.15s; }
         .tp-btn:hover { opacity: 0.85; }
         .tp-btn-risk     { background: #fff1f2; color: #ef4444; }
         .tp-btn-renewals { background: #f0fdfa; color: #0d9488; }
 
-
-        @media (max-width: 900px) {
+        /* ── Responsive ─────────────────────────────────────────────────────── */
+        /* Tablet: 1025px → 769px */
+        @media (max-width: 1024px) {
             .stats-grid  { grid-template-columns: repeat(2, 1fr); }
-            .widget-grid { grid-template-columns: 1fr; }
-            .bottom-grid { grid-template-columns: 1fr; }
+            .widget-grid { grid-template-columns: 1fr 1fr; }
         }
+
+        /* Mobile: ≤ 768px */
+        @media (max-width: 768px) {
+            .page-wrap        { padding: 16px; }
+            .breadcrumb       { display: none; }
+            .page-top         { margin-bottom: 16px; }
+            .page-greeting h1 { font-size: 1.2rem; }
+            .widget-grid      { grid-template-columns: 1fr; }
+            .bottom-grid      { grid-template-columns: 1fr; }
+        }
+
+        /* Small phone: ≤ 560px */
         @media (max-width: 560px) {
-            .stats-grid { grid-template-columns: 1fr; }
-            .page-top   { flex-direction: column; }
+            .stats-grid   { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .stat-card    { padding: 12px 12px; gap: 10px; }
+            .stat-icon    { width: 38px; height: 38px; border-radius: 8px; }
+            .stat-icon svg { width: 18px; height: 18px; }
+            .stat-value   { font-size: 1.3rem; }
+            .stat-sub     { display: none; }
+            /* Icon-only buttons on very small screens */
+            .btn-text     { display: none; }
+            .btn          { padding: 9px 12px; }
+            .widget-body  { padding: 12px 14px; }
+            .widget-header { padding: 12px 14px; }
+        }
+
+        /* Extra small: ≤ 380px */
+        @media (max-width: 380px) {
+            .stats-grid { gap: 8px; }
+            .page-wrap  { padding: 12px; }
         }
     </style>
     @endpush
@@ -444,11 +273,11 @@
             <div class="page-actions">
                 <a href="{{ route('tasks') }}" class="btn btn-outline">
                     <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-                    View All Tasks
+                    <span class="btn-text">View All Tasks</span>
                 </a>
                 <a href="{{ route('daily-report') }}" class="btn btn-dark">
                     <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                    Submit Report
+                    <span class="btn-text">Submit Report</span>
                 </a>
             </div>
         </div>
@@ -462,7 +291,7 @@
                 <div class="stat-body">
                     <div class="stat-value">{{ $myTasksCount }}</div>
                     <div class="stat-label">My Tasks</div>
-                    <div class="stat-sub">{{ $myTasksCount }} total tasks assigned</div>
+                    <div class="stat-sub">{{ $myTasksCount }} total assigned</div>
                 </div>
             </div>
 
@@ -483,8 +312,8 @@
                 </div>
                 <div class="stat-body">
                     <div class="stat-value">{{ $assetsNeedCheckup }}</div>
-                    <div class="stat-label">Assets Need Checkup</div>
-                    <div class="stat-sub">{{ $assetsNeedCheckup > 0 ? $assetsNeedCheckup . ' need attention' : 'All assets healthy' }}</div>
+                    <div class="stat-label">Assets Checkup</div>
+                    <div class="stat-sub">{{ $assetsNeedCheckup > 0 ? $assetsNeedCheckup . ' need attention' : 'All healthy' }}</div>
                 </div>
             </div>
 
@@ -495,7 +324,7 @@
                 <div class="stat-body">
                     <div class="stat-value">{{ $reportsTodayCount }}/{{ $reportableStaffCount }}</div>
                     <div class="stat-label">Reports Today</div>
-                    <div class="stat-sub">{{ $submissionRate }}% submission rate</div>
+                    <div class="stat-sub">{{ $submissionRate }}% submitted</div>
                 </div>
             </div>
         </div>
@@ -559,8 +388,8 @@
                                 <div class="act-avatar">{{ strtoupper(substr($act->staff_name, 0, 2)) }}</div>
                                 <div>
                                     <div class="act-text">
-                                        <strong>{{ $act->staff_name }}</strong> commented
-                                        <em>{{ \Illuminate\Support\Str::limit($act->task_title, 30) }}</em>
+                                        <strong>{{ $act->staff_name }}</strong> commented on
+                                        <em>{{ \Illuminate\Support\Str::limit($act->task_title, 28) }}</em>
                                     </div>
                                     <div class="act-time">{{ \Carbon\Carbon::parse($act->created_at)->diffForHumans() }}</div>
                                 </div>
@@ -583,29 +412,23 @@
                 </div>
                 <div class="widget-body">
                     @php
-                        $today     = now('Asia/Kolkata');
-                        $firstDay  = $today->copy()->startOfMonth();
+                        $today       = now('Asia/Kolkata');
+                        $firstDay    = $today->copy()->startOfMonth();
                         $daysInMonth = $today->daysInMonth;
-                        $startDow  = $firstDay->dayOfWeek; // 0=Sun
+                        $startDow    = $firstDay->dayOfWeek;
                     @endphp
                     <div class="cal-nav">
-                        <button class="cal-btn" id="calPrev">
-                            <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-                        </button>
+                        <button class="cal-btn" id="calPrev"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
                         <span class="cal-month" id="calMonth">{{ $today->format('F Y') }}</span>
-                        <button class="cal-btn" id="calNext">
-                            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-                        </button>
+                        <button class="cal-btn" id="calNext"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
                     </div>
                     <div class="cal-grid" id="calGrid">
                         @foreach (['S','M','T','W','T','F','S'] as $dh)
                             <div class="cal-day-header">{{ $dh }}</div>
                         @endforeach
-                        {{-- Empty cells before first day --}}
                         @for ($i = 0; $i < $startDow; $i++)
                             <div class="cal-day empty">·</div>
                         @endfor
-                        {{-- Days --}}
                         @for ($d = 1; $d <= $daysInMonth; $d++)
                             <div class="cal-day {{ $d == $today->day ? 'today' : '' }}">{{ $d }}</div>
                         @endfor
@@ -637,27 +460,23 @@
                 @foreach ($projects as $project)
                     @php
                         $statusClass = match($project->status ?? 'active') {
-                            'active'  => 'status-active',
-                            'pending' => 'status-pending',
-                            'done', 'completed' => 'status-done',
-                            default   => 'status-paused',
+                            'active'            => 'status-active',
+                            'pending'           => 'status-pending',
+                            'done','completed'  => 'status-done',
+                            default             => 'status-paused',
                         };
                         $dotColor = match($project->status ?? 'active') {
-                            'active'  => '#0d9488',
-                            'pending' => '#f97316',
-                            'done', 'completed' => '#16a34a',
-                            default   => '#94a3b8',
+                            'active'            => '#0d9488',
+                            'pending'           => '#f97316',
+                            'done','completed'  => '#16a34a',
+                            default             => '#94a3b8',
                         };
                     @endphp
                     <div class="project-row">
                         <div class="project-dot" style="background: {{ $dotColor }}"></div>
                         <div class="project-name">{{ $project->name ?? $project->title ?? 'Untitled' }}</div>
-                        <span class="project-status {{ $statusClass }}">
-                            {{ ucfirst($project->status ?? 'active') }}
-                        </span>
-                        <span class="project-progress">
-                            {{ $project->progress ?? 0 }}%
-                        </span>
+                        <span class="project-status {{ $statusClass }}">{{ ucfirst($project->status ?? 'active') }}</span>
+                        <span class="project-progress">{{ $project->progress ?? 0 }}%</span>
                     </div>
                 @endforeach
             @endif
@@ -744,7 +563,6 @@
             </div>
 
         </div>
-
 
     </div>
 </x-layouts.app>

@@ -144,18 +144,41 @@
 .tp-page-subtitle { font-size:.8rem; color:#64748b; margin-top:2px; }
 
 @media(max-width:768px) {
+    .tp-wrap { padding:14px 12px; }
     .tp-grid { grid-template-columns:1fr; }
     .tp-stats { grid-template-columns:repeat(2,1fr); gap:10px; }
     .tp-stat { padding:14px 12px; }
     .tp-stat-value { font-size:1.4rem; }
-    .tp-table { font-size:.72rem; min-width:600px; }
-    .tp-table th,.tp-table td { padding:10px 12px; white-space:nowrap; }
-    .tp-modal-body .form-row { flex-direction:column; }
+    .tp-table { font-size:.72rem; min-width:560px; }
+    .tp-table th,.tp-table td { padding:9px 10px; white-space:nowrap; }
+    .tp-modal-body .form-row,.tp-form-row { flex-direction:column; gap:0; }
+    .tp-metric-label { min-width:100px; }
+    .tp-filter-bar select,.tp-filter-bar input { flex:1; min-width:130px; }
+    .tp-page-title { font-size:1.1rem; }
+    .tp-page-header { margin-bottom:16px; }
+    /* Modals → bottom sheet */
+    .tp-modal-overlay { padding:0; align-items:flex-end; }
+    .tp-modal,.tp-modal.tp-modal-lg { max-width:100%; border-radius:16px 16px 0 0; max-height:92vh; }
+    .tp-cust-info-grid { grid-template-columns:1fr !important; }
 }
 @media(max-width:480px) {
-    .tp-stats { grid-template-columns:1fr; }
-    .tp-tabs { overflow-x:scroll; scrollbar-width:none; }
+    .tp-wrap { padding:12px 10px; }
+    .tp-tabs { margin-bottom:16px; overflow-x:scroll; scrollbar-width:none; }
     .tp-tabs::-webkit-scrollbar { display:none; }
+    .tp-stats { grid-template-columns:repeat(2,1fr); }
+    .tp-card-header { padding:12px 14px; }
+    .tp-card-body.padded { padding:14px; }
+    .tp-metric-label { min-width:80px; font-size:.75rem; }
+    .tp-filter-bar { gap:8px; }
+    .tp-filter-bar select,.tp-filter-bar input { width:100%; min-width:0; flex:none; }
+    .tp-filter-bar .tp-btn { width:100%; justify-content:center; }
+    .tp-modal-body { padding:16px; }
+    .tp-modal-footer { padding:12px 16px; }
+    .tp-modal-header { padding:14px 16px 12px; }
+}
+@media(max-width:380px) {
+    .tp-stats { grid-template-columns:1fr; }
+    .tp-metric-value { font-size:.8rem; }
 }
 body{background:#fff !important;}
 </style>
@@ -329,7 +352,7 @@ body{background:#fff !important;}
                     <input type="text" id="cm_company" style="padding:8px 12px;border:1px solid #e2e8f0;border-radius:8px;font-size:.85rem;font-family:inherit">
                 </div>
             </div>
-            <div style="display:flex;gap:16px">
+            <div class="form-row" style="display:flex;gap:16px">
                 <div style="flex:1;display:flex;flex-direction:column;gap:4px;margin-bottom:16px">
                     <label style="font-size:.8rem;font-weight:500;color:#374151">Phone *</label>
                     <input type="text" id="cm_phone" style="padding:8px 12px;border:1px solid #e2e8f0;border-radius:8px;font-size:.85rem;font-family:inherit">
@@ -339,7 +362,7 @@ body{background:#fff !important;}
                     <input type="email" id="cm_email" style="padding:8px 12px;border:1px solid #e2e8f0;border-radius:8px;font-size:.85rem;font-family:inherit">
                 </div>
             </div>
-            <div style="display:flex;gap:16px">
+            <div class="form-row" style="display:flex;gap:16px">
                 <div style="flex:1;display:flex;flex-direction:column;gap:4px;margin-bottom:16px">
                     <label style="font-size:.8rem;font-weight:500;color:#374151">Subscription *</label>
                     <select id="cm_sub" onchange="calcExpiry()" style="padding:8px 12px;border:1px solid #e2e8f0;border-radius:8px;font-size:.85rem;font-family:inherit">
@@ -360,7 +383,7 @@ body{background:#fff !important;}
                     <input type="date" id="cm_expiry" style="padding:8px 12px;border:1px solid #e2e8f0;border-radius:8px;font-size:.85rem;font-family:inherit">
                 </div>
             </div>
-            <div id="cm_extra_row" style="display:none;gap:16px;margin-bottom:16px">
+            <div id="cm_extra_row" class="form-row" style="display:none;gap:16px;margin-bottom:16px">
                 <div style="flex:1;display:flex;flex-direction:column;gap:4px">
                     <label style="font-size:.8rem;font-weight:500;color:#374151">Status</label>
                     <select id="cm_status" style="padding:8px 12px;border:1px solid #e2e8f0;border-radius:8px;font-size:.85rem;font-family:inherit">
@@ -697,7 +720,7 @@ async function openTpAction(id){
 
     document.getElementById('tpActionTitle').textContent = stageIcon(t.stage)+' '+stageLabel(t.stage)+' — '+t.customer_name;
     let html = `<div style="background:#f8fafc;padding:12px 16px;border-radius:10px;margin-bottom:16px;font-size:.82rem">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+        <div class="tp-cust-info-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
             <div><strong>Company:</strong> ${tpEsc(t.company||'N/A')}</div>
             <div><strong>Phone:</strong> <a href="tel:${t.phone}" style="color:#14b8a6">${tpEsc(t.phone)}</a></div>
             <div><strong>Email:</strong> ${tpEsc(t.email||'N/A')}</div>
@@ -707,7 +730,7 @@ async function openTpAction(id){
 
     if(t.status === 'pending'){
         html += `<h4 style="font-size:.85rem;font-weight:600;margin-bottom:10px">📞 Log Call</h4>
-        <div style="display:flex;gap:12px;margin-bottom:12px">
+        <div class="tp-form-row" style="display:flex;gap:12px;margin-bottom:12px">
             <div style="flex:1;display:flex;flex-direction:column;gap:4px">
                 <label style="font-size:.78rem;font-weight:500;color:#374151">Called By</label>
                 <select id="ta_caller" style="padding:7px 10px;border:1px solid #e2e8f0;border-radius:8px;font-size:.82rem;font-family:inherit">

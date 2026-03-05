@@ -3,7 +3,7 @@
 @push('styles')
 <style>
 /* ── Assets Page Styles ── */
-.as-wrap { --as-teal:#14b8a6; --as-teal-dark:#0d9488; }
+.as-wrap { padding:20px; --as-teal:#14b8a6; --as-teal-dark:#0d9488; }
 
 /* Filter Bar */
 .as-filter { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:18px; padding:14px 18px; background:#fff; border:1px solid #e2e8f0; border-radius:12px; }
@@ -140,17 +140,57 @@
     .as-qr-label { break-inside:avoid; border:1px dashed #ccc !important; box-shadow:none !important; }
 }
 
+/* ── Responsive ── */
 @media(max-width:768px) {
     .as-grid-2 { grid-template-columns:1fr; }
-    .as-kpi-grid { grid-template-columns:repeat(2,1fr); }
-    .as-table { min-width:600px; }
+    .as-kpi-grid { grid-template-columns:repeat(2,1fr); gap:10px; }
+    .as-table { min-width:540px; }
     .as-form-row { flex-direction:column; gap:10px; }
-    .as-page-header { flex-direction:column; align-items:flex-start; }
+    .as-page-header { flex-direction:column; align-items:flex-start; gap:10px; }
+    .as-page-actions { flex-wrap:wrap; gap:6px; }
+
+    /* Bottom-sheet modals */
+    .as-modal-overlay { padding:0; align-items:flex-end; }
+    .as-modal, .as-modal-lg { max-width:100% !important; border-radius:14px 14px 0 0; max-height:92vh; }
+    @keyframes as-popup { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+
+    /* Filter bar stacks on mobile */
+    .as-filter { gap:8px; padding:12px 14px; }
+    .as-filter input { min-width:0; width:100%; }
+
+    /* Toast top-right stays but smaller */
+    .as-toasts { right:10px; top:10px; }
+    .as-toast { font-size:.78rem; padding:9px 14px; }
 }
-body{
-    padding:20px;
-    background:#fff;
+
+@media(max-width:560px) {
+    .as-kpi-grid { grid-template-columns:1fr 1fr; gap:8px; }
+    .as-kpi { padding:12px; }
+    .as-kpi-value { font-size:1.35rem; }
+
+    /* Page action buttons — wrap into two rows */
+    .as-page-actions { flex-wrap:wrap; }
+    .as-page-actions .as-btn { white-space:nowrap; flex-shrink:0; }
+
+    /* QR labels — smaller on small screens */
+    .as-qr-label { width:120px; }
+
+    /* Detail grid — 2 cols */
+    .as-detail-grid { grid-template-columns:repeat(2,1fr); gap:8px; }
 }
+
+@media(max-width:380px) {
+    .as-kpi-grid { grid-template-columns:1fr 1fr; gap:6px; }
+    .as-kpi { padding:10px; }
+    .as-kpi-label { font-size:.65rem; }
+    .as-kpi-value { font-size:1.2rem; }
+    .as-detail-grid { grid-template-columns:1fr; }
+    .as-page-header { margin-bottom:14px; }
+    .as-qr-label { width:105px; padding:8px 6px; }
+}
+
+/* Remove body padding that conflicts with app layout */
+body { padding:0; background:inherit; }
 </style>
 @endpush
 

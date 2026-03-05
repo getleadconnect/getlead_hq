@@ -82,6 +82,40 @@
 @keyframes st-tin { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:none} }
 .st-toast-success { background:#14b8a6; }
 .st-toast-error   { background:#ef4444; }
+
+/* ── Responsive ── */
+@media(max-width:768px) {
+    .st-page  { padding:16px 14px; }
+    .st-card  { padding:20px 16px; }
+
+    /* Stack label + control vertically */
+    .st-row { flex-direction:column; align-items:flex-start; gap:8px; }
+    .st-control { width:100%; }
+    .st-input { min-width:0; width:100%; box-sizing:border-box; }
+
+    /* Badges row also stacks */
+    .st-badges { width:100%; }
+
+    /* Bottom-sheet modal */
+    .st-overlay { padding:0; align-items:flex-end; }
+    .st-modal { border-radius:14px 14px 0 0; max-height:90vh; max-width:100%; transform:translateY(30px); }
+    .st-overlay.active .st-modal { transform:translateY(0); }
+    .st-modal-head { padding:16px 18px; }
+
+    /* Login history table — horizontal scroll */
+    .st-modal-body { overflow-x:auto; }
+    .st-table { min-width:460px; }
+}
+
+@media(max-width:480px) {
+    .st-page  { padding:12px 10px; }
+    .st-card  { padding:16px 14px; margin-bottom:14px; }
+    .st-header { margin-bottom:20px; padding-bottom:12px; }
+    .st-title  { font-size:1.2rem; }
+    .st-section-title { font-size:.9rem; margin-bottom:14px; padding-bottom:10px; }
+    .st-label  { font-size:.85rem; }
+    .st-desc   { font-size:.74rem; }
+}
 </style>
 @endpush
 

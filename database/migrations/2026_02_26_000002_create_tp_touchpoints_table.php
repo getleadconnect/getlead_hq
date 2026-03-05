@@ -8,12 +8,14 @@ return new class extends Migration
 {
     public function up(): void
     {
+        if (Schema::hasTable('tp_touchpoints')) return;
+
         Schema::create('tp_touchpoints', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('customer_id')->constrained('tp_customers')->cascadeOnDelete();
+            $table->foreignId('customer_id')->constrained('tp_customers')->onDelete('cascade');
             $table->string('stage');
             $table->date('due_date');
-            $table->integer('assigned_to')->nullable();
+            $table->unsignedInteger('assigned_to')->nullable();
             $table->enum('status', ['pending', 'completed'])->default('pending');
             $table->string('outcome')->nullable();
             $table->text('outcome_notes')->nullable();

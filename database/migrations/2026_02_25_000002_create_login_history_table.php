@@ -8,23 +8,22 @@ return new class extends Migration
 {
     public function up(): void
     {
-        if (Schema::hasTable('task_comments')) return;
+        if (Schema::hasTable('login_history')) return;
 
-        Schema::create('task_comments', function (Blueprint $table) {
+        Schema::create('login_history', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('task_id');
-            $table->unsignedInteger('staff_id');
-            $table->text('comment');
+            $table->unsignedInteger('staff_id')->nullable();
+            $table->text('ip_address')->nullable();
+            $table->text('user_agent')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
 
-            $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
             $table->foreign('staff_id')->references('id')->on('staff');
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('task_comments');
+        Schema::dropIfExists('login_history');
     }
 };

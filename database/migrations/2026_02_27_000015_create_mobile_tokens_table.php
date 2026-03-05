@@ -8,23 +8,22 @@ return new class extends Migration
 {
     public function up(): void
     {
-        if (Schema::hasTable('task_comments')) return;
+        if (Schema::hasTable('mobile_tokens')) return;
 
-        Schema::create('task_comments', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('task_id');
+        Schema::create('mobile_tokens', function (Blueprint $table) {
+            $table->string('token', 500)->primary();
             $table->unsignedInteger('staff_id');
-            $table->text('comment');
+            $table->text('device_info')->nullable();
+            $table->dateTime('expires_at');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
 
-            $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
             $table->foreign('staff_id')->references('id')->on('staff');
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('task_comments');
+        Schema::dropIfExists('mobile_tokens');
     }
 };

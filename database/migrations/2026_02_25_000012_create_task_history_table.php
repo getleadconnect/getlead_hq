@@ -8,17 +8,20 @@ return new class extends Migration
 {
     public function up(): void
     {
-        if (Schema::hasTable('task_history')) {
-            return;
-        }
+        if (Schema::hasTable('task_history')) return;
+
         Schema::create('task_history', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('task_id')->constrained('tasks')->cascadeOnDelete();
-            $table->foreignId('staff_id')->constrained('staff')->cascadeOnDelete();
-            $table->string('action');
-            $table->string('old_value')->nullable();
-            $table->string('new_value')->nullable();
+            $table->increments('id');
+            $table->unsignedInteger('task_id');
+            $table->unsignedInteger('staff_id');
+            $table->enum('action', ['created', 'status_changed', 'assigned', 'commented', 'updated', 'deleted'])->nullable();
+            $table->text('old_value')->nullable();
+            $table->text('new_value')->nullable();
             $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+
+            $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade');
+            $table->foreign('staff_id')->references('id')->on('staff');
         });
     }
 

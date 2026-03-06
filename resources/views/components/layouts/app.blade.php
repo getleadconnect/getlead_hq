@@ -155,8 +155,9 @@
             display: flex;
             align-items: center;
             gap: 9px;
-            padding: 9px 14px;
-            font-size: 0.78rem; font-weight: 500;
+            padding: 12px 14px;
+            font-size: 0.85rem; 
+            font-weight: 400;
             color: var(--muted);
             text-decoration: none;
             transition: all 0.15s ease;
@@ -209,6 +210,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            background:#fff;
         }
 
         /* ── Mobile breakpoint ───────────────────────────────────────────────── */

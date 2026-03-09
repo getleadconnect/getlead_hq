@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(/opt/lampp/bin/php /usr/local/bin/composer require laravel/sanctum)",
+      "Bash(/opt/lampp/bin/php /usr/bin/composer require laravel/sanctum)",
+      "Bash(php --version)",
+      "Bash(php8.2 --version)",
+      "Bash(php8.3 --version)",
+      "Bash(php /usr/bin/composer require laravel/sanctum)",
+      "Bash(php /usr/bin/composer require yajra/laravel-datatables-oracle --no-interaction)",
+      "Bash(php artisan migrate)",
+      "Bash(php artisan tinker --execute=\"echo implode\\('', '', \\\\Illuminate\\\\Support\\\\Facades\\\\DB::select\\(''SHOW TABLES''\\) |> array_map\\(fn\\($t\\) => array_values\\(\\(array\\)$t\\)[0], $$\\)\\);\")",
+      "Bash(php artisan tinker --execute=\"print_r\\(collect\\(DB::select\\(''SHOW TABLES''\\)\\)->map\\(fn\\($t\\)=>array_values\\(\\(array\\)$t\\)[0]\\)->all\\(\\)\\);\")"
+    ]
+  }
+}

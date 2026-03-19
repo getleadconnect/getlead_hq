@@ -114,9 +114,10 @@ class ApiReportController extends Controller
     public function summary(Request $request)
     {
         $staff = $request->user();
-        if (!$this->isAdmin($staff)) {
+
+        /*if (!$this->isAdmin($staff)) {
             return response()->json(['ok' => false, 'error' => 'Admin only'], 403);
-        }
+        }*/
 
         $date    = $request->input('date', now()->toDateString());
         $reports = DailyReport::with('staff:id,name,role')
@@ -139,6 +140,7 @@ class ApiReportController extends Controller
     public function today(Request $request)
     {
         $staff = $request->user();
+
         if (!$this->isAdmin($staff)) {
             return response()->json(['ok' => false, 'error' => 'Admin only'], 403);
         }
@@ -164,9 +166,10 @@ class ApiReportController extends Controller
     public function missing(Request $request)
     {
         $staff = $request->user();
-        if (!$this->isAdmin($staff)) {
+        
+        /*if (!$this->isAdmin($staff)) {
             return response()->json(['ok' => false, 'error' => 'Admin only'], 403);
-        }
+        }*/
 
         $today    = now()->toDateString();
         $reported = DailyReport::where('report_date', $today)->pluck('staff_id');

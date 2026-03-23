@@ -191,6 +191,40 @@
 
 /* Remove body padding that conflicts with app layout */
 body { padding:0; background:inherit; }
+
+/* ── Asset Dashboard (adb-*) ── */
+.adb-stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:22px; }
+.adb-charts-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:22px; }
+.adb-stat-card { background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:18px 20px; }
+.adb-stat-label { font-size:.7rem; text-transform:uppercase; letter-spacing:.05em; color:#64748b; font-weight:500; margin-bottom:8px; }
+.adb-stat-value { font-size:1.75rem; font-weight:700; letter-spacing:-.03em; color:#0f172a; line-height:1.1; margin-bottom:6px; }
+.adb-stat-sub { font-size:.75rem; color:#94a3b8; display:flex; align-items:center; gap:5px; }
+.adb-dot { display:inline-block; width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+.adb-chart-card { background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:18px 20px; }
+.adb-chart-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+.adb-chart-title { font-size:.85rem; font-weight:600; color:#0f172a; }
+.adb-chart-badge { background:#f1f5f9; color:#64748b; font-size:.7rem; font-weight:600; padding:2px 8px; border-radius:12px; }
+.adb-table-card { background:#fff; border:1px solid #e2e8f0; border-radius:12px; overflow:hidden; margin-bottom:14px; }
+.adb-table-header { display:flex; align-items:center; justify-content:space-between; padding:14px 18px; border-bottom:1px solid #e2e8f0; }
+.adb-table-title { font-size:.85rem; font-weight:600; color:#0f172a; }
+.adb-th { padding:8px 6px 8px 10px; background:#f8fafc; font-size:.68rem; font-weight:600; text-transform:uppercase; letter-spacing:.05em; color:#64748b; text-align:left; border-bottom:1px solid #e2e8f0; }
+.adb-td { padding:0 6px 0 10px; font-size:13px; line-height:30px; border-bottom:1px solid #f1f5f9; vertical-align:middle; }
+.adb-tr:last-child .adb-td { border-bottom:none; }
+.adb-tr:hover .adb-td { background:#f8fafc; }
+
+@media(max-width:768px){
+    .adb-stats-grid { grid-template-columns:repeat(2,1fr); gap:10px; }
+    .adb-charts-grid { grid-template-columns:1fr; gap:10px; }
+    .adb-stat-card { padding:14px 16px; }
+    .adb-stat-value { font-size:1.45rem; }
+    .adb-chart-card { padding:14px 16px; }
+}
+@media(max-width:560px){
+    .adb-stats-grid { grid-template-columns:repeat(2,1fr); gap:8px; }
+    .adb-charts-grid { gap:8px; }
+    .adb-stat-value { font-size:1.25rem; }
+    .adb-stat-label { font-size:.65rem; }
+}
 </style>
 @endpush
 
@@ -447,6 +481,7 @@ body { padding:0; background:inherit; }
 {{-- Toast container --}}
 <div class="as-toasts" id="asToasts"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
 <script>
 const AS_CSRF     = document.querySelector('meta[name="csrf-token"]')?.content || '';
@@ -507,8 +542,8 @@ function typeBadge(t)  { return `<span class="as-badge as-badge-teal">${asEsc(t|
 function fmtPrice(v)   { return v ? '₹'+parseFloat(v).toLocaleString('en-IN') : '—'; }
 function fmtKpi(v){
     const n = parseFloat(v) || 0;
-    //if(n >= 10000000) return '₹'+(n/10000000).toFixed(1)+'Cr';
-    //if(n >= 100000)   return '₹'+(n/100000).toFixed(1)+'L';
+    if(n >= 10000000) return '₹'+(n/10000000).toFixed(2)+'Cr';
+    if(n >= 100000)   return '₹'+(n/100000).toFixed(2)+'L';
     if(n >= 1000)     return '₹'+(n/1000).toFixed(1)+'K';
     return '₹'+n.toFixed(0);
 }
@@ -526,93 +561,185 @@ async function loadDashboard(){
     const d = await asGet('/assets/api/dashboard');
     if(!d.ok) return;
 
-    let html = '';
-
-    // My Assets
-    if(d.my_assets && d.my_assets.length){
-        html += `<div class="as-card" style="margin-bottom:16px;border-left:3px solid #14b8a6">
-            <div class="as-card-title">📦 My Assets (${d.my_assets.length})</div>
-            <div class="as-table-wrap"><table class="as-table"><thead><tr><th>Tag</th><th>Name</th><th>Type</th><th>Brand/Model</th><th>Status</th><th>Warranty</th></tr></thead><tbody>`;
-        d.my_assets.forEach(a => {
-            const wExp = a.warranty_expired;
-            const w = a.warranty_expiry ? `<span class="as-badge ${wExp?'as-badge-red':'as-badge-green'} as-badge-xs">${wExp?'Expired':'Active'} (${fmtDate(a.warranty_expiry)})</span>` : '—';
-            html += `<tr><td><strong>${asEsc(a.asset_tag)}</strong></td><td><a onclick="loadDetail(${a.id})">${asEsc(a.name)}</a></td><td>${typeBadge(a.type)}</td><td>${asEsc([a.brand,a.model].filter(Boolean).join(' '))||'—'}</td><td>${statusBadge(a.status)}</td><td>${w}</td></tr>`;
-        });
-        html += `</tbody></table></div></div>`;
-    }
-
-    // KPI Grid
-    html += `<div class="as-kpi-grid">
-        <div class="as-kpi"><div class="as-kpi-label">Total Assets</div><div class="as-kpi-value teal">${d.total}</div></div>
-        <div class="as-kpi"><div class="as-kpi-label">Active Value</div><div class="as-kpi-value">${fmtKpi(d.total_value)}</div></div>
-        <div class="as-kpi"><div class="as-kpi-label">Repair Costs</div><div class="as-kpi-value amber">${fmtKpi(d.repair_cost)}</div></div>
-        <div class="as-kpi"><div class="as-kpi-label">In Repair</div><div class="as-kpi-value red">${d.in_repair}</div></div>
-        <div class="as-kpi"><div class="as-kpi-label">Checkups Due</div><div class="as-kpi-value ${d.checkups_due>0?'red':'green'}">${d.checkups_due}</div></div>
-        <div class="as-kpi"><div class="as-kpi-label">Expired Warranty</div><div class="as-kpi-value ${d.expired_warranty>0?'amber':''}">${d.expired_warranty}</div></div>
+    // ── Stat cards ───────────────────────────────────────────────
+    const activeCount = (d.by_status||[]).find(s=>s.status==='active')?.cnt || 0;
+    const statCards = `
+    <div class="adb-stats-grid">
+        <div class="adb-stat-card">
+            <div class="adb-stat-label">Total Assets</div>
+            <div class="adb-stat-value">${d.total}</div>
+            <div class="adb-stat-sub"><span class="adb-dot" style="background:#10b981"></span>${activeCount} active</div>
+        </div>
+        <div class="adb-stat-card">
+            <div class="adb-stat-label">Active Value</div>
+            <div class="adb-stat-value" style="color:#059669">${fmtKpi(d.total_value)}</div>
+            <div class="adb-stat-sub">Across all categories</div>
+        </div>
+        <div class="adb-stat-card">
+            <div class="adb-stat-label">In Repair</div>
+            <div class="adb-stat-value" style="color:#f59e0b">${d.in_repair}</div>
+            <div class="adb-stat-sub"><span class="adb-dot" style="background:#f59e0b"></span>${fmtKpi(d.repair_cost)} repair costs</div>
+        </div>
+        <div class="adb-stat-card">
+            <div class="adb-stat-label">Warranty Alerts</div>
+            <div class="adb-stat-value" style="color:#ef4444">${d.expired_warranty}</div>
+            <div class="adb-stat-sub"><span class="adb-dot" style="background:#ef4444"></span>Expired warranties</div>
+        </div>
     </div>`;
 
-    // By Type + By Status
-    html += `<div class="as-grid-2">
-        <div class="as-card"><div class="as-card-title">By Type</div><div class="as-card-body">`;
-    (d.by_type||[]).forEach(r => {
-        html += `<div class="as-row-item"><span>${asEsc(r.type)}</span><strong>${r.cnt}</strong></div>`;
-    });
-    if(!d.by_type?.length) html += '<div class="as-empty" style="padding:20px"><p>No assets</p></div>';
-    html += `</div></div>
-        <div class="as-card"><div class="as-card-title">By Status</div><div class="as-card-body">`;
-    (d.by_status||[]).forEach(r => {
-        html += `<div class="as-row-item">${statusBadge(r.status)}<strong>${r.cnt}</strong></div>`;
-    });
-    if(!d.by_status?.length) html += '<div class="as-empty" style="padding:20px"><p>No assets</p></div>';
-    html += `</div></div></div>`;
+    // ── Chart cards ──────────────────────────────────────────────
+    const statusColors = { active:'#059669', in_repair:'#f59e0b', maintenance:'#3b82f6', retired:'#94a3b8', lost:'#ef4444' };
+    const byStatus  = d.by_status  || [];
+    const byType    = (d.by_type   || []).slice(0, 8);
 
-    // Per Person + Recent Assignments
-    html += `<div class="as-grid-2">
-        <div class="as-card"><div class="as-card-title">Assets Per Person</div><div class="as-card-body">`;
-    (d.by_owner||[]).forEach(r => {
-        html += `<div class="as-row-item"><span>${asEsc(r.name)}</span><strong>${r.cnt}</strong></div>`;
-    });
-    if(!d.by_owner?.length) html += '<div class="as-empty" style="padding:20px"><p>No assignments</p></div>';
-    html += `</div></div>
-        <div class="as-card"><div class="as-card-title">Recent Assignments</div><div class="as-card-body">`;
-    (d.recent_assign||[]).forEach(r => {
-        html += `<div style="padding:6px 0;border-bottom:1px solid #f1f5f9;font-size:.78rem">
-            <strong>${asEsc(r.asset_tag)}</strong> ${asEsc(r.asset_name)}
-            → <span style="color:#14b8a6">${asEsc(r.staff_name||'Unassigned')}</span>
-            <span style="color:#94a3b8;font-size:.72rem;margin-left:4px">${r.assigned_at||''}</span>
+    const chartCards = `
+    <div class="adb-charts-grid">
+        <div class="adb-chart-card">
+            <div class="adb-chart-header">
+                <span class="adb-chart-title">Assets by Type</span>
+                <span class="adb-chart-badge">Top ${byType.length}</span>
+            </div>
+            <div style="position:relative;width:100%;height:220px">
+                <canvas id="adbTypeChart"></canvas>
+            </div>
+        </div>
+        <div class="adb-chart-card">
+            <div class="adb-chart-header">
+                <span class="adb-chart-title">Status Breakdown</span>
+                <span class="adb-chart-badge">${byStatus.length} status${byStatus.length!==1?'es':''}</span>
+            </div>
+            <div style="position:relative;width:100%;height:220px;display:flex;align-items:center;justify-content:center">
+                <canvas id="adbStatusChart"></canvas>
+            </div>
+        </div>
+    </div>`;
+
+    // ── My Assets table ──────────────────────────────────────────
+    let myAssetsHtml = '';
+    if(d.my_assets && d.my_assets.length){
+        let rows = '';
+        d.my_assets.slice(0,10).forEach(a => {
+            const wExp = a.warranty_expired;
+            let w = '—';
+            if(a.warranty_expiry){
+                w = wExp
+                    ? `<span style="font-size:.75rem;font-weight:500;color:#ef4444">Expired · ${fmtDate(a.warranty_expiry)}</span>`
+                    : `<span style="font-size:.75rem;font-weight:500;color:#059669">Active · ${fmtDate(a.warranty_expiry)}</span>`;
+            }
+            const brand = [a.brand, a.model].filter(Boolean).join(' ') || '—';
+            rows += `<tr class="adb-tr">
+                <td class="adb-td" style="font-family:monospace;color:#6b7280;font-weight:500">${asEsc(a.asset_tag||'—')}</td>
+                <td class="adb-td"><a onclick="loadDetail(${a.id})" style="color:#059669;font-weight:500;cursor:pointer;text-decoration:none">${asEsc(a.name)}</a></td>
+                <td class="adb-td">${adbTypeBadge(a.type)}</td>
+                <td class="adb-td" style="color:#374151">${asEsc(brand)}</td>
+                <td class="adb-td">${adbStatusCell(a.status)}</td>
+                <td class="adb-td">${w}</td>
+            </tr>`;
+        });
+        myAssetsHtml = `
+        <div class="adb-table-card">
+            <div class="adb-table-header">
+                <span class="adb-table-title">My Assets</span>
+                <a onclick="showView('list')" style="font-size:.8rem;font-weight:500;color:#059669;cursor:pointer;text-decoration:none">View all →</a>
+            </div>
+            <div style="overflow-x:auto">
+                <table style="width:100%;border-collapse:collapse">
+                    <thead><tr>
+                        <th class="adb-th">Tag</th><th class="adb-th">Name</th><th class="adb-th">Type</th>
+                        <th class="adb-th">Brand / Model</th><th class="adb-th">Status</th><th class="adb-th">Warranty</th>
+                    </tr></thead>
+                    <tbody>${rows}</tbody>
+                </table>
+            </div>
         </div>`;
-    });
-    if(!d.recent_assign?.length) html += '<div class="as-empty" style="padding:20px"><p>No assignments</p></div>';
-    html += `</div></div></div>`;
+    } else {
+        myAssetsHtml = `
+        <div class="adb-table-card">
+            <div class="adb-table-header"><span class="adb-table-title">My Assets</span></div>
+            <div class="as-empty" style="padding:32px"><p>No assets assigned to you</p></div>
+        </div>`;
+    }
 
-    // Checkups Due
+    // ── Alerts row (checkups + attention) ────────────────────────
+    let alertsHtml = '';
     if(d.checkups_due_list?.length){
-        html += `<div class="as-card" style="margin-bottom:16px;border-left:3px solid #ef4444">
-            <div class="as-card-title">🔍 Checkups Due (${d.checkups_due_list.length})</div>
-            <div class="as-card-body">`;
-        d.checkups_due_list.forEach(c => {
-            html += `<div class="as-alert as-alert-red"><a onclick="loadDetail(${c.id})" style="color:inherit;cursor:pointer"><strong>${asEsc(c.asset_tag)}</strong> ${asEsc(c.name)}</a> — Due: ${fmtDate(c.next_checkup)}${c.owner_name?' · '+asEsc(c.owner_name):''}</div>`;
-        });
-        html += `</div></div>`;
+        alertsHtml = `<div style="margin-top:16px">`;
+        if(d.checkups_due_list?.length){
+            alertsHtml += `<div class="adb-chart-card"><div class="adb-chart-header"><span class="adb-chart-title">🔍 Checkups Due</span><span class="adb-chart-badge">${d.checkups_due_list.length}</span></div>`;
+            d.checkups_due_list.slice(0,5).forEach(c=>{
+                alertsHtml += `<div class="as-alert as-alert-red"><a onclick="loadDetail(${c.id})" style="color:inherit;cursor:pointer;font-weight:600">${asEsc(c.asset_tag)}</a> ${asEsc(c.name)} — ${fmtDate(c.next_checkup)}</div>`;
+            });
+            alertsHtml += `</div>`;
+        }
+        alertsHtml += `</div>`;
+}
+
+    document.getElementById('dashContent').innerHTML = statCards + chartCards + myAssetsHtml + alertsHtml;
+
+    // ── Chart.js — Assets by Type (horizontal bar) ───────────────
+    if(window.Chart && byType.length){
+        const typeCtx = document.getElementById('adbTypeChart')?.getContext('2d');
+        if(typeCtx){
+            const greens = ['#059669','#10b981','#34d399','#6ee7b7','#a7f3d0','#d1fae5','#ecfdf5','#f0fdf4'];
+            new Chart(typeCtx, {
+                type: 'bar',
+                data: {
+                    labels: byType.map(r => r.type),
+                    datasets:[{ data: byType.map(r=>r.cnt), backgroundColor: greens.slice(0,byType.length), borderRadius:5, borderSkipped:false, barThickness:20 }]
+                },
+                options:{
+                    indexAxis:'y', responsive:true, maintainAspectRatio:false,
+                    plugins:{ legend:{display:false}, tooltip:{ backgroundColor:'#111113', padding:10, cornerRadius:8, displayColors:false, callbacks:{ label: ctx=>`${ctx.parsed.x} assets` } } },
+                    scales:{
+                        x:{ grid:{color:'#f3f4f6'}, border:{display:false}, ticks:{font:{size:11}} },
+                        y:{ grid:{display:false}, border:{display:false}, ticks:{font:{size:12,weight:'500'},color:'#374151'} }
+                    }
+                }
+            });
+        }
     }
 
-    // Needs Attention
-    const hasAttention = d.pending_repairs?.length || d.expired_warranty_list?.length || d.old_assets?.length;
-    if(hasAttention){
-        html += `<div class="as-card"><div class="as-card-title">⚠️ Needs Attention</div><div class="as-card-body">`;
-        (d.pending_repairs||[]).forEach(r => {
-            html += `<div class="as-alert as-alert-amber">🔧 <strong>${asEsc(r.asset_tag)}</strong> ${asEsc(r.name)} — ${asEsc(r.issue)}</div>`;
-        });
-        (d.expired_warranty_list||[]).forEach(r => {
-            html += `<div class="as-alert as-alert-red">📋 <strong>${asEsc(r.asset_tag)}</strong> ${asEsc(r.name)} — Warranty expired ${fmtDate(r.warranty_expiry)}</div>`;
-        });
-        (d.old_assets||[]).forEach(r => {
-            html += `<div class="as-alert as-alert-blue">🕐 <strong>${asEsc(r.asset_tag)}</strong> ${asEsc(r.name)} — ${assetAge(r.purchase_date)} old${r.owner_name?' · '+asEsc(r.owner_name):''}</div>`;
-        });
-        html += `</div></div>`;
+    // ── Chart.js — Status Breakdown (doughnut) ───────────────────
+    if(window.Chart && byStatus.length){
+        const statusCtx = document.getElementById('adbStatusChart')?.getContext('2d');
+        if(statusCtx){
+            const bgColors = byStatus.map(r => statusColors[r.status] || '#94a3b8');
+            new Chart(statusCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: byStatus.map(r => r.status.replace('_',' ')),
+                    datasets:[{ data: byStatus.map(r=>r.cnt), backgroundColor: bgColors, borderWidth:0, spacing:3, borderRadius:5 }]
+                },
+                options:{
+                    responsive:true, maintainAspectRatio:false, cutout:'68%',
+                    plugins:{
+                        legend:{ position:'right', labels:{ usePointStyle:true, pointStyle:'circle', padding:14, font:{size:12,weight:'500'}, color:'#374151',
+                            generateLabels: chart => chart.data.labels.map((label,i) => ({
+                                text: `${label.charAt(0).toUpperCase()+label.slice(1)}  ·  ${chart.data.datasets[0].data[i]}`,
+                                fillStyle: chart.data.datasets[0].backgroundColor[i], strokeStyle:'transparent', pointStyle:'circle', index:i
+                            }))
+                        }},
+                        tooltip:{ backgroundColor:'#111113', padding:10, cornerRadius:8, displayColors:false, callbacks:{ label: ctx=>{ const t=ctx.dataset.data.reduce((a,b)=>a+b,0); return `${ctx.label}: ${ctx.parsed} (${((ctx.parsed/t)*100).toFixed(1)}%)`; } } }
+                    }
+                }
+            });
+        }
     }
+}
 
-    document.getElementById('dashContent').innerHTML = html;
+// ── Dashboard helper renderers ──────────────────────────────────────
+function adbTypeBadge(t){
+    const map = { laptop:'#eff6ff:#3b82f6', mobile:'#fef3c7:#b45309', phone:'#fef3c7:#b45309', networking:'#eff6ff:#3b82f6', monitor:'#f0fdf4:#059669' };
+    const [bg,color] = (map[t]||'#f0fdf4:#059669').split(':');
+    return `<span style="display:inline-flex;align-items:center;padding:2px 9px;border-radius:20px;font-size:.72rem;font-weight:500;background:${bg};color:${color}">${asEsc(t||'')}</span>`;
+}
+function adbStatusCell(s){
+    const map = { active:'#10b981', in_repair:'#f59e0b', maintenance:'#3b82f6', retired:'#94a3b8', lost:'#ef4444' };
+    const dot = map[s]||'#94a3b8';
+    return `<span style="display:inline-flex;align-items:center;gap:6px;font-size:.82rem;color:#6b7280">
+        <span style="width:7px;height:7px;border-radius:50%;background:${dot};display:inline-block;flex-shrink:0"></span>
+        ${asEsc((s||'').replace('_',' '))}
+    </span>`;
 }
 
 // ═══════════ ASSET LIST ═══════════════════════════════════════════

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\ReportCalendarController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DailyReportController;
 use App\Http\Controllers\ProjectController;
@@ -30,6 +31,10 @@ Route::middleware('auth:staff')->group(function () {
     Route::get('/daily-report',        [DailyReportController::class, 'index'])->name('daily-report');
     Route::post('/daily-report',       [DailyReportController::class, 'store'])->name('daily-report.store');
     Route::get('/daily-report/recent', [DailyReportController::class, 'recent'])->name('daily-report.recent');
+
+    // Report Calendar (admin only)
+    Route::get('/report-calendar',          [ReportCalendarController::class, 'index'])->name('report-calendar');
+    Route::get('/report-calendar/api/data', [ReportCalendarController::class, 'apiData'])->name('report-calendar.api');
 
     // Tasks
     Route::get('/tasks',                      [TaskController::class, 'index'])->name('tasks');

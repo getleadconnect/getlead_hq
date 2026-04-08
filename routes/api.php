@@ -14,6 +14,11 @@ Route::post('/auth/login', [AuthController::class, 'login']);
 // ── Inbound Webhook (uses X-Webhook-Token, not Sanctum) ──────────────────────
 Route::post('/webhook/inbound', [WebhookController::class, 'inbound']);
 
+    Route::get('/reports-today',    [ApiReportController::class, 'apiToday']);
+    Route::get('/reports-missing',  [ApiReportController::class, 'missing']);
+    Route::get('/reports-summary',  [ApiReportController::class, 'summary']);
+    
+
 // ── Authenticated (Sanctum Bearer token) ─────────────────────────────────────
 Route::middleware('auth:sanctum')->group(function () {
 

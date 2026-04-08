@@ -186,4 +186,35 @@ class ApiReportController extends Controller
             'count'   => $missing->count(),
         ]);
     }
+
+
+    /* general report */
+
+    // GET /api/reports/today  — today's reports with decoded data
+    public function apiToday(Request $request)
+    {
+        //$staff = $request->user();
+
+        //if (!$this->isAdmin($staff)) {
+          //  return response()->json(['ok' => false, 'error' => 'Admin only'], 403);
+       // }
+
+        $today   = now()->toDateString();
+        $reports = DailyReport::with('staff:id,name,role')
+            ->where('report_date', $today)
+            ->get()
+            ->map(fn($r) => $this->formatReport($r, true));
+
+        $totalStaff = Staff::where('active', true)->where('role', '!=', 'admin')->count();
+
+        return response()->json([
+            'date'        => $today,
+            'reports'     => $reports,
+            'total_staff' => $totalStaff,
+            'submitted'   => $reports->count(),
+            'pending'     => max(0, $totalStaff - $reports->count()),
+        ]);
+    }
+
+    
 }

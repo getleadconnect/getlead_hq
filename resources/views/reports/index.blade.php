@@ -165,11 +165,18 @@ const ROLE_FIELDS = {
         {k:'notes',              l:'📝 Notes', full:true},
     ],
     hr: [
-        {k:'attendance',      l:'👥 Attendance'},
-        {k:'leave_requests',  l:'📋 Leave Requests'},
-        {k:'interviews',      l:'🤝 Interviews'},
-        {k:'issues',          l:'⚠️ Issues', full:true},
-        {k:'notes',           l:'📝 Notes', full:true},
+        {k:'present_count',         l:'✅ Present'},
+        {k:'half_day_count',        l:'🌓 Half Day'},
+        {k:'full_day_leave_count',  l:'🚫 Full Day Leave'},
+        {k:'total_employees',       l:'👥 Total Employees'},
+        {k:'interviews_scheduled',  l:'📅 Interviews Scheduled'},
+        {k:'interviews_completed',  l:'✅ Interviews Completed'},
+        {k:'attendance',            l:'👥 Attendance', fmt:'attendance_list', full:true},
+        {k:'leave_requests',        l:'📋 Leave Requests'},
+        {k:'interviews',            l:'🤝 Interviews'},
+        {k:'issues',                l:'⚠️ Issues', full:true},
+        {k:'hr_note',               l:'📝 HR Note', full:true},
+        {k:'notes',                 l:'📝 Notes', full:true},
     ],
     finance: [
         {k:'invoices',          l:'📄 Invoices'},
@@ -214,9 +221,29 @@ function setDate(d){ document.getElementById('rpDate').value = d; loadReports();
 
 function fmtVal(v, fmt){
     if(v === undefined || v === null || v === '') return null;
+    if(Array.isArray(v) && v.length === 0) return null;
     if(fmt === 'currency') return '₹' + Number(v).toLocaleString('en-IN');
     if(fmt === 'table' && Array.isArray(v))
         return v.map(r => `${rpEsc(r.customer)}: ₹${Number(r.amount||0).toLocaleString('en-IN')} (${rpEsc(r.type)})`).join('\n');
+    if(fmt === 'attendance_list' && Array.isArray(v)){
+        const statusLabel = s => ({
+            present:'✅ Present',
+            half_day:'🌓 Half Day',
+            full_day_leave:'🚫 Full Day Leave',
+            absent:'❌ Absent',
+            on_leave:'🏖 On Leave'
+        }[s] || s || '—');
+        return v.map(r => `${rpEsc(r.name||'—')} — ${statusLabel(r.status)}`).join('\n');
+    }
+    if(Array.isArray(v)){
+        // Generic array of objects fallback
+        if(v.length && typeof v[0] === 'object')
+            return v.map(o => Object.entries(o).map(([k,val]) => `${k}: ${val}`).join(', ')).join('\n');
+        return v.join(', ');
+    }
+    if(typeof v === 'object'){
+        return Object.entries(v).map(([k,val]) => `${k}: ${val}`).join('\n');
+    }
     return String(v);
 }
 

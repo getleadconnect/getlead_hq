@@ -9,6 +9,8 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 // Notify Telegram group about staff who have not submitted daily reports — every day 8:00 PM IST
+//UTC + 5:30 = IST 8:00 PM
+
 Schedule::command('reports:notify-missing')
     ->dailyAt('14:30')
     ->timezone('UTC')

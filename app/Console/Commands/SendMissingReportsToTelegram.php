@@ -65,10 +65,7 @@ class SendMissingReportsToTelegram extends Command
         $text .= $fmtList($submitted) . "\n\n";
         $text .= "⚠️ <b>Pending Staff</b>\n";
         $text .= $fmtList($pending);
-
-        \Log::info("message-text:".$text);
-        \Log::info('reports:notify-missing STARTED');
-
+     
         try {
             $res = Http::timeout(15)->post("https://api.telegram.org/bot{$token}/sendMessage", [
                 'chat_id'    => $chatId,
@@ -77,8 +74,7 @@ class SendMissingReportsToTelegram extends Command
             ]);
 
             if ($res->successful()) {
-                \Log::info('Telegram notification sent. Submitted: ' . $submitted->count() . ', Pending: ' . $pending->count());
-               
+              
                 $this->info('Telegram notification sent. Submitted: ' . $submitted->count() . ', Pending: ' . $pending->count());
                 return self::SUCCESS;
             }

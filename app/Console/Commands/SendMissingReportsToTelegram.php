@@ -11,12 +11,16 @@ use Illuminate\Support\Facades\Log;
 
 class SendMissingReportsToTelegram extends Command
 {
-    protected $signature = 'reports:notify-missing {--date= : Date to check (Y-m-d), defaults to today}';
+
+   protected $signature = 'reports:notify-missing {--date= : Date to check (Y-m-d), defaults to today}';
 
     protected $description = 'Send list of staff who have not submitted daily report to Telegram';
 
     public function handle(): int
     {
+
+     \Log::info("Schedule message telegram : started");
+     
         $token  = env('TELEGRAM_BOT_TOKEN');
         $chatId = env('TELEGRAM_CHAT_ID');
 
@@ -61,8 +65,9 @@ class SendMissingReportsToTelegram extends Command
         $text .= $fmtList($submitted) . "\n\n";
         $text .= "⚠️ <b>Pending Staff</b>\n";
         $text .= $fmtList($pending);
-        
+
         \Log::info("message-text:".$text);
+        \Log::info('reports:notify-missing STARTED');
 
         try {
             $res = Http::timeout(15)->post("https://api.telegram.org/bot{$token}/sendMessage", [
@@ -79,11 +84,11 @@ class SendMissingReportsToTelegram extends Command
             }
 
             $this->error('Telegram API error: ' . $res->body());
-            Log::error('Telegram missing-reports notify failed', ['response' => $res->body()]);
+            \Log::error('Telegram missing-reports notify failed', ['response' => $res->body()]);
             return self::FAILURE;
         } catch (\Throwable $e) {
             $this->error('Exception: ' . $e->getMessage());
-            Log::error('Telegram missing-reports exception', ['error' => $e->getMessage()]);
+            \Log::error('Telegram missing-reports exception', ['error' => $e->getMessage()]);
             return self::FAILURE;
         }
     }

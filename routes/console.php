@@ -10,7 +10,7 @@ Artisan::command('inspire', function () {
 
 // Notify Telegram group about staff who have not submitted daily reports — every day 8:00 PM IST
 Schedule::command('reports:notify-missing')
-    ->dailyAt('20:00')
+    ->dailyAt('10:00')
     ->timezone('Asia/Kolkata')
     ->weekdays()
     ->onOneServer();

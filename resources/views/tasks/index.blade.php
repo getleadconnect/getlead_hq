@@ -267,13 +267,13 @@
     <button class="clear-link" id="clearBtn" style="display:none">Clear all</button>
     <div class="tool-spacer"></div>
     <div class="view-toggle">
-      <button id="vList" class="on" title="List view"><svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></button>
-      <button id="vBoard" title="Board view"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="6" height="18" rx="1"/><rect x="10" y="3" width="6" height="12" rx="1"/><rect x="17" y="3" width="4" height="8" rx="1"/></svg></button>
+      <button id="vList" title="List view"><svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></button>
+      <button id="vBoard" class="on" title="Board view"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="6" height="18" rx="1"/><rect x="10" y="3" width="6" height="12" rx="1"/><rect x="17" y="3" width="4" height="8" rx="1"/></svg></button>
     </div>
   </div>
 
   {{-- List view --}}
-  <div class="table-wrap" id="listView">
+  <div class="table-wrap" id="listView" style="display:none">
     <table class="demo-table">
       <thead>
         <tr>
@@ -298,7 +298,7 @@
   </div>
 
   {{-- Board view --}}
-  <div class="board" id="boardView"></div>
+  <div class="board show" id="boardView"></div>
 </main>
 </div>
 
@@ -409,8 +409,8 @@ const STATUS_DOT = {pending:'var(--warning)',in_progress:'var(--info)',blocked:'
 const CAT_ICON   = {sales:'💼',development:'🖥️',support:'🎫',hr:'👥',finance:'💰',operations:'⚙️',other:'📌'};
 const MONTHS     = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
-const state = {status:new Set(),priority:new Set(),assignee:new Set(),project:new Set(),search:'',quick:null,mine:false,sort:{key:'due',dir:1}};
-let viewMode = 'list';
+const state = {status:new Set(['pending']),priority:new Set(),assignee:new Set(),project:new Set(),search:'',quick:null,mine:false,sort:{key:'due',dir:1}};
+let viewMode = 'board';
 
 /* ── Helpers ── */
 function esc(s){const d=document.createElement('div');d.textContent=s==null?'':s;return d.innerHTML;}
@@ -447,6 +447,12 @@ buildPop('status', Object.keys(STATUS).map(k=>({key:k,label:STATUS[k].label})), 
 buildPop('priority', Object.keys(PRIORITY).map(k=>({key:k,label:PRIORITY[k].label})));
 buildPop('assignee', assignees);
 buildPop('project', projects);
+
+/* Reflect default status filter (pending) in the popover checkboxes */
+state.status.forEach(v=>{
+  const cb=document.querySelector(`.popover input[data-group="status"][value="${v}"]`);
+  if(cb) cb.checked = true;
+});
 
 /* ── Popover open/close ── */
 document.querySelectorAll('.filter-pill').forEach(p=>{

@@ -359,7 +359,10 @@
         </a>
 
         {{-- Navigation --}}
-        @php $isAdmin = in_array(Auth::guard('staff')->user()->role, ['admin', 'secretary']); @endphp
+        @php 
+        $isAdmin = in_array(Auth::guard('staff')->user()->role, ['admin', 'secretary']); 
+        $isFinance=(strtoupper(Auth::guard('staff')->user()->role)=="FINANCE")?true:false;
+        @endphp
         <nav class="sidebar-nav">
             @if($isAdmin)
             <a href="{{ route('dashboard') }}" class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}" onclick="closeSidebar()">
@@ -368,6 +371,13 @@
             </a>
             @endif
 
+            @if($isAdmin Or $isFinance)
+            <a href="{{ route('clients') }}" class="nav-item {{ request()->routeIs('clients*') ? 'active' : '' }}" onclick="closeSidebar()">
+                <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Clients
+            </a>
+            @endif
+            
             @if(!$isAdmin) <!-- admin user can't show this menu --->
             <a href="{{ route('my-tasks') }}" class="nav-item {{ request()->routeIs('my-tasks') ? 'active' : '' }}" onclick="closeSidebar()">
                 <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
@@ -375,7 +385,6 @@
             </a>
             @endif
             
-
             @if($isAdmin)
             <a href="{{ route('tasks') }}" class="nav-item {{ request()->routeIs('tasks') ? 'active' : '' }}" onclick="closeSidebar()">
                 <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>

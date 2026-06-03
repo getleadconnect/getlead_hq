@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ReportCalendarController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DailyReportController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
@@ -26,6 +27,12 @@ Route::middleware('auth:staff')->group(function () {
 
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Clients
+    Route::get('/clients',            [ClientController::class, 'index'])->name('clients');
+    Route::post('/clients',           [ClientController::class, 'store'])->name('clients.store');
+    Route::put('/clients/{client}',   [ClientController::class, 'update'])->name('clients.update');
+    Route::delete('/clients/{client}',[ClientController::class, 'destroy'])->name('clients.destroy');
 
     // Daily Report
     Route::get('/daily-report',        [DailyReportController::class, 'index'])->name('daily-report');

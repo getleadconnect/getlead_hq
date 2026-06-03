@@ -18,8 +18,11 @@ class TaskController extends Controller
         $staff   = Auth::guard('staff')->user();
         $isAdmin = $staff->role === 'admin';
 
+        // Scope: "All tasks" only when an admin lands on the /tasks route.
+        $scope = (request()->routeIs('tasks') && $isAdmin) ? 'all' : 'my';
+
         $staffList = $isAdmin
-            ? Staff::where('active', true)->orderBy('name')->get(['id', 'name', 'role'])
+            ? Staff::where('active', 1)->orderBy('name')->get(['id', 'name', 'role'])
             : collect();
 
         $projects = $this->safe(fn () => DB::table('projects')
@@ -27,7 +30,37 @@ class TaskController extends Controller
             ->orderBy('name')
             ->get(['id', 'name']), collect());
 
-        return view('tasks.index', compact('staff', 'isAdmin', 'staffList', 'projects'));
+        // Server-render the scoped task list (client-side filters/sort/board take over from here).
+        $query = Task::query()
+            ->leftJoin('staff as assignee', 'tasks.assigned_to', '=', 'assignee.id')
+            ->leftJoin('projects', 'tasks.project_id', '=', 'projects.id')
+            ->select(
+                'tasks.*',
+                'assignee.name as assignee_name',
+                DB::raw("COALESCE(projects.name, '') as project_name")
+            );
+
+        if ($scope === 'my') {
+            $query->where('tasks.assigned_to', $staff->id);
+        }
+
+        $tasks = $query->orderByRaw('tasks.due_date IS NULL, tasks.due_date ASC')
+            ->get()
+            ->map(fn ($t) => [
+                'id'          => $t->id,
+                'title'       => $t->title,
+                'status'      => $t->status,
+                'priority'    => $t->priority,
+                'category'    => $t->category,
+                'assignee'    => $t->assignee_name ?: null,
+                'assigned_to' => $t->assigned_to,
+                'project'     => $t->project_name ?: null,
+                'project_id'  => $t->project_id,
+                'due_date'    => $t->due_date ? \Carbon\Carbon::parse($t->due_date)->toDateString() : null,
+            ])
+            ->values();
+
+        return view('tasks.index', compact('staff', 'isAdmin', 'staffList', 'projects', 'tasks', 'scope'));
     }
 
     public function datatable(Request $request)

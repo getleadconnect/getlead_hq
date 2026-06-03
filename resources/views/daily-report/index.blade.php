@@ -35,7 +35,7 @@
     }
     .dr-progress-fill {
         height: 100%;
-        background: #14b8a6;
+        background: #DC2626;
         border-radius: 99px;
         transition: width 0.35s ease;
     }
@@ -91,7 +91,7 @@
         transition: border-color 0.15s;
         box-sizing: border-box;
     }
-    .dr-input:focus { outline: none; border-color: #14b8a6; box-shadow: 0 0 0 3px rgba(20,184,166,.12); }
+    .dr-input:focus { outline: none; border-color: #DC2626; box-shadow: 0 0 0 3px rgba(220,38,38,.12); }
 
     /* ── Submitted badge ── */
     .dr-submitted-badge {
@@ -118,7 +118,7 @@
         justify-content: center;
         width: 100%;
         height: 44px;
-        background: #0f172a;
+        background: #DC2626;
         color: white;
         font-size: 15px;
         font-weight: 600;
@@ -129,7 +129,7 @@
         transition: background 0.15s;
         margin-top: 8px;
     }
-    .dr-btn-primary:hover { background: #1e293b; }
+    .dr-btn-primary:hover { background: #B91C1C; }
     .dr-btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
 
     /* ── Recent reports ── */
@@ -160,7 +160,7 @@
         transition: background 0.1s;
     }
     .dr-recent-item:hover { opacity: 0.85; }
-    .dr-recent-item-today { background: #f0fdfa; }
+    .dr-recent-item-today { background: #FEF2F2; }
     .dr-recent-item-normal { background: #f8fafc; }
     .dr-recent-item-label { color: #1e293b; font-weight: 500; }
     .dr-recent-item-right {
@@ -170,7 +170,7 @@
         color: #64748b;
         font-size: 12px;
     }
-    .dr-recent-item-edit { color: #0d9488; font-weight: 600; }
+    .dr-recent-item-edit { color: #B91C1C; font-weight: 600; }
 
     /* ── Screen wrapper widths (fix flex shrink) ── */
     #dateScreen, #wizardScreen, #successScreen {
@@ -222,7 +222,7 @@
         box-sizing: border-box;
         transition: border-color 0.15s;
     }
-    .dr-wizard-input:focus { outline: none; border-color: #14b8a6; box-shadow: 0 0 0 3px rgba(20,184,166,.12); background: white; }
+    .dr-wizard-input:focus { outline: none; border-color: #DC2626; box-shadow: 0 0 0 3px rgba(220,38,38,.12); background: white; }
 
     .dr-wizard-textarea {
         width: 100%;
@@ -239,7 +239,7 @@
         transition: border-color 0.15s;
         line-height: 1.5;
     }
-    .dr-wizard-textarea:focus { outline: none; border-color: #14b8a6; box-shadow: 0 0 0 3px rgba(20,184,166,.12); background: white; }
+    .dr-wizard-textarea:focus { outline: none; border-color: #DC2626; box-shadow: 0 0 0 3px rgba(220,38,38,.12); background: white; }
 
     /* Dual input */
     .dr-dual { display: flex; gap: 12px; }
@@ -265,7 +265,7 @@
         background: transparent; color: #64748b;
         cursor: pointer; transition: all 0.15s;
     }
-    .dr-add-btn:hover { border-color: #14b8a6; color: #14b8a6; background: #f0fdfa; }
+    .dr-add-btn:hover { border-color: #DC2626; color: #DC2626; background: #FEF2F2; }
 
     /* ── Wizard nav ── */
     .dr-nav {
@@ -312,7 +312,7 @@
         padding: 0 20px;
         border: none;
         border-radius: 8px;
-        background: #0f172a;
+        background: #DC2626;
         color: white;
         font-size: 14px;
         font-weight: 600;
@@ -323,7 +323,7 @@
         align-items: center;
         gap: 6px;
     }
-    .dr-btn-next:hover { background: #1e293b; }
+    .dr-btn-next:hover { background: #B91C1C; }
     .dr-btn-next:disabled { opacity: 0.6; cursor: not-allowed; }
 
     /* ── Success ── */

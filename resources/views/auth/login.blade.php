@@ -9,7 +9,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #f0fdfa 0%, #f8fafc 50%, #f0fdf4 100%);
+            background: linear-gradient(135deg, #FEF2F2 0%, #f8fafc 50%, #f0fdf4 100%);
             position: relative;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
@@ -20,8 +20,8 @@
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             background-image:
-                radial-gradient(circle at 20% 20%, rgba(20, 184, 166, 0.03) 0%, transparent 40%),
-                radial-gradient(circle at 80% 80%, rgba(20, 184, 166, 0.03) 0%, transparent 40%),
+                radial-gradient(circle at 20% 20%, rgba(220,38,38, 0.03) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(220,38,38, 0.03) 0%, transparent 40%),
                 radial-gradient(circle at 50% 50%, rgba(15, 118, 110, 0.02) 0%, transparent 50%);
             pointer-events: none;
             z-index: 0;
@@ -31,7 +31,7 @@
             position: fixed;
             border-radius: 50%;
             opacity: 0.05;
-            background: linear-gradient(135deg, #14b8a6, #0d9488);
+            background: linear-gradient(135deg, #DC2626, #B91C1C);
             animation: float 20s ease-in-out infinite;
             pointer-events: none;
             z-index: 0;
@@ -59,11 +59,11 @@
             box-shadow:
                 0 4px 6px -1px rgba(0,0,0,0.02),
                 0 10px 15px -3px rgba(0,0,0,0.04),
-                0 20px 40px -10px rgba(20,184,166,0.08);
+                0 20px 40px -10px rgba(220,38,38,0.08);
             position: relative;
             z-index: 1;
             animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(20, 184, 166, 0.08);
+            border: 1px solid rgba(220,38,38, 0.08);
         }
 
         .login-header {
@@ -74,18 +74,18 @@
         .brand-logo {
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+            background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%);
             border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 20px;
-            box-shadow: 0 8px 24px rgba(20,184,166,0.25);
+            box-shadow: 0 8px 24px rgba(220,38,38,0.25);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .brand-logo:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 32px rgba(20,184,166,0.35);
+            box-shadow: 0 12px 32px rgba(220,38,38,0.35);
         }
         .brand-logo svg { width: 28px; height: 28px; fill: white; }
 
@@ -97,7 +97,7 @@
             letter-spacing: -0.02em;
         }
         .login-title span {
-            background: linear-gradient(135deg, #14b8a6, #0d9488);
+            background: linear-gradient(135deg, #DC2626, #B91C1C);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -154,7 +154,7 @@
             pointer-events: none;
             color: #64748b;
         }
-        .input-wrap:focus-within .input-icon { opacity: 1; color: #14b8a6; }
+        .input-wrap:focus-within .input-icon { opacity: 1; color: #DC2626; }
         .input-wrap input {
             width: 100%;
             padding: 14px 16px 14px 44px;
@@ -169,9 +169,9 @@
             height: 50px;
         }
         .input-wrap input:focus {
-            border-color: #14b8a6;
+            border-color: #DC2626;
             background: white;
-            box-shadow: 0 0 0 4px rgba(20,184,166,0.1);
+            box-shadow: 0 0 0 4px rgba(220,38,38,0.1);
         }
         .input-wrap input::placeholder { color: #94a3b8; font-weight: 400; }
 
@@ -197,14 +197,14 @@
             -webkit-appearance: none;
         }
         .pin-dot-input:focus {
-            border-color: #14b8a6;
+            border-color: #DC2626;
             background: white;
-            box-shadow: 0 0 0 4px rgba(20,184,166,0.1);
+            box-shadow: 0 0 0 4px rgba(220,38,38,0.1);
             transform: scale(1.05);
         }
         .pin-dot-input.filled {
-            border-color: #14b8a6;
-            background: #f0fdfa;
+            border-color: #DC2626;
+            background: #FEF2F2;
         }
 
         .btn-submit {

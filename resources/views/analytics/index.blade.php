@@ -12,11 +12,11 @@
 /* Date Range Picker */
 .an-range { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
 .an-range-select { padding:7px 12px; border:1px solid #e2e8f0; border-radius:8px; font-size:.8rem; font-family:inherit; background:#fff; height:36px; cursor:pointer; }
-.an-range-select:focus { outline:none; border-color:#14b8a6; }
+.an-range-select:focus { outline:none; border-color:#DC2626; }
 .an-range-dates { display:flex; align-items:center; gap:6px; }
 .an-range-dates input[type="date"] { padding:7px 10px; border:1px solid #e2e8f0; border-radius:8px; font-size:.8rem; font-family:inherit; background:#fff; height:36px; }
-.an-btn { display:inline-flex; align-items:center; gap:6px; padding:7px 14px; border-radius:8px; font-size:.8rem; font-weight:500; cursor:pointer; border:1px solid #14b8a6; background:#14b8a6; color:#fff; font-family:inherit; transition:background .15s; height:36px; }
-.an-btn:hover { background:#0d9488; }
+.an-btn { display:inline-flex; align-items:center; gap:6px; padding:7px 14px; border-radius:8px; font-size:.8rem; font-weight:500; cursor:pointer; border:1px solid #DC2626; background:#DC2626; color:#fff; font-family:inherit; transition:background .15s; height:36px; }
+.an-btn:hover { background:#B91C1C; }
 
 /* Section */
 .an-section { margin-bottom:28px; }
@@ -26,13 +26,13 @@
 .an-kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px; margin-bottom:16px; }
 .an-kpi { background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:18px 16px; position:relative; overflow:hidden; transition:all .2s; }
 .an-kpi:hover { transform:translateY(-2px); box-shadow:0 6px 24px rgba(0,0,0,.06); }
-.an-kpi::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,#14b8a6,#2dd4bf); opacity:0; transition:opacity .2s; }
+.an-kpi::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,#DC2626,#EF4444); opacity:0; transition:opacity .2s; }
 .an-kpi:hover::before { opacity:1; }
 .an-kpi-label { font-size:.7rem; font-weight:600; text-transform:uppercase; letter-spacing:.04em; color:#64748b; margin-bottom:8px; }
 .an-kpi-value { font-size:1.8rem; font-weight:700; color:#0f172a; letter-spacing:-.02em; line-height:1.1; }
 .an-kpi-sub { font-size:.73rem; color:#64748b; margin-top:5px; }
 .an-kpi-value.c-green  { color:#10b981; }
-.an-kpi-value.c-teal   { color:#14b8a6; }
+.an-kpi-value.c-teal   { color:#DC2626; }
 .an-kpi-value.c-blue   { color:#0ea5e9; }
 .an-kpi-value.c-red    { color:#ef4444; }
 .an-kpi-value.c-amber  { color:#f59e0b; }
@@ -67,7 +67,7 @@
 /* Funnel */
 .an-funnel { }
 .an-funnel-step { display:flex; align-items:center; gap:10px; margin-bottom:10px; font-size:.82rem; }
-.an-funnel-bar  { height:30px; border-radius:6px; background:linear-gradient(90deg,#14b8a6,#2dd4bf); transition:width .6s ease; min-width:4px; }
+.an-funnel-bar  { height:30px; border-radius:6px; background:linear-gradient(90deg,#DC2626,#EF4444); transition:width .6s ease; min-width:4px; }
 .an-funnel-info { display:flex; justify-content:space-between; flex:1; }
 .an-funnel-label { color:#64748b; font-weight:500; }
 .an-funnel-count { font-weight:700; color:#0f172a; }
@@ -79,7 +79,7 @@
 /* Team cards */
 .an-team-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:14px; }
 .an-team-card { background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:18px; transition:all .2s; }
-.an-team-card:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,.06); border-color:rgba(20,184,166,.2); }
+.an-team-card:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,.06); border-color:rgba(220,38,38,.2); }
 .an-team-head { display:flex; align-items:center; gap:12px; margin-bottom:14px; }
 .an-team-avatar { width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.88rem; font-weight:600; flex-shrink:0; }
 .an-team-name { font-weight:600; font-size:.87rem; color:#0f172a; }
@@ -101,7 +101,7 @@
 .an-streak-row:last-child { border-bottom:none; }
 .an-streak-rank { width:28px; text-align:center; font-weight:600; font-size:.88rem; }
 .an-streak-name { flex:1; font-size:.84rem; font-weight:500; color:#0f172a; }
-.an-streak-badge { display:inline-flex; align-items:center; padding:3px 9px; border-radius:20px; font-size:.68rem; font-weight:600; background:rgba(20,184,166,.1); color:#0f766e; }
+.an-streak-badge { display:inline-flex; align-items:center; padding:3px 9px; border-radius:20px; font-size:.68rem; font-weight:600; background:rgba(220,38,38,.1); color:#991B1B; }
 
 /* Skeleton */
 .an-skel { background:linear-gradient(90deg,#f1f5f9 25%,#e2e8f0 50%,#f1f5f9 75%); background-size:200% 100%; animation:an-shimmer 1.4s infinite; border-radius:8px; }
@@ -324,7 +324,7 @@ function barChart(items){
     const mx = Math.max(...items.map(i => i.value)) || 1;
     return '<div class="an-bar-chart">' + items.map(i => {
         const pct   = Math.round((i.value / mx) * 100);
-        const color = i.color || '#14b8a6';
+        const color = i.color || '#DC2626';
         return `<div class="an-bar-row">
             <div class="an-bar-label" title="${anEsc(i.label)}">${anEsc(i.label)}</div>
             <div class="an-bar-track"><div class="an-bar-fill" style="width:${pct}%;background:${color}"></div></div>
@@ -337,7 +337,7 @@ function trendChart(data, label1, label2){
     if(!data.length) return '<div class="an-empty">No data</div>';
     const mx = Math.max(...data.map(d => Math.max(d.v1||0, d.v2||0))) || 1;
     const legend = `<div class="an-trend-legend">
-        <span class="an-trend-item"><span class="an-trend-dot" style="background:#14b8a6"></span>${anEsc(label1)}</span>
+        <span class="an-trend-item"><span class="an-trend-dot" style="background:#DC2626"></span>${anEsc(label1)}</span>
         ${label2 ? `<span class="an-trend-item"><span class="an-trend-dot" style="background:#0ea5e9"></span>${anEsc(label2)}</span>` : ''}
     </div>`;
     const bars = data.map(d => {
@@ -346,7 +346,7 @@ function trendChart(data, label1, label2){
         const shortLbl = (d.label||'').substring(5); // strip year
         return `<div class="an-trend-col">
             <div class="an-trend-group">
-                <div class="an-trend-bar" style="height:${h1}%;background:#14b8a6" title="${label1}: ${d.v1}"></div>
+                <div class="an-trend-bar" style="height:${h1}%;background:#DC2626" title="${label1}: ${d.v1}"></div>
                 ${label2 ? `<div class="an-trend-bar" style="height:${h2}%;background:#0ea5e9" title="${label2}: ${d.v2}"></div>` : ''}
             </div>
             <div class="an-trend-lbl">${anEsc(shortLbl)}</div>
@@ -356,7 +356,7 @@ function trendChart(data, label1, label2){
 }
 
 function progressRing(pct, color){
-    color = color || '#14b8a6';
+    color = color || '#DC2626';
     const size=72, stroke=6, r=(size-stroke)/2, c=2*Math.PI*r;
     const offset = c - (pct/100)*c;
     return `<svg width="${size}" height="${size}" style="position:relative">
@@ -404,7 +404,7 @@ async function loadTasks(){
     }));
     document.getElementById('anTasksByPerson').innerHTML = barChart(byPerson);
 
-    const byCat = (data.by_category||[]).map(c => ({ label: c.category || '—', value: c.count, color: '#14b8a6' }));
+    const byCat = (data.by_category||[]).map(c => ({ label: c.category || '—', value: c.count, color: '#DC2626' }));
     document.getElementById('anTasksByCategory').innerHTML = barChart(byCat);
 
     document.getElementById('anTaskTrend').innerHTML = trendChart(
@@ -485,7 +485,7 @@ async function loadHr(){
             <div class="an-hr-stat"><div class="an-hr-val" style="color:#10b981">${att.present_days||0}</div><div class="an-hr-lbl">Active Days</div></div>
             <div class="an-hr-stat"><div class="an-hr-val" style="color:#ef4444">${att.leave_days||0}</div><div class="an-hr-lbl">Absent Days</div></div>
             <div class="an-hr-stat"><div class="an-hr-val" style="color:#f59e0b">${att.half_days||0}</div><div class="an-hr-lbl">Half Days</div></div>
-            <div class="an-hr-stat"><div class="an-hr-val" style="color:#14b8a6">${att.attendance_rate||0}%</div><div class="an-hr-lbl">Rate</div></div>
+            <div class="an-hr-stat"><div class="an-hr-val" style="color:#DC2626">${att.attendance_rate||0}%</div><div class="an-hr-lbl">Rate</div></div>
         </div>
         ${att.trend && att.trend.length ? trendChart((att.trend||[]).map(t=>({label:t.date,v1:t.present})),'Present') : ''}
     `;
@@ -496,7 +496,7 @@ async function loadHr(){
             label:   l.name,
             value:   l.total_leaves,
             display: `${l.total_leaves}d`,
-            color:   l.total_leaves >= 10 ? '#ef4444' : l.total_leaves >= 5 ? '#f59e0b' : '#14b8a6',
+            color:   l.total_leaves >= 10 ? '#ef4444' : l.total_leaves >= 5 ? '#f59e0b' : '#DC2626',
           })))
         : '<div class="an-empty">All staff active 👍</div>';
 }

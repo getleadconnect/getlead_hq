@@ -17,8 +17,8 @@
 .st-card:hover { box-shadow:0 4px 12px rgba(0,0,0,.07); }
 
 /* Section title */
-.st-section-title { font-size:1rem; font-weight:600; color:#0f172a; margin-bottom:20px; padding-bottom:12px; border-bottom:2px solid rgba(20,184,166,.2); display:flex; align-items:center; gap:8px; }
-.st-section-title::before { content:''; width:4px; height:20px; background:#14b8a6; border-radius:2px; flex-shrink:0; }
+.st-section-title { font-size:1rem; font-weight:600; color:#0f172a; margin-bottom:20px; padding-bottom:12px; border-bottom:2px solid rgba(220,38,38,.2); display:flex; align-items:center; gap:8px; }
+.st-section-title::before { content:''; width:4px; height:20px; background:#DC2626; border-radius:2px; flex-shrink:0; }
 
 /* Setting row */
 .st-row { display:flex; justify-content:space-between; align-items:center; padding:16px 0; border-bottom:1px solid #e2e8f0; gap:20px; }
@@ -31,27 +31,27 @@
 
 /* Inputs */
 .st-input { min-width:220px; padding:9px 13px; border:1px solid #e2e8f0; border-radius:8px; font-family:inherit; font-size:.875rem; background:#fff; transition:all .2s; }
-.st-input:focus { outline:none; border-color:#14b8a6; box-shadow:0 0 0 3px rgba(20,184,166,.12); }
-.st-input:hover { border-color:rgba(20,184,166,.5); }
+.st-input:focus { outline:none; border-color:#DC2626; box-shadow:0 0 0 3px rgba(220,38,38,.12); }
+.st-input:hover { border-color:rgba(220,38,38,.5); }
 
 /* Toggle switch */
 .st-toggle { position:relative; display:inline-block; width:48px; height:26px; cursor:pointer; flex-shrink:0; }
 .st-toggle input { opacity:0; width:0; height:0; }
 .st-toggle-slider { position:absolute; inset:0; background:#cbd5e1; border-radius:26px; transition:all .3s; }
 .st-toggle-slider::before { content:''; position:absolute; height:20px; width:20px; left:3px; bottom:3px; background:#fff; border-radius:50%; transition:all .3s; box-shadow:0 1px 4px rgba(0,0,0,.2); }
-.st-toggle input:checked + .st-toggle-slider { background:#14b8a6; }
+.st-toggle input:checked + .st-toggle-slider { background:#DC2626; }
 .st-toggle input:checked + .st-toggle-slider::before { transform:translateX(22px); }
 .st-toggle:hover .st-toggle-slider { filter:brightness(.95); }
 
 /* Buttons */
 .st-btn { display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-radius:8px; font-family:inherit; font-size:.82rem; font-weight:500; cursor:pointer; transition:all .15s; text-decoration:none; border:1px solid #e2e8f0; background:#f8fafc; color:#374151; }
-.st-btn:hover { background:#fff; border-color:#14b8a6; color:#0f172a; }
-.st-btn-primary { background:#14b8a6; color:#fff; border-color:#14b8a6; }
-.st-btn-primary:hover { background:#0d9488; }
+.st-btn:hover { background:#fff; border-color:#DC2626; color:#0f172a; }
+.st-btn-primary { background:#DC2626; color:#fff; border-color:#DC2626; }
+.st-btn-primary:hover { background:#B91C1C; }
 
 /* Badge pills */
 .st-badge { display:inline-flex; align-items:center; padding:4px 12px; border-radius:9999px; font-size:.75rem; font-weight:600; background:#f1f5f9; border:1px solid #e2e8f0; color:#475569; transition:all .15s; cursor:default; }
-.st-badge:hover { background:rgba(20,184,166,.08); border-color:#14b8a6; color:#0f766e; }
+.st-badge:hover { background:rgba(220,38,38,.08); border-color:#DC2626; color:#991B1B; }
 .st-badges { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
 
 /* ── Login History Modal ── */
@@ -70,7 +70,7 @@
 .st-table thead th { padding:11px 16px; text-align:left; font-size:.72rem; font-weight:600; text-transform:uppercase; letter-spacing:.05em; color:#64748b; background:#f8fafc; position:sticky; top:0; border-bottom:1px solid #e2e8f0; }
 .st-table tbody td { padding:11px 16px; border-bottom:1px solid #f1f5f9; color:#374151; }
 .st-table tbody tr:last-child td { border-bottom:none; }
-.st-table tbody tr:hover td { background:rgba(20,184,166,.03); }
+.st-table tbody tr:hover td { background:rgba(220,38,38,.03); }
 
 /* Skeleton */
 .st-skel { background:linear-gradient(90deg,#f1f5f9 25%,#e2e8f0 50%,#f1f5f9 75%); background-size:200% 100%; animation:st-shimmer 1.4s infinite; border-radius:12px; }
@@ -80,7 +80,7 @@
 .st-toasts { position:fixed; top:18px; right:18px; z-index:4000; display:flex; flex-direction:column; gap:8px; pointer-events:none; }
 .st-toast { padding:11px 18px; border-radius:8px; font-size:.82rem; font-weight:500; color:#fff; box-shadow:0 4px 14px rgba(0,0,0,.18); animation:st-tin .25s ease; pointer-events:auto; }
 @keyframes st-tin { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:none} }
-.st-toast-success { background:#14b8a6; }
+.st-toast-success { background:#DC2626; }
 .st-toast-error   { background:#ef4444; }
 
 /* ── Responsive ── */

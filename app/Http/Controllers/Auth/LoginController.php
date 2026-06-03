@@ -84,6 +84,6 @@ class LoginController extends Controller
 
         return in_array($staff->role, $adminRoles)
             ? redirect()->route('dashboard')
-            : redirect()->route('tasks');
+            : redirect()->route('my-tasks');
     }
 }

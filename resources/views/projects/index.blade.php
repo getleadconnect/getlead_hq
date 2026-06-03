@@ -3,8 +3,8 @@
 <style>
 /* ── Vars (scoped to avoid overriding app.blade.php :root) ── */
 .p-wrap, .modal-overlay, .toast-wrap {
-    --pp:    #14b8a6;
-    --ppd:   #0d9488;
+    --pp:    #DC2626;
+    --ppd:   #B91C1C;
     --bg:    #ffffff;
     --p-muted: #f8fafc;
     --bdr:   #e2e8f0;
@@ -12,7 +12,7 @@
     --txm:   #64748b;
     --txs:   #94a3b8;
     --hov:   #f1f5f9;
-    --p-teal:#f0fdfa;
+    --p-teal:#FEF2F2;
     --red:   #dc2626;
     --warn:  #d97706;
     --grn:   #16a34a;
@@ -39,7 +39,7 @@
     border-radius:6px; cursor:pointer; background:transparent; color:var(--txm);
     transition:all .15s;
 }
-.p-tab.on { background:var(--pp); color:#fff; box-shadow:0 1px 4px rgba(20,184,166,.25); }
+.p-tab.on { background:var(--pp); color:#fff; box-shadow:0 1px 4px rgba(220,38,38,.25); }
 
 /* View-mode toggle */
 .vm-toggle {
@@ -96,12 +96,12 @@
     margin-bottom:10px; cursor:pointer; transition:all .2s;
 }
 .proj-card:last-child { margin-bottom:0; }
-.proj-card:hover { border-color:rgba(20,184,166,.3); box-shadow:0 4px 16px -4px rgba(20,184,166,.15); transform:translateY(-1px); }
+.proj-card:hover { border-color:rgba(220,38,38,.3); box-shadow:0 4px 16px -4px rgba(220,38,38,.15); transform:translateY(-1px); }
 .proj-card.ov { border-left:4px solid var(--red); }
 
 /* ── Progress ── */
 .prog-wrap { width:100%; height:6px; background:var(--bdr); border-radius:9999px; overflow:hidden; }
-.prog-fill { height:100%; background:linear-gradient(90deg,#14b8a6,#34d399); border-radius:9999px; transition:width .5s ease; }
+.prog-fill { height:100%; background:linear-gradient(90deg,#DC2626,#34d399); border-radius:9999px; transition:width .5s ease; }
 
 /* ── Activity ── */
 .act-item { display:flex; align-items:flex-start; gap:10px; padding:9px 0; border-bottom:1px solid var(--bdr); font-size:.8rem; color:var(--tx); line-height:1.45; }
@@ -118,7 +118,7 @@
     font-size:.82rem; color:var(--tx); background:var(--bg); outline:none;
     transition:border-color .15s;
 }
-.fsel:focus, .finp:focus { border-color:var(--pp); box-shadow:0 0 0 3px rgba(20,184,166,.1); }
+.fsel:focus, .finp:focus { border-color:var(--pp); box-shadow:0 0 0 3px rgba(220,38,38,.1); }
 .finp { min-width:200px; }
 
 /* ── Table ── */
@@ -141,7 +141,7 @@
 
 /* Status badges */
 .badge { display:inline-block; padding:3px 10px; border-radius:9999px; font-size:.7rem; font-weight:600; white-space:nowrap; }
-.b-active    { background:rgba(20,184,166,.12); color:#0f766e; border:1px solid rgba(20,184,166,.25); }
+.b-active    { background:rgba(220,38,38,.12); color:#991B1B; border:1px solid rgba(220,38,38,.25); }
 .b-on_hold   { background:rgba(245,158,11,.12); color:#92400e; border:1px solid rgba(245,158,11,.25); }
 .b-completed { background:rgba(34,197,94,.12);  color:#14532d; border:1px solid rgba(34,197,94,.25); }
 .b-archived  { background:rgba(100,116,139,.12); color:#334155; border:1px solid rgba(100,116,139,.25); }
@@ -169,7 +169,7 @@
     background:var(--bg); border:1px solid var(--bdr); border-radius:9px;
     padding:11px 13px; cursor:pointer; transition:all .2s; user-select:none;
 }
-.kb-card:hover { border-color:rgba(20,184,166,.3); box-shadow:0 4px 12px -4px rgba(0,0,0,.1); transform:translateY(-2px); }
+.kb-card:hover { border-color:rgba(220,38,38,.3); box-shadow:0 4px 12px -4px rgba(0,0,0,.1); transform:translateY(-2px); }
 .kb-card.ov { border-left:4px solid var(--red); }
 .kb-card.dragging { opacity:.45; transform:rotate(2deg); }
 .kb-card-title { font-size:.82rem; font-weight:600; color:var(--tx); margin-bottom:7px; }
@@ -214,7 +214,7 @@
 .fg { margin-bottom:13px; }
 .flbl { display:block; font-size:.77rem; font-weight:600; color:var(--tx); margin-bottom:5px; }
 .fi { width:100%; padding:8px 11px; border:1px solid var(--bdr); border-radius:8px; font-size:.83rem; color:var(--tx); background:var(--bg); outline:none; transition:border-color .15s; }
-.fi:focus { border-color:var(--pp); box-shadow:0 0 0 3px rgba(20,184,166,.1); }
+.fi:focus { border-color:var(--pp); box-shadow:0 0 0 3px rgba(220,38,38,.1); }
 textarea.fi { resize:vertical; }
 .frow { display:flex; gap:12px; }
 .frow .fg { flex:1; }

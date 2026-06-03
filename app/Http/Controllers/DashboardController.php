@@ -83,6 +83,11 @@ class DashboardController extends Controller
     {
         $staff = Auth::guard('staff')->user();
 
+        // Dashboard is admin-only — everyone else lands on their tasks.
+        if (! in_array($staff->role, ['admin', 'secretary'])) {
+            return redirect()->route('my-tasks');
+        }
+
         // Time-based greeting (IST)
         $hour     = now('Asia/Kolkata')->hour;
         $greeting = match (true) {

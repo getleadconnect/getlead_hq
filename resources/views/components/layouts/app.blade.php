@@ -7,23 +7,69 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title }} — Getlead HQ</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --sidebar-w: 200px;
+            --sidebar-w: 232px;
             --topbar-h:  52px;
-            --border:    #e2e8f0;
-            --teal:      #0d9488;
-            --teal-bg:   #f0fdfa;
-            --teal-text: #0f766e;
-            --fg:        #0f172a;
-            --muted:     #64748b;
-            --bg:        #f8fafc;
-            --card:      #ffffff;
-            --radius:    10px;
-            --font:      'Inter', -apple-system, sans-serif;
+
+            /* ===== GetLead Design System — Brand ===== */
+            --brand-red:        #DC2626;
+            --brand-red-dark:   #B91C1C;
+            --brand-red-soft:   #FEF2F2;
+            --brand-red-border: #FECACA;
+
+            /* Text */
+            --text-1: #0F172A;
+            --text-2: #475569;
+            --text-3: #94A3B8;
+
+            /* Borders & surfaces */
+            --border:       #E5E7EB;
+            --border-soft:  #F1F5F9;
+            --bg-page:      #FAFAF9;
+            --bg-card:      #FFFFFF;
+            --bg-neutral:   #F3F4F6;
+            --bg-neutral-2: #E5E7EB;
+
+            /* Semantic */
+            --success: #15803D; --success-soft: #F0FDF4; --success-border: #BBF7D0; --success-text: #173404;
+            --warning: #B45309; --warning-soft: #FFFBEB; --warning-border: #FDE68A; --warning-text: #412402;
+            --danger:  #991B1B; --danger-soft:  #FEF2F2; --danger-border:  #FECACA; --danger-text:  #501313;
+            --info:    #1D4ED8; --info-soft:    #EFF6FF; --info-border:    #BFDBFE; --info-text:    #1E3A8A;
+
+            /* Radius */
+            --radius-sm: 6px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --radius-pill: 999px;
+
+            /* Fonts: Poppins for text, Geist for numerals */
+            --font-text: 'Poppins', -apple-system, sans-serif;
+            --font-num:  'Geist', 'Poppins', sans-serif;
+
+            /* ===== Back-compat aliases (old page styles → new tokens) ===== */
+            --teal:      var(--brand-red);
+            --teal-bg:   var(--brand-red-soft);
+            --teal-text: var(--brand-red-dark);
+            --fg:        var(--text-1);
+            --muted:     var(--text-2);
+            --bg:        var(--bg-page);
+            --card:      var(--bg-card);
+            --radius:    var(--radius-lg);
+            --font:      var(--font-text);
+        }
+
+        /* Numerals use Geist with tabular figures */
+        .num {
+            font-family: var(--font-num);
+            font-variant-numeric: tabular-nums;
+            letter-spacing: -0.01em;
         }
 
         html, body { height: 100%; width: 100%; }
@@ -32,6 +78,7 @@
             font-family: var(--font);
             background: var(--bg);
             color: var(--fg);
+            font-variant-numeric: tabular-nums;
             -webkit-font-smoothing: antialiased;
         }
 
@@ -59,7 +106,7 @@
             flex-shrink: 0;
             -webkit-tap-highlight-color: transparent;
         }
-        .hamburger:hover { background: #f1f5f9; }
+        .hamburger:hover { background: var(--bg-neutral); }
         .hamburger svg {
             width: 20px; height: 20px;
             stroke: currentColor; fill: none;
@@ -74,7 +121,7 @@
         }
         .topbar-logo .logo-icon {
             width: 28px; height: 28px;
-            background: #ef4444;
+            background: var(--brand-red);
             border-radius: 7px;
             display: flex; align-items: center; justify-content: center;
         }
@@ -82,7 +129,7 @@
         .topbar-logo .logo-name { font-size: 0.875rem; font-weight: 700; color: var(--fg); }
         .topbar-avatar {
             width: 32px; height: 32px;
-            background: linear-gradient(135deg, #14b8a6, #0d9488);
+            background: linear-gradient(135deg, #EF4444, var(--brand-red));
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             font-size: 0.65rem;
@@ -107,100 +154,110 @@
             pointer-events: auto;
         }
 
-        /* ── Sidebar ─────────────────────────────────────────────────────────── */
+        /* ── Sidebar (GetLead design-system rail) ────────────────────────────── */
         .sidebar {
             position: fixed;
             top: 0; left: 0; bottom: 0;
             width: var(--sidebar-w);
-            background: var(--card);
+            background: var(--bg-card);
             border-right: 1px solid var(--border);
             display: flex;
             flex-direction: column;
             z-index: 300;
             overflow-y: auto;
+            padding: 18px 12px;
             transition: transform 0.25s ease;
         }
+        /* Brand block */
         .sidebar-logo {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 16px 14px;
-            border-bottom: 1px solid var(--border);
+            gap: 10px;
+            padding: 4px 6px 16px;
+            margin-bottom: 14px;
+            border-bottom: 1px solid var(--border-soft);
             text-decoration: none;
         }
         .logo-icon {
             width: 30px; height: 30px;
-            background: #ef4444;
-            border-radius: 7px;
+            background: var(--brand-red);
+            border-radius: 8px;
             display: flex; align-items: center; justify-content: center;
             flex-shrink: 0;
         }
         .logo-icon svg { width: 16px; height: 16px; fill: white; }
-        .logo-name { font-size: 0.875rem; font-weight: 700; color: var(--fg); line-height: 1; }
+        .logo-meta { display: flex; flex-direction: column; gap: 2px; line-height: 1.1; }
+        .logo-name { font-size: 14px; font-weight: 600; color: var(--text-1); line-height: 1.1; }
         .logo-badge {
-            font-size: 0.55rem; font-weight: 700;
-            background: #22c55e; color: white;
-            padding: 1px 5px; border-radius: 4px; letter-spacing: 0.03em;
+            display: block; background: none; border: none; padding: 0;
+            font-size: 9px; font-weight: 600; color: var(--brand-red);
+            letter-spacing: 1.5px;
         }
-        .logo-meta { display: flex; flex-direction: column; gap: 3px; }
 
         /* Nav */
-        .sidebar-nav { flex: 1; padding: 8px 0; }
+        .sidebar-nav { flex: 1; display: flex; flex-direction: column; gap: 1px; padding: 0; }
         .nav-section {
-            padding: 8px 14px 4px;
+            padding: 12px 10px 4px;
             font-size: 0.6rem; font-weight: 600;
-            color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em;
+            color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em;
         }
         .nav-item {
             display: flex;
             align-items: center;
-            gap: 9px;
-            padding: 12px 14px;
-            font-size: 0.85rem; 
+            gap: 11px;
+            padding: 8px 10px;
+            font-size: 13px;
             font-weight: 400;
-            color: var(--muted);
+            color: var(--text-2);
             text-decoration: none;
-            transition: all 0.15s ease;
+            border-radius: var(--radius-sm);
+            transition: background 0.12s ease, color 0.12s ease;
             white-space: nowrap;
             overflow: hidden;
             -webkit-tap-highlight-color: transparent;
         }
-        .nav-item:hover { background: #f1f5f9; color: var(--fg); }
-        .nav-item.active { background: var(--teal-bg); color: var(--teal-text); font-weight: 600; }
+        .nav-item:hover { background: var(--bg-neutral); color: var(--text-1); }
+        .nav-item.active {
+            background: var(--brand-red-soft); color: var(--brand-red-dark); font-weight: 500;
+        }
         .nav-item svg {
             width: 17px; height: 17px; flex-shrink: 0;
             stroke: currentColor; fill: none;
             stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
         }
+        .nav-item.active svg { stroke: var(--brand-red); }
 
         /* Sidebar bottom user */
         .sidebar-user {
-            padding: 12px 14px;
-            border-top: 1px solid var(--border);
-            display: flex; align-items: center; gap: 8px;
+            padding: 12px 6px 2px;
+            margin-top: 8px;
+            border-top: 1px solid var(--border-soft);
+            display: flex; align-items: center; gap: 10px;
         }
         .user-avatar {
-            width: 30px; height: 30px;
-            background: linear-gradient(135deg, #14b8a6, #0d9488);
+            width: 32px; height: 32px;
+            background: var(--brand-red);
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-size: 0.65rem; font-weight: 700; color: white; flex-shrink: 0;
+            font-size: 12px; font-weight: 600; color: white; flex-shrink: 0;
         }
-        .user-info { flex: 1; overflow: hidden; }
+        .user-info { flex: 1; overflow: hidden; line-height: 1.2; }
         .user-name {
-            font-size: 0.72rem; font-weight: 600; color: var(--fg);
+            font-size: 13px; font-weight: 500; color: var(--text-1);
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
-        .user-role { font-size: 0.62rem; color: var(--muted); text-transform: capitalize; }
+        .user-role { font-size: 11px; color: var(--text-3); text-transform: capitalize; }
         .logout-btn {
-            background: none; border: none; cursor: pointer;
-            color: var(--muted); padding: 4px; border-radius: 6px;
-            display: flex; align-items: center; transition: color 0.15s; flex-shrink: 0;
+            width: 30px; height: 30px;
+            background: none; border: 1px solid var(--border); cursor: pointer;
+            color: var(--text-2); border-radius: var(--radius-sm);
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.15s; flex-shrink: 0;
         }
-        .logout-btn:hover { color: #ef4444; }
+        .logout-btn:hover { background: var(--bg-neutral); color: var(--brand-red); }
         .logout-btn svg {
             width: 15px; height: 15px; stroke: currentColor; fill: none;
-            stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+            stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
         }
 
         /* ── Main content ─────────────────────────────────────────────────────── */
@@ -279,17 +336,20 @@
             </a>
             @endif
 
+            @if(!$isAdmin) <!-- admin user can't show this menu --->
             <a href="{{ route('my-tasks') }}" class="nav-item {{ request()->routeIs('my-tasks') ? 'active' : '' }}" onclick="closeSidebar()">
                 <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
                 My Tasks
             </a>
+            @endif
+            
 
             @if($isAdmin)
             <a href="{{ route('tasks') }}" class="nav-item {{ request()->routeIs('tasks') ? 'active' : '' }}" onclick="closeSidebar()">
                 <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-                All Tasks
+                Tasks
             </a>
-            @endif
+            @endif 
 
             <a href="{{ route('daily-report') }}" class="nav-item {{ request()->routeIs('daily-report') ? 'active' : '' }}" onclick="closeSidebar()">
                 <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>

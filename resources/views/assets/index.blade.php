@@ -3,12 +3,12 @@
 @push('styles')
 <style>
 /* ── Assets Page Styles ── */
-.as-wrap { padding:20px; --as-teal:#14b8a6; --as-teal-dark:#0d9488; }
+.as-wrap { padding:20px; --as-teal:#DC2626; --as-teal-dark:#B91C1C; }
 
 /* Filter Bar */
 .as-filter { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:18px; padding:14px 18px; background:#fff; border:1px solid #e2e8f0; border-radius:12px; }
 .as-filter input,.as-filter select { padding:8px 12px; border:1px solid #e2e8f0; border-radius:8px; font-size:.82rem; font-family:inherit; background:#fff; min-height:36px; transition:border-color .2s; }
-.as-filter input:focus,.as-filter select:focus { outline:none; border-color:#14b8a6; box-shadow:0 0 0 3px rgba(20,184,166,.1); }
+.as-filter input:focus,.as-filter select:focus { outline:none; border-color:#DC2626; box-shadow:0 0 0 3px rgba(220,38,38,.1); }
 .as-filter input { flex:1; min-width:180px; }
 
 /* Table */
@@ -17,8 +17,8 @@
 .as-table th { padding:11px 14px; background:#f8fafc; font-weight:600; font-size:.71rem; text-transform:uppercase; letter-spacing:.04em; color:#64748b; border-bottom:1px solid #e2e8f0; text-align:left; }
 .as-table td { padding:11px 14px; border-bottom:1px solid #e2e8f0; vertical-align:middle; }
 .as-table tr:last-child td { border-bottom:none; }
-.as-table tbody tr:hover td { background:rgba(20,184,166,.04); }
-.as-table a { color:#14b8a6; font-weight:500; cursor:pointer; }
+.as-table tbody tr:hover td { background:rgba(220,38,38,.04); }
+.as-table a { color:#DC2626; font-weight:500; cursor:pointer; }
 .as-table a:hover { text-decoration:underline; }
 
 /* KPI Cards */
@@ -27,7 +27,7 @@
 .as-kpi:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,.06); }
 .as-kpi-label { font-size:.7rem; text-transform:uppercase; letter-spacing:.04em; color:#64748b; font-weight:500; margin-bottom:6px; }
 .as-kpi-value { font-size:1.6rem; font-weight:700; letter-spacing:-.02em; color:#0f172a; }
-.as-kpi-value.teal  { color:#14b8a6; }
+.as-kpi-value.teal  { color:#DC2626; }
 .as-kpi-value.amber { color:#f59e0b; }
 .as-kpi-value.red   { color:#ef4444; }
 .as-kpi-value.green { color:#10b981; }
@@ -44,7 +44,7 @@
 
 /* Badges */
 .as-badge { display:inline-flex; align-items:center; padding:3px 9px; border-radius:20px; font-size:.69rem; font-weight:600; }
-.as-badge-teal   { background:rgba(20,184,166,.12); color:#0f766e; }
+.as-badge-teal   { background:rgba(220,38,38,.12); color:#991B1B; }
 .as-badge-green  { background:rgba(16,185,129,.12); color:#15803d; }
 .as-badge-amber  { background:rgba(245,158,11,.12); color:#b45309; }
 .as-badge-red    { background:rgba(239,68,68,.12); color:#dc2626; }
@@ -68,10 +68,10 @@
 
 /* Buttons */
 .as-btn { display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:7px 14px; border-radius:8px; font-size:.8rem; font-weight:500; cursor:pointer; transition:all .15s; border:none; font-family:inherit; text-decoration:none; }
-.as-btn-primary { background:linear-gradient(135deg,#14b8a6,#0d9488); color:#fff; }
-.as-btn-primary:hover { box-shadow:0 4px 12px rgba(20,184,166,.35); transform:translateY(-1px); }
+.as-btn-primary { background:linear-gradient(135deg,#DC2626,#B91C1C); color:#fff; }
+.as-btn-primary:hover { box-shadow:0 4px 12px rgba(220,38,38,.35); transform:translateY(-1px); }
 .as-btn-secondary { background:#f1f5f9; color:#374151; border:1px solid #e2e8f0; }
-.as-btn-secondary:hover { background:#fff; border-color:#14b8a6; }
+.as-btn-secondary:hover { background:#fff; border-color:#DC2626; }
 .as-btn-danger { background:linear-gradient(135deg,#ef4444,#dc2626); color:#fff; }
 .as-btn-ghost { background:transparent; color:#64748b; }
 .as-btn-ghost:hover { background:#f1f5f9; color:#0f172a; }
@@ -96,16 +96,16 @@
 .as-form-group { flex:1; display:flex; flex-direction:column; gap:4px; }
 .as-form-group label { font-size:.78rem; font-weight:500; color:#374151; }
 .as-form-group input,.as-form-group select,.as-form-group textarea { padding:8px 11px; border:1px solid #e2e8f0; border-radius:8px; font-size:.84rem; font-family:inherit; }
-.as-form-group input:focus,.as-form-group select:focus,.as-form-group textarea:focus { outline:none; border-color:#14b8a6; box-shadow:0 0 0 3px rgba(20,184,166,.1); }
+.as-form-group input:focus,.as-form-group select:focus,.as-form-group textarea:focus { outline:none; border-color:#DC2626; box-shadow:0 0 0 3px rgba(220,38,38,.1); }
 .as-form-group textarea { resize:vertical; min-height:64px; }
 
 /* QR Grid */
 .as-qr-grid { display:flex; flex-wrap:wrap; gap:10px; }
 .as-qr-label { border:1px solid #e2e8f0; border-radius:8px; padding:10px; text-align:center; background:#fff; position:relative; width:140px; transition:all .15s; }
 .as-qr-label:hover { box-shadow:0 2px 10px rgba(0,0,0,.08); }
-.as-qr-label.mapped { border-color:#14b8a6; background:rgba(20,184,166,.04); }
+.as-qr-label.mapped { border-color:#DC2626; background:rgba(220,38,38,.04); }
 .as-qr-label .qr-id { font-weight:700; font-size:.75rem; margin-top:6px; letter-spacing:.5px; }
-.as-qr-label .qr-mapped-name { font-size:.66rem; color:#14b8a6; margin-top:3px; font-weight:500; }
+.as-qr-label .qr-mapped-name { font-size:.66rem; color:#DC2626; margin-top:3px; font-weight:500; }
 .as-qr-dot { position:absolute; top:6px; right:6px; width:8px; height:8px; border-radius:50%; }
 .as-qr-dot-green { background:#22c55e; }
 .as-qr-dot-gray  { background:#d1d5db; }
@@ -125,8 +125,8 @@
 /* Pagination */
 .as-pagination { display:flex; gap:6px; margin-top:16px; flex-wrap:wrap; }
 .as-pagination button { padding:6px 12px; border-radius:6px; border:1px solid #e2e8f0; background:#fff; font-size:.8rem; cursor:pointer; }
-.as-pagination button.active { background:#14b8a6; color:#fff; border-color:#14b8a6; }
-.as-pagination button:hover:not(.active):not(:disabled) { border-color:#14b8a6; }
+.as-pagination button.active { background:#DC2626; color:#fff; border-color:#DC2626; }
+.as-pagination button:hover:not(.active):not(:disabled) { border-color:#DC2626; }
 .as-pagination button:disabled { opacity:.4; cursor:not-allowed; }
 
 /* Empty state */
@@ -633,6 +633,7 @@ async function loadDashboard(){
                 <td class="adb-td">${adbTypeBadge(a.type)}</td>
                 <td class="adb-td" style="color:#374151">${asEsc(brand)}</td>
                 <td class="adb-td">${adbStatusCell(a.status)}</td>
+                <td class="adb-td" style="color:#374151">${fmtDate(a.purchase_date)||'—'}</td>
                 <td class="adb-td">${w}</td>
             </tr>`;
         });
@@ -646,7 +647,7 @@ async function loadDashboard(){
                 <table style="width:100%;border-collapse:collapse">
                     <thead><tr>
                         <th class="adb-th">Tag</th><th class="adb-th">Name</th><th class="adb-th">Type</th>
-                        <th class="adb-th">Brand / Model</th><th class="adb-th">Status</th><th class="adb-th">Warranty</th>
+                        <th class="adb-th">Brand / Model</th><th class="adb-th">Status</th><th class="adb-th">Purchase Date</th><th class="adb-th">Warranty</th>
                     </tr></thead>
                     <tbody>${rows}</tbody>
                 </table>
@@ -680,12 +681,12 @@ async function loadDashboard(){
     if(window.Chart && byType.length){
         const typeCtx = document.getElementById('adbTypeChart')?.getContext('2d');
         if(typeCtx){
-            const greens = ['#059669','#10b981','#34d399','#6ee7b7','#a7f3d0','#d1fae5','#ecfdf5','#f0fdf4'];
+            const reds = ['#DC2626','#EF4444','#F87171','#FCA5A5','#FECACA','#FEE2E2','#FEF2F2','#FFF5F5'];
             new Chart(typeCtx, {
                 type: 'bar',
                 data: {
                     labels: byType.map(r => r.type),
-                    datasets:[{ data: byType.map(r=>r.cnt), backgroundColor: greens.slice(0,byType.length), borderRadius:5, borderSkipped:false, barThickness:20 }]
+                    datasets:[{ data: byType.map(r=>r.cnt), backgroundColor: reds.slice(0,byType.length), borderRadius:5, borderSkipped:false, barThickness:20 }]
                 },
                 options:{
                     indexAxis:'y', responsive:true, maintainAspectRatio:false,
@@ -703,7 +704,8 @@ async function loadDashboard(){
     if(window.Chart && byStatus.length){
         const statusCtx = document.getElementById('adbStatusChart')?.getContext('2d');
         if(statusCtx){
-            const bgColors = byStatus.map(r => statusColors[r.status] || '#94a3b8');
+            const redRamp = ['#DC2626','#EF4444','#F87171','#FCA5A5','#FECACA','#FEE2E2','#FEF2F2','#FFF5F5'];
+            const bgColors = byStatus.map((r,i) => redRamp[i % redRamp.length]);
             new Chart(statusCtx, {
                 type: 'doughnut',
                 data: {
@@ -767,7 +769,7 @@ async function loadList(page=1){
         return;
     }
     let html = `<div class="as-table-wrap"><table class="as-table"><thead><tr>
-        <th>Tag</th><th>Name</th><th>Type</th><th>Owner</th><th>Status</th><th>Remarks</th><th>Checkup</th><th>Actions</th>
+        <th>Tag</th><th>Name</th><th>Type</th><th>Owner</th><th>Purchase Date</th><th>Status</th><th>Remarks</th><th>Checkup</th><th>Actions</th>
     </tr></thead><tbody>`;
     assets.forEach(a => {
         const checkup = a.checkup_due ? '<span class="as-badge as-badge-red as-badge-xs">Due!</span>' :
@@ -786,6 +788,7 @@ async function loadList(page=1){
             <td style="font-weight:500">${asEsc(a.name)}</td>
             <td>${typeBadge(a.type)}</td>
             <td>${asEsc(a.owner_name||'—')}</td>
+            <td style="white-space:nowrap">${fmtDate(a.purchase_date)||'—'}</td>
             <td>${statusBadge(a.status)}</td>
             <td style="font-size:.76rem;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${asEsc(a.remarks||'')}">${asEsc(a.remarks)||'—'}</td>
             <td>${checkup}</td>
@@ -899,7 +902,7 @@ async function loadDetail(id){
         html += `<div style="color:#94a3b8;font-size:.78rem;padding:20px 0">
             <div style="font-size:1.8rem;margin-bottom:6px">🏷️</div>
             No QR mapped<br>
-            <a onclick="showView('qr-map')" style="color:#14b8a6;cursor:pointer;font-size:.75rem">Map a QR code →</a>
+            <a onclick="showView('qr-map')" style="color:#DC2626;cursor:pointer;font-size:.75rem">Map a QR code →</a>
         </div>`;
     }
     html += `</div></div>`; // end right column card + column

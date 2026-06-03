@@ -3,9 +3,9 @@
 @push('styles')
 <style>
 :root {
-    --rc-teal:           #0D9B8C;
-    --rc-teal-light:     #E8F7F5;
-    --rc-teal-deep:      #0A7E72;
+    --rc-teal:           #DC2626;
+    --rc-teal-light:     #FEF2F2;
+    --rc-teal-deep:      #B91C1C;
     --rc-red:            #E5484D;
     --rc-amber:          #F0A30A;
     --rc-green:          #30A46C;
@@ -93,7 +93,7 @@
 .rc-cell.late      { background:var(--cell-late); }
 .rc-cell.weekend   { background:var(--cell-weekend); }
 .rc-cell.future    { background:var(--cell-future); border:1px dashed var(--rc-border); }
-.rc-cell.today-ring { box-shadow:0 0 0 2.5px var(--rc-teal), 0 0 0 4px rgba(13,155,140,.2); }
+.rc-cell.today-ring { box-shadow:0 0 0 2.5px var(--rc-teal), 0 0 0 4px rgba(220,38,38,.2); }
 .rc-cell.missing.today-ring { box-shadow:0 0 0 2.5px var(--rc-red), 0 0 0 4px rgba(229,72,77,.2); animation:rc-pulse 2s ease-in-out infinite; }
 @keyframes rc-pulse { 0%,100%{box-shadow:0 0 0 2.5px var(--rc-red),0 0 0 4px rgba(229,72,77,.15)} 50%{box-shadow:0 0 0 2.5px var(--rc-red),0 0 0 8px rgba(229,72,77,.04)} }
 

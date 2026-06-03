@@ -3,12 +3,12 @@
 @push('styles')
 <style>
 /* ── TouchPoint Module Styles ── */
-.tp-wrap { padding:20px; --tp-primary:#14b8a6; --tp-primary-dark:#0d9488; --green:#10b981; --amber:#f59e0b; --red:#ef4444; --blue:#0ea5e9; }
+.tp-wrap { padding:20px; --tp-primary:#DC2626; --tp-primary-dark:#B91C1C; --green:#10b981; --amber:#f59e0b; --red:#ef4444; --blue:#0ea5e9; }
 
 .tp-tabs { display:flex; gap:4px; background:#f1f5f9; border-radius:12px; padding:4px; margin-bottom:24px; overflow-x:auto; border:1px solid #e2e8f0; }
 .tp-tab { padding:10px 18px; border-radius:10px; font-size:.82rem; font-weight:500; cursor:pointer; white-space:nowrap; background:transparent; border:none; color:#64748b; font-family:inherit; transition:all .2s cubic-bezier(.4,0,.2,1); }
-.tp-tab:hover { color:#0f172a; background:rgba(20,184,166,.08); }
-.tp-tab.active { background:#fff; color:#14b8a6; box-shadow:0 2px 8px rgba(0,0,0,.08); font-weight:600; }
+.tp-tab:hover { color:#0f172a; background:rgba(220,38,38,.08); }
+.tp-tab.active { background:#fff; color:#DC2626; box-shadow:0 2px 8px rgba(0,0,0,.08); font-weight:600; }
 .tp-panel { display:none; animation:tp-fadeIn .3s ease; }
 .tp-panel.active { display:block; }
 @keyframes tp-fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
@@ -16,19 +16,19 @@
 /* Stats Cards */
 .tp-stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:14px; margin-bottom:24px; }
 .tp-stat { background:#fff; border:1px solid #e2e8f0; border-radius:14px; padding:18px 16px; position:relative; overflow:hidden; transition:all .2s ease; }
-.tp-stat:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,.06); border-color:rgba(20,184,166,.3); }
+.tp-stat:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,.06); border-color:rgba(220,38,38,.3); }
 .tp-stat-label { font-size:.72rem; color:#64748b; font-weight:500; margin-bottom:8px; text-transform:uppercase; letter-spacing:.03em; }
 .tp-stat-value { font-size:1.75rem; font-weight:700; letter-spacing:-.02em; line-height:1.2; }
 .tp-stat-value.red   { color:#ef4444; }
 .tp-stat-value.green { color:#10b981; }
 .tp-stat-value.blue  { color:#0ea5e9; }
 .tp-stat-value.amber { color:#f59e0b; }
-.tp-stat-value.teal  { color:#14b8a6; }
+.tp-stat-value.teal  { color:#DC2626; }
 
 /* Cards */
 .tp-card { background:#fff; border:1px solid #e2e8f0; border-radius:14px; margin-bottom:16px; overflow:hidden; transition:box-shadow .2s; }
 .tp-card:hover { box-shadow:0 4px 20px rgba(0,0,0,.04); }
-.tp-card-header { padding:16px 20px; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center; background:linear-gradient(to right,#fff,rgba(20,184,166,.02)); }
+.tp-card-header { padding:16px 20px; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center; background:linear-gradient(to right,#fff,rgba(220,38,38,.02)); }
 .tp-card-header h3 { font-size:.88rem; font-weight:600; color:#0f172a; display:flex; align-items:center; gap:8px; }
 .tp-card-body { padding:0; }
 .tp-card-body.padded { padding:20px; }
@@ -38,7 +38,7 @@
 .tp-table { width:100%; border-collapse:separate; border-spacing:0; font-size:.82rem; }
 .tp-table th { text-align:left; padding:12px 16px; background:#f8fafc; font-weight:600; color:#64748b; font-size:.72rem; text-transform:uppercase; letter-spacing:.04em; border-bottom:1px solid #e2e8f0; }
 .tp-table td { padding:12px 16px; border-bottom:1px solid #e2e8f0; transition:background .15s; }
-.tp-table tr:hover td { background:rgba(20,184,166,.04); }
+.tp-table tr:hover td { background:rgba(220,38,38,.04); }
 .tp-table tr:last-child td { border-bottom:none; }
 
 /* Badges */
@@ -48,7 +48,7 @@
 .tp-badge-red    { background:linear-gradient(135deg,#fee2e2,#fecaca); color:#991b1b; border:1px solid rgba(239,68,68,.2); }
 .tp-badge-blue   { background:linear-gradient(135deg,#dbeafe,#bfdbfe); color:#1e40af; border:1px solid rgba(59,130,246,.2); }
 .tp-badge-slate  { background:#f1f5f9; color:#64748b; border:1px solid #e2e8f0; }
-.tp-badge-teal   { background:linear-gradient(135deg,#ccfbf1,#99f6e4); color:#0f766e; border:1px solid rgba(20,184,166,.2); }
+.tp-badge-teal   { background:linear-gradient(135deg,#FEE2E2,#FECACA); color:#991B1B; border:1px solid rgba(220,38,38,.2); }
 
 /* Health Indicators */
 .tp-health { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; vertical-align:middle; }
@@ -64,8 +64,8 @@
     padding:8px 14px; border:1px solid #e2e8f0; border-radius:10px; font-size:.8rem; font-family:inherit;
     background:#fff; transition:all .2s; min-height:38px;
 }
-.tp-filter-bar select:hover,.tp-filter-bar input:hover { border-color:#14b8a6; }
-.tp-filter-bar select:focus,.tp-filter-bar input:focus { outline:none; border-color:#14b8a6; box-shadow:0 0 0 3px rgba(20,184,166,.1); }
+.tp-filter-bar select:hover,.tp-filter-bar input:hover { border-color:#DC2626; }
+.tp-filter-bar select:focus,.tp-filter-bar input:focus { outline:none; border-color:#DC2626; box-shadow:0 0 0 3px rgba(220,38,38,.1); }
 
 /* Empty State */
 .tp-empty { text-align:center; padding:48px 24px; color:#64748b; }
@@ -86,33 +86,33 @@
 /* List Items */
 .tp-list-item { display:flex; align-items:center; gap:14px; padding:12px 16px; border-bottom:1px solid #e2e8f0; transition:all .15s; }
 .tp-list-item:last-child { border-bottom:none; }
-.tp-list-item:hover { background:rgba(20,184,166,.04); }
+.tp-list-item:hover { background:rgba(220,38,38,.04); }
 
 /* Call Log */
 .tp-call-log-item { padding:14px 18px; border-bottom:1px solid #e2e8f0; font-size:.82rem; position:relative; }
 .tp-call-log-item:last-child { border-bottom:none; }
-.tp-call-log-item::before { content:''; position:absolute; left:0; top:50%; transform:translateY(-50%); width:3px; height:0; background:#14b8a6; transition:height .2s; border-radius:0 2px 2px 0; }
+.tp-call-log-item::before { content:''; position:absolute; left:0; top:50%; transform:translateY(-50%); width:3px; height:0; background:#DC2626; transition:height .2s; border-radius:0 2px 2px 0; }
 .tp-call-log-item:hover::before { height:60%; }
 
 /* Action Buttons */
-.tp-action-btn { background:linear-gradient(135deg,#14b8a6,#0d9488); color:#fff; border:none; padding:6px 14px; border-radius:8px; font-size:.75rem; font-weight:500; cursor:pointer; transition:all .2s; display:inline-flex; align-items:center; gap:4px; }
-.tp-action-btn:hover { transform:translateY(-1px); box-shadow:0 4px 12px rgba(20,184,166,.35); }
+.tp-action-btn { background:linear-gradient(135deg,#DC2626,#B91C1C); color:#fff; border:none; padding:6px 14px; border-radius:8px; font-size:.75rem; font-weight:500; cursor:pointer; transition:all .2s; display:inline-flex; align-items:center; gap:4px; }
+.tp-action-btn:hover { transform:translateY(-1px); box-shadow:0 4px 12px rgba(220,38,38,.35); }
 .tp-action-btn.secondary { background:#f1f5f9; color:#0f172a; border:1px solid #e2e8f0; }
-.tp-action-btn.secondary:hover { background:#fff; border-color:#14b8a6; }
+.tp-action-btn.secondary:hover { background:#fff; border-color:#DC2626; }
 
 /* Modal overrides */
 .tp-modal-body .form-row { display:flex; gap:16px; }
 .tp-modal-body .form-group { margin-bottom:16px; display:flex; flex-direction:column; gap:4px; }
 .tp-modal-body .form-label { font-size:.8rem; font-weight:500; color:#374151; }
 .tp-modal-body .form-input { padding:8px 12px; border:1px solid #e2e8f0; border-radius:8px; font-size:.85rem; font-family:inherit; background:#fff; transition:border-color .2s; }
-.tp-modal-body .form-input:focus { outline:none; border-color:#14b8a6; box-shadow:0 0 0 3px rgba(20,184,166,.1); }
+.tp-modal-body .form-input:focus { outline:none; border-color:#DC2626; box-shadow:0 0 0 3px rgba(220,38,38,.1); }
 
 /* Btn helpers inside tp */
 .tp-btn { display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:8px 16px; border-radius:8px; font-size:.82rem; font-weight:500; cursor:pointer; transition:all .2s; border:none; font-family:inherit; }
-.tp-btn-primary { background:linear-gradient(135deg,#14b8a6,#0d9488); color:#fff; }
-.tp-btn-primary:hover { box-shadow:0 4px 12px rgba(20,184,166,.4); transform:translateY(-1px); }
+.tp-btn-primary { background:linear-gradient(135deg,#DC2626,#B91C1C); color:#fff; }
+.tp-btn-primary:hover { box-shadow:0 4px 12px rgba(220,38,38,.4); transform:translateY(-1px); }
 .tp-btn-secondary { background:#f1f5f9; color:#374151; border:1px solid #e2e8f0; }
-.tp-btn-secondary:hover { background:#fff; border-color:#14b8a6; }
+.tp-btn-secondary:hover { background:#fff; border-color:#DC2626; }
 .tp-btn-sm { padding:5px 12px; font-size:.75rem; }
 .tp-btn-danger { background:linear-gradient(135deg,#ef4444,#dc2626); color:#fff; }
 .tp-btn-ghost { background:transparent; color:#64748b; }
@@ -505,7 +505,7 @@ async function loadDashboard(){
         <div class="tp-stat"><div class="tp-stat-label">📞 Today</div><div class="tp-stat-value blue">${d.today}</div></div>
         <div class="tp-stat"><div class="tp-stat-label">📅 Next 7 Days</div><div class="tp-stat-value amber">${d.upcoming}</div></div>
         <div class="tp-stat"><div class="tp-stat-label">✅ This Week</div><div class="tp-stat-value green">${d.completed_week}</div></div>
-        <div class="tp-stat" style="border-left:3px solid #0d9488"><div class="tp-stat-label">🆕 Active Trials</div><div class="tp-stat-value teal">${d.active_trials||0}</div></div>
+        <div class="tp-stat" style="border-left:3px solid #B91C1C"><div class="tp-stat-label">🆕 Active Trials</div><div class="tp-stat-value teal">${d.active_trials||0}</div></div>
     `;
 
     // Onboarding pipeline
@@ -516,7 +516,7 @@ async function loadDashboard(){
         document.getElementById('dashOnboarding').innerHTML = onbPipe.map(s => {
             const total = s.pending + s.done;
             const pct   = total > 0 ? Math.round(s.done/total*100) : 0;
-            return `<div class="tp-metric"><span class="tp-metric-label">${stageIcon(s.stage)} ${stageLabel(s.stage)}</span><div class="tp-progress"><div class="tp-progress-fill" style="width:${pct}%;background:#0d9488"></div></div><span class="tp-metric-value" style="width:60px">${s.done}/${total}</span></div>`;
+            return `<div class="tp-metric"><span class="tp-metric-label">${stageIcon(s.stage)} ${stageLabel(s.stage)}</span><div class="tp-progress"><div class="tp-progress-fill" style="width:${pct}%;background:#B91C1C"></div></div><span class="tp-metric-value" style="width:60px">${s.done}/${total}</span></div>`;
         }).join('') || '<p style="color:#64748b;font-size:.82rem">No active onboarding touchpoints</p>';
     } else {
         document.getElementById('dashOnboardingCard').style.display = 'none';
@@ -722,7 +722,7 @@ async function openTpAction(id){
     let html = `<div style="background:#f8fafc;padding:12px 16px;border-radius:10px;margin-bottom:16px;font-size:.82rem">
         <div class="tp-cust-info-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
             <div><strong>Company:</strong> ${tpEsc(t.company||'N/A')}</div>
-            <div><strong>Phone:</strong> <a href="tel:${t.phone}" style="color:#14b8a6">${tpEsc(t.phone)}</a></div>
+            <div><strong>Phone:</strong> <a href="tel:${t.phone}" style="color:#DC2626">${tpEsc(t.phone)}</a></div>
             <div><strong>Email:</strong> ${tpEsc(t.email||'N/A')}</div>
             <div><strong>Expiry:</strong> ${fmtDate(t.expiry_date)} (${daysUntil(t.expiry_date)}d)</div>
         </div>
@@ -902,7 +902,7 @@ async function loadReports(period='week'){
 
     // Onboarding metrics
     if(d.trial_signups > 0){
-        html += `<div class="tp-card" style="border-left:3px solid #0d9488"><div class="tp-card-header"><h3>🚀 Onboarding Metrics</h3></div><div class="tp-card-body padded">
+        html += `<div class="tp-card" style="border-left:3px solid #B91C1C"><div class="tp-card-header"><h3>🚀 Onboarding Metrics</h3></div><div class="tp-card-body padded">
             <div class="tp-stats" style="margin-bottom:16px">
                 <div class="tp-stat"><div class="tp-stat-label">Trial Signups</div><div class="tp-stat-value teal">${d.trial_signups}</div></div>
                 <div class="tp-stat"><div class="tp-stat-label">Converted</div><div class="tp-stat-value green">${d.trial_converted}</div></div>
@@ -915,7 +915,7 @@ async function loadReports(period='week'){
         const maxDrop = Math.max(...stageNames.map(s=>dropOff[s]||0), 1);
         stageNames.forEach(s => {
             const v = dropOff[s]||0; const pct = Math.round(v/maxDrop*100);
-            html += `<div class="tp-metric"><span class="tp-metric-label">${stageLabel(s)}</span><div class="tp-progress"><div class="tp-progress-fill" style="width:${pct}%;background:#0d9488"></div></div><span class="tp-metric-value">${v}</span></div>`;
+            html += `<div class="tp-metric"><span class="tp-metric-label">${stageLabel(s)}</span><div class="tp-progress"><div class="tp-progress-fill" style="width:${pct}%;background:#B91C1C"></div></div><span class="tp-metric-value">${v}</span></div>`;
         });
         html += `</div></div>`;
     }

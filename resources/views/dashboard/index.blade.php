@@ -61,9 +61,9 @@
             white-space: nowrap;
         }
         .btn-outline { background: white; color: #0f172a; border: 1px solid #e2e8f0; }
-        .btn-outline:hover { border-color: #0d9488; color: #0d9488; }
-        .btn-dark    { background: #0f172a; color: white; }
-        .btn-dark:hover { background: #1e293b; }
+        .btn-outline:hover { border-color: #B91C1C; color: #B91C1C; }
+        .btn-dark    { background: #DC2626; color: white; }
+        .btn-dark:hover { background: #B91C1C; }
         .btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
         /* ── Stat Cards ── */
@@ -92,7 +92,7 @@
         }
         .stat-icon svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
         .stat-icon-blue   { background: #eff6ff; color: #3b82f6; }
-        .stat-icon-teal   { background: #f0fdfa; color: #0d9488; }
+        .stat-icon-teal   { background: #FEF2F2; color: #B91C1C; }
         .stat-icon-orange { background: #fff7ed; color: #f97316; }
         .stat-icon-purple { background: #f5f3ff; color: #8b5cf6; }
         .stat-body { flex: 1; min-width: 0; }
@@ -128,7 +128,7 @@
             font-weight: 600;
             color: #0f172a;
         }
-        .widget-title svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; color: #0d9488; }
+        .widget-title svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; color: #B91C1C; }
         .widget-action { color: #94a3b8; cursor: pointer; background: none; border: none; padding: 4px; border-radius: 6px; display: flex; align-items: center; }
         .widget-action:hover { background: #f1f5f9; color: #0f172a; }
         .widget-action svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
@@ -155,7 +155,7 @@
         .activity-item:last-child { border-bottom: none; }
         .act-avatar {
             width: 28px; height: 28px; border-radius: 50%;
-            background: linear-gradient(135deg, #14b8a6, #0d9488);
+            background: linear-gradient(135deg, #DC2626, #B91C1C);
             display: flex; align-items: center; justify-content: center;
             font-size: 0.6rem; font-weight: 700; color: white; flex-shrink: 0;
         }
@@ -174,7 +174,7 @@
         .cal-day { font-size: 0.72rem; padding: 5px 2px; border-radius: 6px; cursor: pointer; color: #0f172a; transition: background 0.15s; }
         .cal-day:hover { background: #f1f5f9; }
         .cal-day.empty { color: transparent; cursor: default; }
-        .cal-day.today { background: #0d9488; color: white; font-weight: 700; }
+        .cal-day.today { background: #B91C1C; color: white; font-weight: 700; }
         .cal-day.other-month { color: #cbd5e1; }
 
         /* ── Projects section ── */
@@ -184,7 +184,7 @@
         .project-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
         .project-name { flex: 1; font-size: 0.82rem; font-weight: 500; color: #0f172a; min-width: 100px; }
         .project-status { font-size: 0.68rem; font-weight: 600; padding: 3px 9px; border-radius: 20px; white-space: nowrap; }
-        .status-active  { background: #f0fdfa; color: #0d9488; }
+        .status-active  { background: #FEF2F2; color: #B91C1C; }
         .status-pending { background: #fff7ed; color: #f97316; }
         .status-done    { background: #f0fdf4; color: #16a34a; }
         .status-paused  { background: #f8fafc; color: #64748b; }
@@ -213,7 +213,7 @@
         .tp-btn { padding: 10px; border: none; border-radius: 8px; font-family: inherit; font-size: 0.78rem; font-weight: 600; cursor: pointer; text-decoration: none; text-align: center; transition: opacity 0.15s; }
         .tp-btn:hover { opacity: 0.85; }
         .tp-btn-risk     { background: #fff1f2; color: #ef4444; }
-        .tp-btn-renewals { background: #f0fdfa; color: #0d9488; }
+        .tp-btn-renewals { background: #FEF2F2; color: #B91C1C; }
 
         /* ── Responsive ─────────────────────────────────────────────────────── */
         /* Tablet: 1025px → 769px */
@@ -466,7 +466,7 @@
                             default             => 'status-paused',
                         };
                         $dotColor = match($project->status ?? 'active') {
-                            'active'            => '#0d9488',
+                            'active'            => '#B91C1C',
                             'pending'           => '#f97316',
                             'done','completed'  => '#16a34a',
                             default             => '#94a3b8',

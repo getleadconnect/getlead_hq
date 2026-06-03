@@ -428,7 +428,7 @@
                 </button>
                 <div class="nav-sub">
                     <a href="{{ route('settings') }}" class="nav-subitem {{ request()->routeIs('settings*') ? 'active' : '' }}" onclick="closeSidebar()">General Settings</a>
-                    <a href="{{ route('team') }}" class="nav-subitem {{ request()->routeIs('team*') ? 'active' : '' }}" onclick="closeSidebar()">Teams</a>
+                    <a href="{{ route('team') }}" class="nav-subitem {{ request()->routeIs('team*') ? 'active' : '' }}" onclick="closeSidebar()">Team</a>
                 </div>
             </div>
             @endif

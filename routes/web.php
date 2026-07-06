@@ -12,6 +12,12 @@ use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\Crm\DashboardController as CrmDashboardController;
+use App\Http\Controllers\Crm\CustomerController as CrmCustomerController;
+use App\Http\Controllers\Crm\CustomerDetailController as CrmCustomerDetailController;
+use App\Http\Controllers\Crm\WatchController as CrmWatchController;
+use App\Http\Controllers\Crm\SalesTeamController as CrmSalesTeamController;
+use App\Http\Controllers\Crm\SettingsController as CrmSettingsController;
 use Illuminate\Support\Facades\Route;
 
 // Guest routes (unauthenticated only)
@@ -20,12 +26,44 @@ Route::middleware('guest:staff')->group(function () {
     Route::post('/login', [LoginController::class, 'login']);
 });
 
+// Public CRM watch page (customer-facing — no auth; identity is the link token)
+Route::prefix('crm')->name('crm.')->group(function () {
+    Route::get('/watch',        [CrmWatchController::class, 'show'])->name('watch');
+    Route::post('/watch/track', [CrmWatchController::class, 'track'])->name('watch.track');
+});
+
 // Authenticated routes
 Route::middleware('auth:staff')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Getlead CRM module (ported from crmdemo) — separate controllers per feature
+    Route::prefix('crm')->name('crm.')->group(function () {
+        Route::get('/dashboard', [CrmDashboardController::class, 'index'])->name('dashboard');
+
+        // Customers
+        Route::get('/customers',                 [CrmCustomerController::class, 'index'])->name('customers');
+        Route::get('/customers/create',          [CrmCustomerController::class, 'create'])->name('customers.create');
+        Route::post('/customers',                [CrmCustomerController::class, 'store'])->name('customers.store');
+        Route::get('/customers/{customer}',      [CrmCustomerDetailController::class, 'show'])->name('customers.show');
+        Route::delete('/customers/{customer}',   [CrmCustomerController::class, 'destroy'])->name('customers.destroy');
+
+        // Sales Team (writes to the staff table with role = sales_rep)
+        Route::get('/sales-team',                [CrmSalesTeamController::class, 'index'])->name('sales-team');
+        Route::get('/sales-team/create',         [CrmSalesTeamController::class, 'create'])->name('sales-team.create');
+        Route::post('/sales-team',               [CrmSalesTeamController::class, 'store'])->name('sales-team.store');
+        Route::get('/sales-team/{member}/edit',  [CrmSalesTeamController::class, 'edit'])->name('sales-team.edit');
+        Route::put('/sales-team/{member}',       [CrmSalesTeamController::class, 'update'])->name('sales-team.update');
+        Route::delete('/sales-team/{member}',    [CrmSalesTeamController::class, 'destroy'])->name('sales-team.destroy');
+
+        // Settings (landing/branding + Telegram) — stored in the settings table
+        Route::get('/settings',           [CrmSettingsController::class, 'index'])->name('settings');
+        Route::post('/settings/landing',  [CrmSettingsController::class, 'updateLanding'])->name('settings.landing');
+        Route::post('/settings/telegram', [CrmSettingsController::class, 'updateTelegram'])->name('settings.telegram');
+        Route::post('/settings/test',     [CrmSettingsController::class, 'sendTest'])->name('settings.test');
+    });
 
     // Daily Report
     Route::get('/daily-report',        [DailyReportController::class, 'index'])->name('daily-report');

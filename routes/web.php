@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ReportCalendarController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DailyReportController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
@@ -39,31 +40,12 @@ Route::middleware('auth:staff')->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Getlead CRM module (ported from crmdemo) — separate controllers per feature
-    Route::prefix('crm')->name('crm.')->group(function () {
-        Route::get('/dashboard', [CrmDashboardController::class, 'index'])->name('dashboard');
 
-        // Customers
-        Route::get('/customers',                 [CrmCustomerController::class, 'index'])->name('customers');
-        Route::get('/customers/create',          [CrmCustomerController::class, 'create'])->name('customers.create');
-        Route::post('/customers',                [CrmCustomerController::class, 'store'])->name('customers.store');
-        Route::get('/customers/{customer}',      [CrmCustomerDetailController::class, 'show'])->name('customers.show');
-        Route::delete('/customers/{customer}',   [CrmCustomerController::class, 'destroy'])->name('customers.destroy');
-
-        // Sales Team (writes to the staff table with role = sales_rep)
-        Route::get('/sales-team',                [CrmSalesTeamController::class, 'index'])->name('sales-team');
-        Route::get('/sales-team/create',         [CrmSalesTeamController::class, 'create'])->name('sales-team.create');
-        Route::post('/sales-team',               [CrmSalesTeamController::class, 'store'])->name('sales-team.store');
-        Route::get('/sales-team/{member}/edit',  [CrmSalesTeamController::class, 'edit'])->name('sales-team.edit');
-        Route::put('/sales-team/{member}',       [CrmSalesTeamController::class, 'update'])->name('sales-team.update');
-        Route::delete('/sales-team/{member}',    [CrmSalesTeamController::class, 'destroy'])->name('sales-team.destroy');
-
-        // Settings (landing/branding + Telegram) — stored in the settings table
-        Route::get('/settings',           [CrmSettingsController::class, 'index'])->name('settings');
-        Route::post('/settings/landing',  [CrmSettingsController::class, 'updateLanding'])->name('settings.landing');
-        Route::post('/settings/telegram', [CrmSettingsController::class, 'updateTelegram'])->name('settings.telegram');
-        Route::post('/settings/test',     [CrmSettingsController::class, 'sendTest'])->name('settings.test');
-    });
+    // Clients
+    Route::get('/clients',            [ClientController::class, 'index'])->name('clients');
+    Route::post('/clients',           [ClientController::class, 'store'])->name('clients.store');
+    Route::put('/clients/{client}',   [ClientController::class, 'update'])->name('clients.update');
+    Route::delete('/clients/{client}',[ClientController::class, 'destroy'])->name('clients.destroy');
 
     // Daily Report
     Route::get('/daily-report',        [DailyReportController::class, 'index'])->name('daily-report');
@@ -151,6 +133,35 @@ Route::middleware('auth:staff')->group(function () {
     Route::get('/projects/{project}',         [ProjectController::class, 'show'])->name('projects.show');
     Route::put('/projects/{project}',         [ProjectController::class, 'update'])->name('projects.update');
     Route::delete('/projects/{project}',      [ProjectController::class, 'destroy'])->name('projects.destroy');
+
+
+
+    // Getlead CRM module (ported from crmdemo) — separate controllers per feature
+    Route::prefix('crm')->name('crm.')->group(function () {
+        Route::get('/dashboard', [CrmDashboardController::class, 'index'])->name('dashboard');
+
+        // Customers
+        Route::get('/customers',                 [CrmCustomerController::class, 'index'])->name('customers');
+        Route::get('/customers/create',          [CrmCustomerController::class, 'create'])->name('customers.create');
+        Route::post('/customers',                [CrmCustomerController::class, 'store'])->name('customers.store');
+        Route::get('/customers/{customer}',      [CrmCustomerDetailController::class, 'show'])->name('customers.show');
+        Route::delete('/customers/{customer}',   [CrmCustomerController::class, 'destroy'])->name('customers.destroy');
+
+        // Sales Team (writes to the staff table with role = sales_rep)
+        Route::get('/sales-team',                [CrmSalesTeamController::class, 'index'])->name('sales-team');
+        Route::get('/sales-team/create',         [CrmSalesTeamController::class, 'create'])->name('sales-team.create');
+        Route::post('/sales-team',               [CrmSalesTeamController::class, 'store'])->name('sales-team.store');
+        Route::get('/sales-team/{member}/edit',  [CrmSalesTeamController::class, 'edit'])->name('sales-team.edit');
+        Route::put('/sales-team/{member}',       [CrmSalesTeamController::class, 'update'])->name('sales-team.update');
+        Route::delete('/sales-team/{member}',    [CrmSalesTeamController::class, 'destroy'])->name('sales-team.destroy');
+
+        // Settings (landing/branding + Telegram) — stored in the settings table
+        Route::get('/settings',           [CrmSettingsController::class, 'index'])->name('settings');
+        Route::post('/settings/landing',  [CrmSettingsController::class, 'updateLanding'])->name('settings.landing');
+        Route::post('/settings/telegram', [CrmSettingsController::class, 'updateTelegram'])->name('settings.telegram');
+        Route::post('/settings/test',     [CrmSettingsController::class, 'sendTest'])->name('settings.test');
+    });
+
 });
 
 // Redirect root to login

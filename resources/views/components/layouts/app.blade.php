@@ -359,9 +359,10 @@
         </a>
 
         {{-- Navigation --}}
-        @php 
-        $isAdmin = in_array(Auth::guard('staff')->user()->role, ['admin', 'secretary']); 
+        @php
+        $isAdmin = in_array(Auth::guard('staff')->user()->role, ['admin', 'secretary']);
         $isFinance=(strtoupper(Auth::guard('staff')->user()->role)=="FINANCE")?true:false;
+        $isSales = Auth::guard('staff')->user()->role === 'sales_rep';
         @endphp
         <nav class="sidebar-nav">
             @if($isAdmin)
@@ -429,19 +430,28 @@
                 <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
                 Analytics
             </a>
+            @endif
+
+            {{-- Sales (Getlead CRM) — visible to admins/secretaries and sales reps --}}
+            @if($isAdmin || $isSales)
             <div class="nav-group {{ request()->routeIs('crm.*') ? 'open' : '' }}">
                 <button type="button" class="nav-item nav-parent" onclick="toggleNavGroup(this)">
                     <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
-                    <span>Getlead CRM</span>
+                    <span>Sales</span>
                     <svg class="nav-caret" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
                 </button>
                 <div class="nav-sub">
                     <a href="{{ route('crm.dashboard') }}" class="nav-subitem {{ request()->routeIs('crm.dashboard') ? 'active' : '' }}" onclick="closeSidebar()">Dashboard</a>
                     <a href="{{ route('crm.customers') }}" class="nav-subitem {{ request()->routeIs('crm.customers*') ? 'active' : '' }}" onclick="closeSidebar()">Customers</a>
+                    @if($isAdmin)
                     <a href="{{ route('crm.sales-team') }}" class="nav-subitem {{ request()->routeIs('crm.sales-team*') ? 'active' : '' }}" onclick="closeSidebar()">Sales Team</a>
                     <a href="{{ route('crm.settings') }}" class="nav-subitem {{ request()->routeIs('crm.settings*') ? 'active' : '' }}" onclick="closeSidebar()">Settings</a>
+                    @endif
                 </div>
             </div>
+            @endif
+
+            @if($isAdmin)
             <div class="nav-group {{ request()->routeIs('settings*','team*') ? 'open' : '' }}">
                 <button type="button" class="nav-item nav-parent" onclick="toggleNavGroup(this)">
                     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>

@@ -104,7 +104,12 @@ Route::middleware('auth:staff')->group(function () {
         Route::post('/payroll/process',          [HrPayrollController::class, 'process'])->name('payroll.process');
 
         Route::get('/job-openings',              [HrJobOpeningController::class, 'index'])->name('job-openings');
+        Route::get('/job-openings/data',         [HrJobOpeningController::class, 'data'])->name('job-openings.data');
+        Route::get('/job-openings/create',       [HrJobOpeningController::class, 'create'])->name('job-openings.create');
         Route::post('/job-openings',             [HrJobOpeningController::class, 'store'])->name('job-openings.store');
+        Route::get('/job-openings/{id}/edit',    [HrJobOpeningController::class, 'edit'])->whereNumber('id')->name('job-openings.edit');
+        Route::put('/job-openings/{id}',         [HrJobOpeningController::class, 'update'])->whereNumber('id')->name('job-openings.update');
+        Route::delete('/job-openings/{id}',      [HrJobOpeningController::class, 'destroy'])->whereNumber('id')->name('job-openings.destroy');
         Route::post('/job-openings/{id}/toggle', [HrJobOpeningController::class, 'toggle'])->whereNumber('id')->name('job-openings.toggle');
     });
 

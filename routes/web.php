@@ -19,6 +19,14 @@ use App\Http\Controllers\Crm\CustomerDetailController as CrmCustomerDetailContro
 use App\Http\Controllers\Crm\WatchController as CrmWatchController;
 use App\Http\Controllers\Crm\SalesTeamController as CrmSalesTeamController;
 use App\Http\Controllers\Crm\SettingsController as CrmSettingsController;
+use App\Http\Controllers\Hr\RegisterController;
+use App\Http\Controllers\Hr\DashboardController as HrDashboardController;
+use App\Http\Controllers\Hr\ApplicationController as HrApplicationController;
+use App\Http\Controllers\Hr\JobOpeningController as HrJobOpeningController;
+use App\Http\Controllers\Hr\EmployeeController as HrEmployeeController;
+use App\Http\Controllers\Hr\AttendanceController as HrAttendanceController;
+use App\Http\Controllers\Hr\LeaveController as HrLeaveController;
+use App\Http\Controllers\Hr\PayrollController as HrPayrollController;
 use Illuminate\Support\Facades\Route;
 
 // Guest routes (unauthenticated only)
@@ -33,6 +41,14 @@ Route::prefix('crm')->name('crm.')->group(function () {
     Route::post('/watch/track', [CrmWatchController::class, 'track'])->name('watch.track');
 });
 
+// HR section (public — job application form + submission)
+Route::prefix('hr')->name('hr.')->group(function () {
+    Route::get('/register',        [RegisterController::class, 'index'])->name('register');
+    Route::post('/register',       [RegisterController::class, 'store'])->name('register.store');
+    Route::get('/register/finish', [RegisterController::class, 'finish'])->name('register.finish');
+});
+
+
 // Authenticated routes
 Route::middleware('auth:staff')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -40,6 +56,57 @@ Route::middleware('auth:staff')->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    // HR Management (admin/HR) — controllers in App\Http\Controllers\Hr
+    Route::prefix('hr')->name('hr.')->group(function () {
+        Route::get('/dashboard',                 [HrDashboardController::class, 'index'])->name('dashboard');
+
+        Route::get('/applications',              [HrApplicationController::class, 'index'])->name('applications');
+        Route::get('/applications/data',         [HrApplicationController::class, 'data'])->name('applications.data');
+        Route::get('/applications/{id}',         [HrApplicationController::class, 'show'])->whereNumber('id')->name('applications.show');
+        Route::post('/applications/{id}/status', [HrApplicationController::class, 'updateStatus'])->whereNumber('id')->name('applications.status');
+        Route::delete('/applications/{id}',      [HrApplicationController::class, 'destroy'])->whereNumber('id')->name('applications.destroy');
+
+        Route::get('/employees',                 [HrEmployeeController::class, 'index'])->name('employees');
+        Route::get('/employees/data',            [HrEmployeeController::class, 'data'])->name('employees.data');
+        Route::get('/employees/create',          [HrEmployeeController::class, 'create'])->name('employees.create');
+        Route::post('/employees',                [HrEmployeeController::class, 'store'])->name('employees.store');
+        Route::get('/employees/{id}',            [HrEmployeeController::class, 'show'])->whereNumber('id')->name('employees.show');
+        Route::get('/employees/{id}/attendance', [HrEmployeeController::class, 'attendance'])->whereNumber('id')->name('employees.attendance');
+        Route::post('/employees/{id}/salary',    [HrEmployeeController::class, 'updateSalary'])->whereNumber('id')->name('employees.salary');
+        Route::post('/employees/{id}/bank',      [HrEmployeeController::class, 'updateBank'])->whereNumber('id')->name('employees.bank');
+        Route::post('/employees/{id}/documents', [HrEmployeeController::class, 'uploadDocument'])->whereNumber('id')->name('employees.documents.store');
+        Route::delete('/employees/{id}/documents/{doc}', [HrEmployeeController::class, 'deleteDocument'])->whereNumber('id')->whereNumber('doc')->name('employees.documents.destroy');
+        Route::get('/employees/{id}/edit',       [HrEmployeeController::class, 'edit'])->whereNumber('id')->name('employees.edit');
+        Route::put('/employees/{id}',            [HrEmployeeController::class, 'update'])->whereNumber('id')->name('employees.update');
+
+        // Attendance
+        Route::get('/attendance',                [HrAttendanceController::class, 'index'])->name('attendance');
+        Route::get('/attendance/data',           [HrAttendanceController::class, 'data'])->name('attendance.data');
+        Route::get('/attendance/employees',      [HrAttendanceController::class, 'employeesByDate'])->name('attendance.employees');
+        Route::get('/attendance/export',         [HrAttendanceController::class, 'export'])->name('attendance.export');
+        Route::post('/attendance',               [HrAttendanceController::class, 'store'])->name('attendance.store');
+        Route::get('/attendance/{id}/edit',      [HrAttendanceController::class, 'edit'])->whereNumber('id')->name('attendance.edit');
+        Route::delete('/attendance/{id}',        [HrAttendanceController::class, 'destroy'])->whereNumber('id')->name('attendance.destroy');
+
+        // Leave Requests
+        Route::get('/leave-requests',            [HrLeaveController::class, 'index'])->name('leave-requests');
+        Route::get('/leave-requests/data',       [HrLeaveController::class, 'data'])->name('leave-requests.data');
+        Route::get('/leave-requests/counts',     [HrLeaveController::class, 'counts'])->name('leave-requests.counts');
+        Route::post('/leave-requests',           [HrLeaveController::class, 'store'])->name('leave-requests.store');
+        Route::post('/leave-requests/{id}/status', [HrLeaveController::class, 'updateStatus'])->whereNumber('id')->name('leave-requests.status');
+        Route::delete('/leave-requests/{id}',    [HrLeaveController::class, 'destroy'])->whereNumber('id')->name('leave-requests.destroy');
+
+        // Payroll
+        Route::get('/payroll',                   [HrPayrollController::class, 'index'])->name('payroll');
+        Route::get('/payroll/export',            [HrPayrollController::class, 'export'])->name('payroll.export');
+        Route::post('/payroll/set-salary',       [HrPayrollController::class, 'setBaseSalary'])->name('payroll.set-salary');
+        Route::post('/payroll/update-salary',    [HrPayrollController::class, 'updateBaseSalary'])->name('payroll.update-salary');
+        Route::post('/payroll/process',          [HrPayrollController::class, 'process'])->name('payroll.process');
+
+        Route::get('/job-openings',              [HrJobOpeningController::class, 'index'])->name('job-openings');
+        Route::post('/job-openings',             [HrJobOpeningController::class, 'store'])->name('job-openings.store');
+        Route::post('/job-openings/{id}/toggle', [HrJobOpeningController::class, 'toggle'])->whereNumber('id')->name('job-openings.toggle');
+    });
 
     // Clients
     Route::get('/clients',            [ClientController::class, 'index'])->name('clients');

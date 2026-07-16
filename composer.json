@@ -11,6 +11,7 @@
         "laravel/mcp": "^0.6.2",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10.1",
+        "league/flysystem-aws-s3-v3": "^3.0",
         "yajra/laravel-datatables-oracle": "^12.7"
     },
     "require-dev": {

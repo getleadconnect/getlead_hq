@@ -363,6 +363,7 @@
         $isAdmin = in_array(Auth::guard('staff')->user()->role, ['admin', 'secretary']);
         $isFinance=(strtoupper(Auth::guard('staff')->user()->role)=="FINANCE")?true:false;
         $isSales = Auth::guard('staff')->user()->role === 'sales_rep';
+        $isHr = Auth::guard('staff')->user()->role === 'hr';
         @endphp
         <nav class="sidebar-nav">
             @if($isAdmin)
@@ -447,6 +448,26 @@
                     <a href="{{ route('crm.sales-team') }}" class="nav-subitem {{ request()->routeIs('crm.sales-team*') ? 'active' : '' }}" onclick="closeSidebar()">Sales Team</a>
                     <a href="{{ route('crm.settings') }}" class="nav-subitem {{ request()->routeIs('crm.settings*') ? 'active' : '' }}" onclick="closeSidebar()">Settings</a>
                     @endif
+                </div>
+            </div>
+            @endif
+
+            {{-- Hr Management — visible to admins/secretaries and HR staff --}}
+            @if($isAdmin || $isHr)
+            <div class="nav-group {{ request()->routeIs('hr.dashboard','hr.applications*','hr.employees*','hr.attendance*','hr.leave-requests*','hr.payroll*','hr.job-openings*') ? 'open' : '' }}">
+                <button type="button" class="nav-item nav-parent" onclick="toggleNavGroup(this)">
+                    <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span>Hr Management</span>
+                    <svg class="nav-caret" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="nav-sub">
+                    <a href="{{ route('hr.dashboard') }}" class="nav-subitem {{ request()->routeIs('hr.dashboard') ? 'active' : '' }}" onclick="closeSidebar()">Dashboard</a>
+                    <a href="{{ route('hr.applications') }}" class="nav-subitem {{ request()->routeIs('hr.applications*') ? 'active' : '' }}" onclick="closeSidebar()">Applications</a>
+                    <a href="{{ route('hr.employees') }}" class="nav-subitem {{ request()->routeIs('hr.employees*') ? 'active' : '' }}" onclick="closeSidebar()">Employees</a>
+                    <a href="{{ route('hr.attendance') }}" class="nav-subitem {{ request()->routeIs('hr.attendance*') ? 'active' : '' }}" onclick="closeSidebar()">Attendance</a>
+                    <a href="{{ route('hr.leave-requests') }}" class="nav-subitem {{ request()->routeIs('hr.leave-requests*') ? 'active' : '' }}" onclick="closeSidebar()">Leave Request</a>
+                    <a href="{{ route('hr.payroll') }}" class="nav-subitem {{ request()->routeIs('hr.payroll*') ? 'active' : '' }}" onclick="closeSidebar()">Payroll</a>
+                    <a href="{{ route('hr.job-openings') }}" class="nav-subitem {{ request()->routeIs('hr.job-openings*') ? 'active' : '' }}" onclick="closeSidebar()">Job Openings</a>
                 </div>
             </div>
             @endif

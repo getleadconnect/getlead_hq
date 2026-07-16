@@ -37,6 +37,16 @@
     .kpi-label { font-size:12.5px; color:var(--text-2); font-weight:500; margin-bottom:10px; }
     .kpi-figure { font-size:30px; font-weight:600; color:var(--text-1); letter-spacing:-.02em; }
 
+    /* Application link bar */
+    .app-link { display:flex; align-items:center; gap:10px; flex-wrap:wrap;     background: #f9d7d74d; border:1px solid var(--border); border-radius:var(--radius-lg); padding:13px 16px; margin-bottom:20px; }
+    .al-label { font-size:14px; font-weight:600; color:var(--text-2); flex-shrink:0; }
+    .al-url { font-size:14px; color:var(--brand-red-dark); text-decoration:none; word-break:break-all; }
+    .al-url:hover { text-decoration:underline; }
+    .al-copy { display:inline-flex; align-items:center; gap:6px; flex-shrink:0; font-family:inherit; font-size:11.5px; font-weight:600; cursor:pointer;
+               color:var(--brand-red-dark); background:var(--brand-red-soft); border:1px solid var(--brand-red-border); border-radius:var(--radius-pill); padding:5px 12px; }
+    .al-copy:hover { background:var(--brand-red); color:#fff; border-color:var(--brand-red); }
+    .al-copy.copied { background:var(--success); color:#fff; border-color:var(--success); }
+
     .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:start; }
     @media(max-width:900px){ .grid-2{ grid-template-columns:1fr;} }
     .card { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-lg); padding:20px; }
@@ -90,6 +100,15 @@
             <div class="kpi-top-row"><div class="kpi-label">Leave Pending Requests</div><a href="{{ route('hr.leave-requests', ['status' => 'pending']) }}" class="kpi-view">View</a></div>
             <div class="kpi-figure num" style="color:var(--brand-red);">{{ number_format($totals['pending_leaves']) }}</div>
         </div>
+    </div>
+
+    <div class="app-link">
+        <span class="al-label">Application Link:</span>
+        <a href="{{ $applicationLink }}" target="_blank" rel="noopener" class="al-url" id="appLinkUrl">{{ $applicationLink }}</a>
+        <button type="button" class="al-copy" id="appLinkCopy" data-link="{{ $applicationLink }}">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span id="appLinkCopyTxt">Copy</span>
+        </button>
     </div>
 
     <div class="grid-2">
@@ -170,6 +189,29 @@
     modal.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => modal.classList.remove('open')));
     modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('open'); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') modal.classList.remove('open'); });
+
+    // Copy the application link. navigator.clipboard needs a secure context, so fall back to execCommand.
+    const copyBtn = document.getElementById('appLinkCopy');
+    const copyTxt = document.getElementById('appLinkCopyTxt');
+    function flash() {
+        copyBtn.classList.add('copied'); copyTxt.textContent = 'Copied!';
+        setTimeout(() => { copyBtn.classList.remove('copied'); copyTxt.textContent = 'Copy'; }, 1600);
+    }
+    function fallbackCopy(text) {
+        const ta = document.createElement('textarea');
+        ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); flash(); } catch (e) { /* ignore */ }
+        document.body.removeChild(ta);
+    }
+    if (copyBtn) copyBtn.addEventListener('click', function () {
+        const link = this.dataset.link;
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(link).then(flash).catch(() => fallbackCopy(link));
+        } else {
+            fallbackCopy(link);
+        }
+    });
 })();
 </script>
 </x-layouts.app>

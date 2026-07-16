@@ -73,6 +73,9 @@ class DashboardController extends Controller
             ->limit(8)
             ->get();
 
-        return view('Hr.dashboard', compact('totals', 'statusCounts', 'topRoles', 'recent', 'onLeaveList'));
+        // Public application form link (shared with candidates).
+        $applicationLink = config('constants.hr_application_link');
+
+        return view('Hr.dashboard', compact('totals', 'statusCounts', 'topRoles', 'recent', 'onLeaveList', 'applicationLink'));
     }
 }

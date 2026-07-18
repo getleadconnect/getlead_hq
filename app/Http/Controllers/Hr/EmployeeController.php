@@ -253,6 +253,7 @@ class EmployeeController extends Controller
             'technology_stack'         => ['nullable', 'string', 'max:255'],
             'join_date'                => ['nullable', 'date'],
             'releaving_date'           => ['nullable', 'date'],
+            'status'                   => ['required', 'numeric'],
             // Contact
             'mobile_number'            => ['required', 'string', 'max:15'],
             'alternative_number_1'     => ['nullable', 'string', 'max:15'],

@@ -115,7 +115,14 @@
                 </div>
                 <div class="field"><label>Technology Stack</label><input type="text" name="technology_stack" class="input" value="{{ $v('technology_stack') }}" placeholder="Eg: Laravel, React"></div>
                 <div class="field"><label>Join Date</label><input type="date" name="join_date" class="input" value="{{ $vd('join_date') }}"></div>
-                <div class="field"><label>Relieving Date</label><input type="date" name="releaving_date" class="input" value="{{ $vd('releaving_date') }}"></div>
+                <div class="field"><label>Relieving Date</label><input type="date" name="releaving_date" id="releaving_date" rele class="input" value="{{ $vd('releaving_date') }}"></div>
+                <div class="field"><label>Status</label>
+                    <select name="status" id="status" class="input" style="font-weight:600;">
+                        <option value="">--select--</option>
+                        <option value="1" @if($emp->status==1) selected @endif>Active</option>
+                        <option value="0" @if($emp->status==0) selected @endif>Inactive</option>
+                    </select>
+                </div>
             </div>
         </div>
 
@@ -201,7 +208,10 @@
     </form>
 </div>
 
+<script src="{{ asset('assets/js/jquery-3.7.1.js') }}"></script>
 <script>
+
+
 (function () {
     const input = document.getElementById('profileInput');
     const prev = document.getElementById('avatarPrev');
@@ -211,5 +221,19 @@
         prev.innerHTML = '<img src="' + URL.createObjectURL(f) + '">';
     });
 })();
+
+$("#status").change(function(){
+
+var today=new Date().toISOString().slice(0, 10);
+var rdate=$("#releaving_date").val();
+
+if($(this).val()==0 && rdate=="")
+   $("#releaving_date").val(today);
+else
+   $("#releaving_date").val(""); 
+
+});
+
+
 </script>
 </x-layouts.app>

@@ -8,6 +8,8 @@ use App\Models\HrJobCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+
 
 /**
  * HR › Job Application (Register).

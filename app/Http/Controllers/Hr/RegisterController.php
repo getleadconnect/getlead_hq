@@ -132,8 +132,8 @@ class RegisterController extends Controller
         $slug = Str::slug($applicantName, '_') ?: 'applicant';
         $name = $slug . '_' . now()->timestamp . '_' . Str::random(6) . '.' . $file->getClientOriginalExtension();
         Storage::disk('spaces')->put(self::UPLOAD_DIR . $name, file_get_contents($file), 'public');
-
-        return $name;
+        $filename=self::UPLOAD_DIR.$name;
+        return $filename;
 
     }
     

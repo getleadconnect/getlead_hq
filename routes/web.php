@@ -155,8 +155,9 @@ Route::middleware('auth:staff')->group(function () {
     Route::get('/touchpoint/api/call-logs',           [TouchPointController::class, 'apiCallLogs'])->name('touchpoint.call-logs');
     Route::get('/touchpoint/api/reports',             [TouchPointController::class, 'apiReports'])->name('touchpoint.reports');
 
-    // Assets
-    Route::get('/assets',                    [AssetController::class, 'index'])->name('assets');
+    // Assets — page path is /assets-list to avoid colliding with the physical
+    // public/assets/ directory (which the web server would serve instead).
+    Route::get('/assets-list',               [AssetController::class, 'index'])->name('assets');
     Route::get('/assets/api/dashboard',      [AssetController::class, 'apiDashboard'])->name('assets.dashboard');
     Route::get('/assets/api/list',           [AssetController::class, 'apiList'])->name('assets.list');
     Route::get('/assets/api/detail/{id}',    [AssetController::class, 'apiDetail'])->name('assets.detail');

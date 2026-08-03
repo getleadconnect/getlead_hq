@@ -521,17 +521,39 @@ async function asPost(path, body={}){
     return r.json();
 }
 
-// ── View switching ─────────────────────────────────────────────────
+// ── View switching (with browser history) ──────────────────────────
 let currentView = 'dashboard';
-function showView(v){
+const AS_PAGE_URL = "{{ route('assets', [], false) }}"; // relative /assets-list — same-origin for pushState
+
+// Render a view. `history` controls whether a new browser-history entry is pushed:
+//   'push'    → new entry (normal tab click)  ·  'replace' → overwrite current entry (initial load)
+//   'none'    → don't touch history at all (used when restoring from a popstate)
+function showView(v, history = 'push', detailId = null){
     document.querySelectorAll('.as-view').forEach(el => el.style.display='none');
     document.getElementById('view-'+v).style.display='block';
     currentView = v;
+
+    if(history !== 'none'){
+        const state = { view: v, detailId: detailId };
+        const url   = v === 'dashboard' ? AS_PAGE_URL : AS_PAGE_URL + '?view=' + v;
+        if(history === 'replace') window.history.replaceState(state, '', url);
+        else                      window.history.pushState(state, '', url);
+    }
+
     if(v==='dashboard')   loadDashboard();
     if(v==='list')        loadList();
     if(v==='qr-labels')   loadQrCodes(1);
     if(v==='qr-map')      loadQrMapData();
+    // 'detail' reloads itself via loadDetail() on popstate (handled below).
 }
+
+// Back/Forward: restore the view from history state instead of leaving the page.
+window.addEventListener('popstate', e => {
+    const s = e.state;
+    if(!s || !s.view){ showView('dashboard', 'none'); return; }
+    if(s.view === 'detail' && s.detailId){ loadDetail(s.detailId, 'none'); return; }
+    showView(s.view, 'none');
+});
 
 // ── Helpers ────────────────────────────────────────────────────────
 const STATUS_BADGE = { active:'as-badge-green', in_repair:'as-badge-amber', maintenance:'as-badge-amber', retired:'as-badge-slate', lost:'as-badge-red' };
@@ -841,9 +863,9 @@ async function loadList(page=1){
 
 // ═══════════ ASSET DETAIL ══════════════════════════════════════════
 let _currentAssetId = null;
-async function loadDetail(id){
+async function loadDetail(id, history = 'push'){
     _currentAssetId = id;
-    showView('detail');
+    showView('detail', history, id);
     document.getElementById('detailContent').innerHTML = '<div class="as-empty"><div class="as-empty-icon">📦</div><p>Loading…</p></div>';
     const d = await asGet(`/assets/api/detail/${id}`);
     if(!d.ok) return;
@@ -1233,6 +1255,11 @@ async function unmapQr(code){
 }
 
 // ── Bootstrap ──────────────────────────────────────────────────────
-loadDashboard();
+(function(){
+    const valid = ['dashboard','list','qr-labels','qr-map'];
+    const v = new URLSearchParams(window.location.search).get('view');
+    // Seed the first history entry as 'replace' so Back never lands on the old /assets URL.
+    showView(valid.includes(v) ? v : 'dashboard', 'replace');
+})();
 </script>
 </x-layouts.app>

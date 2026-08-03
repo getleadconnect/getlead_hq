@@ -57,7 +57,7 @@ class CrmTelegram
         }
 
         $isFirst = (int) $view->view_number === 1;
-        $action  = $isFirst ? 'viewed the demo for the first time' : 'revisited the demo';
+        $action  = $isFirst ? 'Viewed the demo video for the first time' : 'Revisited the demo video';
         $e       = fn ($v) => htmlspecialchars((string) $v, ENT_NOQUOTES, 'UTF-8');
 
         $msg  = "🔔 <b>CRM Demo Alert</b>\n\n";

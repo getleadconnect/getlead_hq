@@ -26,9 +26,17 @@ class CustomerController extends Controller
         $search = trim((string) $request->query('search', ''));
         $rep    = (int) $request->query('rep', 0);
 
+        // Furthest each customer watched: MAX(watch_percentage) across all their
+        // views' sessions (crm_customers → crm_customer_views → crm_watch_sessions).
+        $viewPct = DB::table('crm_customer_views as cv')
+            ->join('crm_watch_sessions as ws', 'ws.view_id', '=', 'cv.id')
+            ->select('cv.customer_id', DB::raw('MAX(ws.watch_percentage) as video_view_pct'))
+            ->groupBy('cv.customer_id');
+
         $customers = DB::table('crm_customers as c')
             ->leftJoin('staff as u', 'c.created_by', '=', 'u.id')
-            ->select('c.*', 'u.name as sales_name')
+            ->leftJoinSub($viewPct, 'vp', 'vp.customer_id', '=', 'c.id')
+            ->select('c.*', 'u.name as sales_name', 'vp.video_view_pct')
             ->when($search !== '', function ($q) use ($search) {
                 $q->where(function ($w) use ($search) {
                     $w->where('c.name', 'like', "%{$search}%")

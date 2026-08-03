@@ -38,6 +38,16 @@
     .crm-table .num-col, .crm-table .num-cell { text-align: right; font-variant-numeric: tabular-nums; }
     .row-actions { display: flex; gap: 6px; justify-content: flex-end; }
     .crm-empty { text-align: center; color: var(--text-3); padding: 32px 16px; }
+
+    /* Video view % */
+    .vv-cell { min-width: 140px; }
+    .vv-wrap { display: flex; align-items: center; gap: 8px; }
+    .vv-bar { display: block; flex: 1; height: 8px; border-radius: var(--radius-pill); background: var(--bg-neutral); overflow: hidden; }
+    .vv-fill { display: block; height: 100%; border-radius: var(--radius-pill); background: var(--brand-red); transition: width .3s ease; min-width: 2px; }
+    .vv-fill.hi { background: var(--success); }
+    .vv-fill.mid { background: var(--warning); }
+    .vv-pct { font-size: 12px; font-weight: 600; color: var(--text-1); font-variant-numeric: tabular-nums; width: 38px; text-align: right; }
+    .vv-none { font-size: 12px; color: var(--text-3); }
 </style>
 @endpush
 
@@ -85,7 +95,9 @@
                     <th>Mobile</th>
                     <th>Sales Person</th>
                     <th class="num-col">Views</th>
+                    <th>Video View %</th>
                     <th>Last Viewed</th>
+                    <th>Created At</th>
                     <th style="text-align:right;">Actions</th>
                 </tr>
             </thead>
@@ -96,11 +108,26 @@
                         <td>{{ $c->mobile }}</td>
                         <td>{{ $c->sales_name ?? 'Unknown' }}</td>
                         <td class="num-cell">{{ number_format((int) $c->views_count) }}</td>
+                        <td class="vv-cell">
+                            @if($c->video_view_pct !== null)
+                                @php
+                                    $pct = round((float) $c->video_view_pct);
+                                    $lvl = $pct >= 75 ? 'hi' : ($pct >= 40 ? 'mid' : '');
+                                @endphp
+                                <div class="vv-wrap" title="{{ $pct }}% watched">
+                                    <span class="vv-bar"><span class="vv-fill {{ $lvl }}" style="width: {{ min(100, max(0, $pct)) }}%"></span></span>
+                                    <span class="vv-pct">{{ $pct }}%</span>
+                                </div>
+                            @else
+                                <span class="vv-none">—</span>
+                            @endif
+                        </td>
                         <td>{{ $c->last_viewed_at ? \Carbon\Carbon::parse($c->last_viewed_at)->format('M j, Y g:i A') : '—' }}</td>
+                        <td>{{ $c->created_at ? \Carbon\Carbon::parse($c->created_at)->format('d-m-Y g:i A') : '—' }}</td>
                         <td>
                             <div class="row-actions">
                                 <a href="{{ route('crm.customers.show', $c->id) }}" class="btn btn-sm btn-secondary">Details</a>
-                                <a href="{{ url('/crm/watch') }}?token={{ $c->token }}" target="_blank" class="btn btn-sm btn-ghost">Open</a>
+                                <a href="{{ url('/crm/watch') }}?token={{ $c->token }}" class="btn btn-sm btn-secondary" target="_blank" class="btn btn-sm btn-ghost">Open</a>
                                 <form method="POST" action="{{ route('crm.customers.destroy', $c->id) }}" onsubmit="return confirm('Delete this customer and all its data?');">
                                     @csrf
                                     @method('DELETE')
@@ -110,7 +137,7 @@
                         </td>
                     </tr>
                 @empty
-                    <tr><td colspan="6" class="crm-empty">No customers found.</td></tr>
+                    <tr><td colspan="8" class="crm-empty">No customers found.</td></tr>
                 @endforelse
             </tbody>
         </table>

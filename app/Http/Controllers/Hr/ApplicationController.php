@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
+use App\Services\TelegramService;
+use App\Models\HrNotificationSetting;
 /**
  * HR › Applications.
  *
@@ -118,6 +120,25 @@ class ApplicationController extends Controller
             $app->rejection_reason = $data['rejection_reason'] ?? $app->rejection_reason;
         }
         $app->save();
+
+
+            try{
+                // Send Telegram notification (except for "New" status) if enabled
+                if ($request->status !== 'New' && HrNotificationSetting::isStatusChangeNotificationEnabled()) {
+                    $applicationWithCategory = HrApplication::select('hr_applications.*', 'hr_job_category.category_name')
+                        ->leftJoin('hr_job_category', 'hr_applications.job_category_id', '=', 'hr_job_category.id')
+                        ->where('hr_applications.id', $id)
+                        ->first();
+
+                    $telegramService = new TelegramService();
+                    $telegramService->sendStatusChangeNotification($applicationWithCategory, $request->status, $request->rejection_reason);
+                }
+            }
+            catch(\Exception $e)
+            {
+                \Log::info($e->getMessage());
+            }
+
 
         return response()->json(['status' => true, 'msg' => 'Status updated.', 'app_status' => $app->status, 'reason' => $app->rejection_reason]);
     }

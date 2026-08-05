@@ -35,4 +35,16 @@ return [
         ],
     ],
 
+    'telegram' => [
+        // Default/general bot (GL-Support) — used by console reports, etc.
+        'bot_token' => env('TELEGRAM_BOT_TOKEN'),
+        'chat_id'   => env('TELEGRAM_CHAT_ID'),
+
+        // Dedicated HR Management bot.
+        'hr' => [
+            'bot_token' => env('TELEGRAM_HR_BOT_TOKEN'),
+            'chat_id'   => env('TELEGRAM_HR_CHAT_ID'),
+        ],
+    ],
+
 ];

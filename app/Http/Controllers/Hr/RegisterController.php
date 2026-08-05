@@ -10,6 +10,13 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
+use App\Services\ApiService;
+use App\Services\TelegramService;
+use App\Models\HrNotificationSetting;
+
+use DB;
+use Session;
+use Log;
 
 /**
  * HR › Job Application (Register).
@@ -65,45 +72,84 @@ class RegisterController extends Controller
             'declaration'      => ['required'],
         ]);
 
-        // Save uploads into public/uploads/user_files.
-        $photoPath = $this->storeUpload($request->file('photo'), $request->first_name);
-        $cvPath    = $this->storeUpload($request->file('cv_file'), $request->first_name);
 
-        $dob = sprintf('%04d-%02d-%02d', (int) $request->year, (int) $request->month, (int) $request->day);
+        DB::beginTransaction();
+        try
+        {
 
-        HrApplication::create([
-            'name'              => $request->first_name,
-            'photo'             => $photoPath,
-            'dob'               => $dob,
-            'technology_stack'  => $request->technology_stack,
-            'gender'            => $request->gender,
-            'marital_status'    => $request->marital_status,
-            'father_name'       => $request->father_name,
-            'address'           => $request->address,
-            'pincode'           => $request->pincode,
-            'state'             => $request->state,
-            'district'          => $request->district,
-            'countrycode'       => $request->country_code ?: '91',
-            'mobile'            => $request->mobile,
-            'email'             => $request->email,
-            'experience'        => $request->experience,
-            'experience_years'  => $request->experience === 'Yes' ? $request->years_experience : null,
-            'previous_employer' => $request->previous_employer,
-            'last_drawn_salary' => $request->last_salary,
-            'expected_salary'   => $request->expected_salary,
-            'why_changing_job'  => $request->changing_job,
-            'why_getlead'       => $request->why_getlead,
-            'qualification'     => $request->qualification,
-            'cv_file'           => $cvPath,
-            'job_category_id'   => $request->job_category_id,
-            'declaration'       => 'Agreed',
-            'status'            => HrApplication::STATUS_NEW,
-        ]);
+            // Save uploads into public/uploads/user_files.
+            $photoPath = $this->storeUpload($request->file('photo'), $request->first_name);
+            $cvPath    = $this->storeUpload($request->file('cv_file'), $request->first_name);
 
-        // Send the applicant to a dedicated "completed" page.
-        return redirect()->route('hr.register.finish')
-            ->with('hr_application_done', true)
-            ->with('applicant_name', $request->first_name);
+            $dob = sprintf('%04d-%02d-%02d', (int) $request->year, (int) $request->month, (int) $request->day);
+
+            $data=[
+                'name'              => $request->first_name,
+                'photo'             => $photoPath,
+                'dob'               => $dob,
+                'technology_stack'  => $request->technology_stack,
+                'gender'            => $request->gender,
+                'marital_status'    => $request->marital_status,
+                'father_name'       => $request->father_name,
+                'address'           => $request->address,
+                'pincode'           => $request->pincode,
+                'state'             => $request->state,
+                'district'          => $request->district,
+                'countrycode'       => $request->country_code ?: '91',
+                'mobile'            => $request->mobile,
+                'email'             => $request->email,
+                'experience'        => $request->experience,
+                'experience_years'  => $request->experience === 'Yes' ? $request->years_experience : null,
+                'previous_employer' => $request->previous_employer,
+                'last_drawn_salary' => $request->last_salary,
+                'expected_salary'   => $request->expected_salary,
+                'why_changing_job'  => $request->changing_job,
+                'why_getlead'       => $request->why_getlead,
+                'qualification'     => $request->qualification,
+                'cv_file'           => $cvPath,
+                'job_category_id'   => $request->job_category_id,
+                'declaration'       => 'Agreed',
+                'status'            => HrApplication::STATUS_NEW,
+            ];
+
+            $apps=HrApplication::create($data);
+
+            if($apps)
+                {   
+                    DB::commit();
+                    $cat=HrJobCategory::where('id',$request->job_category_id)->pluck('category_name')->first();
+                    $data['category_name']=$cat;
+                    
+                    $apiService=new ApiService();
+                    $api_result=$apiService->sendDataToCrm($data);
+
+                    \Log::info($api_result);
+
+                    // Send Telegram notification if enabled
+                    if (HrNotificationSetting::isEnabled(HrNotificationSetting::KEY_NEW_APPLICATION)) {
+                        $telegramService = new TelegramService();
+                        $telegramService->sendJobApplicationNotification($data);
+                    }
+
+                    return redirect()->route('hr.register.finish')
+                        ->with('hr_application_done', true)
+                        ->with('applicant_name', $request->first_name);
+                }
+                else
+                {
+                    DB::rollback();
+                    Session::flash('fail',"Something wrong, Try again.");
+                    return redirect()->back()->withInput();
+                }
+        }
+        catch(\Exception $e)
+		{
+			\Log::info($e->getMessage());
+			DB::rollback();
+			Session::flash('fail',$e->getMessage());
+			return redirect()->back()->withInput();
+		}
+		
     }
 
     /** Application-submitted confirmation page (only reachable right after a submit). */

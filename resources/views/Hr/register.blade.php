@@ -8,6 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link href="{{url('assets/toastr/js/toastr.min.css')}}" rel="stylesheet" >
+
     <style>
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
         :root{
@@ -363,7 +366,23 @@
     </main>
 </div>
 
+<script src="{{url('assets/toastr/js/toastr.min.js')}}"></script>
+
+@if(Session::get('success'))
+	<script>
+		toastr.success("{{Session::get('success')}}");
+	</script>
+@endif
+
+@if (Session::get('fail'))
+	<script>
+		toastr.error("{{Session::get('fail')}}");
+	</script>
+@endif
+
 <script>
+
+
 (function () {
     const form   = document.getElementById('hrForm');
     const panels = Array.from(form.querySelectorAll('.step-panel'));

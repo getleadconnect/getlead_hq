@@ -27,6 +27,7 @@ use App\Http\Controllers\Hr\EmployeeController as HrEmployeeController;
 use App\Http\Controllers\Hr\AttendanceController as HrAttendanceController;
 use App\Http\Controllers\Hr\LeaveController as HrLeaveController;
 use App\Http\Controllers\Hr\PayrollController as HrPayrollController;
+use App\Http\Controllers\Hr\SettingsController as HrSettingsController;
 use Illuminate\Support\Facades\Route;
 
 // Guest routes (unauthenticated only)
@@ -111,6 +112,36 @@ Route::middleware('auth:staff')->group(function () {
         Route::put('/job-openings/{id}',         [HrJobOpeningController::class, 'update'])->whereNumber('id')->name('job-openings.update');
         Route::delete('/job-openings/{id}',      [HrJobOpeningController::class, 'destroy'])->whereNumber('id')->name('job-openings.destroy');
         Route::post('/job-openings/{id}/toggle', [HrJobOpeningController::class, 'toggle'])->whereNumber('id')->name('job-openings.toggle');
+
+        // Settings (vertical-tab hub — Job Category tab implemented)
+        Route::get('/settings',                       [HrSettingsController::class, 'index'])->name('settings');
+        Route::get('/settings/job-categories/data',   [HrSettingsController::class, 'jobCategoryData'])->name('settings.job-categories.data');
+        Route::post('/settings/job-categories',       [HrSettingsController::class, 'jobCategoryStore'])->name('settings.job-categories.store');
+        Route::put('/settings/job-categories/{id}',   [HrSettingsController::class, 'jobCategoryUpdate'])->whereNumber('id')->name('settings.job-categories.update');
+        Route::post('/settings/job-categories/{id}/toggle', [HrSettingsController::class, 'jobCategoryToggle'])->whereNumber('id')->name('settings.job-categories.toggle');
+        Route::delete('/settings/job-categories/{id}', [HrSettingsController::class, 'jobCategoryDestroy'])->whereNumber('id')->name('settings.job-categories.destroy');
+        Route::get('/settings/qualifications/data',   [HrSettingsController::class, 'qualificationData'])->name('settings.qualifications.data');
+        Route::post('/settings/qualifications',       [HrSettingsController::class, 'qualificationStore'])->name('settings.qualifications.store');
+        Route::put('/settings/qualifications/{id}',   [HrSettingsController::class, 'qualificationUpdate'])->whereNumber('id')->name('settings.qualifications.update');
+        Route::delete('/settings/qualifications/{id}', [HrSettingsController::class, 'qualificationDestroy'])->whereNumber('id')->name('settings.qualifications.destroy');
+        Route::get('/settings/departments/data',      [HrSettingsController::class, 'departmentData'])->name('settings.departments.data');
+        Route::post('/settings/departments',          [HrSettingsController::class, 'departmentStore'])->name('settings.departments.store');
+        Route::put('/settings/departments/{id}',      [HrSettingsController::class, 'departmentUpdate'])->whereNumber('id')->name('settings.departments.update');
+        Route::delete('/settings/departments/{id}',   [HrSettingsController::class, 'departmentDestroy'])->whereNumber('id')->name('settings.departments.destroy');
+        Route::get('/settings/designations/data',     [HrSettingsController::class, 'designationData'])->name('settings.designations.data');
+        Route::post('/settings/designations',         [HrSettingsController::class, 'designationStore'])->name('settings.designations.store');
+        Route::put('/settings/designations/{id}',     [HrSettingsController::class, 'designationUpdate'])->whereNumber('id')->name('settings.designations.update');
+        Route::delete('/settings/designations/{id}',  [HrSettingsController::class, 'designationDestroy'])->whereNumber('id')->name('settings.designations.destroy');
+        Route::get('/settings/leave-settings/types',  [HrSettingsController::class, 'leaveSettingTypes'])->name('settings.leave-settings.types');
+        Route::get('/settings/leave-settings/data',   [HrSettingsController::class, 'leaveSettingData'])->name('settings.leave-settings.data');
+        Route::post('/settings/leave-settings',       [HrSettingsController::class, 'leaveSettingStore'])->name('settings.leave-settings.store');
+        Route::put('/settings/leave-settings/{id}',   [HrSettingsController::class, 'leaveSettingUpdate'])->whereNumber('id')->name('settings.leave-settings.update');
+        Route::delete('/settings/leave-settings/{id}', [HrSettingsController::class, 'leaveSettingDestroy'])->whereNumber('id')->name('settings.leave-settings.destroy');
+        Route::get('/settings/allowances/data',       [HrSettingsController::class, 'allowanceData'])->name('settings.allowances.data');
+        Route::post('/settings/allowances',           [HrSettingsController::class, 'allowanceStore'])->name('settings.allowances.store');
+        Route::put('/settings/allowances/{id}',       [HrSettingsController::class, 'allowanceUpdate'])->whereNumber('id')->name('settings.allowances.update');
+        Route::delete('/settings/allowances/{id}',    [HrSettingsController::class, 'allowanceDestroy'])->whereNumber('id')->name('settings.allowances.destroy');
+        Route::post('/settings/notifications/toggle', [HrSettingsController::class, 'notificationToggle'])->name('settings.notifications.toggle');
     });
 
     // Clients

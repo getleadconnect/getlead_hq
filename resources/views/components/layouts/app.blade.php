@@ -454,7 +454,7 @@
 
             {{-- Hr Management — visible to admins/secretaries and HR staff --}}
             @if($isAdmin || $isHr)
-            <div class="nav-group {{ request()->routeIs('hr.dashboard','hr.applications*','hr.employees*','hr.attendance*','hr.leave-requests*','hr.payroll*','hr.job-openings*') ? 'open' : '' }}">
+            <div class="nav-group {{ request()->routeIs('hr.dashboard','hr.applications*','hr.employees*','hr.attendance*','hr.leave-requests*','hr.payroll*','hr.job-openings*','hr.settings*') ? 'open' : '' }}">
                 <button type="button" class="nav-item nav-parent" onclick="toggleNavGroup(this)">
                     <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                     <span>Hr Management</span>
@@ -468,6 +468,7 @@
                     <a href="{{ route('hr.leave-requests') }}" class="nav-subitem {{ request()->routeIs('hr.leave-requests*') ? 'active' : '' }}" onclick="closeSidebar()">Leave Request</a>
                     <a href="{{ route('hr.payroll') }}" class="nav-subitem {{ request()->routeIs('hr.payroll*') ? 'active' : '' }}" onclick="closeSidebar()">Payroll</a>
                     <a href="{{ route('hr.job-openings') }}" class="nav-subitem {{ request()->routeIs('hr.job-openings*') ? 'active' : '' }}" onclick="closeSidebar()">Job Openings</a>
+                    <a href="{{ route('hr.settings') }}" class="nav-subitem {{ request()->routeIs('hr.settings*') ? 'active' : '' }}" onclick="closeSidebar()">Settings</a>
                 </div>
             </div>
             @endif

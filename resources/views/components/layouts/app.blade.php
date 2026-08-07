@@ -469,7 +469,11 @@
                     <a href="{{ route('hr.leave-requests') }}" class="nav-subitem {{ request()->routeIs('hr.leave-requests*') ? 'active' : '' }}" onclick="closeSidebar()">Leave Request</a>
                     <a href="{{ route('hr.payroll') }}" class="nav-subitem {{ request()->routeIs('hr.payroll*') ? 'active' : '' }}" onclick="closeSidebar()">Payroll</a>
                     <a href="{{ route('hr.job-openings') }}" class="nav-subitem {{ request()->routeIs('hr.job-openings*') ? 'active' : '' }}" onclick="closeSidebar()">Job Openings</a>
-                    <a href="{{ route('hr.staff') }}" class="nav-subitem {{ request()->routeIs('hr.staff*') ? 'active' : '' }}" onclick="closeSidebar()">Staff Section</a>
+                    
+                    @if(!$isAdmin)
+                        <a href="{{ route('hr.staff') }}" class="nav-subitem {{ request()->routeIs('hr.staff*') ? 'active' : '' }}" onclick="closeSidebar()">Staff Section</a>
+                    @endif
+
                     <a href="{{ route('hr.settings') }}" class="nav-subitem {{ request()->routeIs('hr.settings*') ? 'active' : '' }}" onclick="closeSidebar()">Settings</a>
                 </div>
             </div>

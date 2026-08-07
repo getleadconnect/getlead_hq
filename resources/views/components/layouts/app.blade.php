@@ -364,6 +364,7 @@
         $isFinance=(strtoupper(Auth::guard('staff')->user()->role)=="FINANCE")?true:false;
         $isSales = Auth::guard('staff')->user()->role === 'sales_rep';
         $isHr = Auth::guard('staff')->user()->role === 'hr';
+        $userRole=strtoupper(Auth::guard('staff')->user()->role);
         @endphp
         <nav class="sidebar-nav">
             @if($isAdmin)
@@ -474,19 +475,13 @@
             </div>
             @endif
 
-
-            @if(!$isAdmin || !$isHr)
-            <div class="nav-group {{ request()->routeIs('hr.dashboard','hr.applications*','hr.employees*','hr.attendance*','hr.leave-requests*','hr.payroll*','hr.job-openings*','hr.staff*','hr.settings*') ? 'open' : '' }}">
-                <button type="button" class="nav-item nav-parent" onclick="toggleNavGroup(this)">
-                    <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                    <span>Hr Management</span>
-                    <svg class="nav-caret" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-                </button>
-                <div class="nav-sub">
-                    <a href="{{ route('hr.staff') }}" class="nav-subitem {{ request()->routeIs('hr.staff*') ? 'active' : '' }}" onclick="closeSidebar()">Staff Section</a>
-                </div>
-            </div>
-            @endif
+            {{-- Staff Section — self-service, shown to everyone except admin/secretary/hr --}}
+            @unless($isAdmin || $isHr)
+            <a href="{{ route('hr.staff') }}" class="nav-item {{ request()->routeIs('hr.staff*') ? 'active' : '' }}" onclick="closeSidebar()">
+                <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                Staff Section
+            </a>
+            @endunless
 
 
             @if($isAdmin)

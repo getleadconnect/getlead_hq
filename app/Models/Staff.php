@@ -33,4 +33,10 @@ class Staff extends Authenticatable
             'active' => 'boolean',
         ];
     }
+
+    /** The HR employee profile linked to this staff account (via hr_employees.staff_id). */
+    public function employee()
+    {
+        return $this->hasOne(HrEmployee::class, 'staff_id');
+    }
 }

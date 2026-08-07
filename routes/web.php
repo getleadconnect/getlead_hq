@@ -28,6 +28,7 @@ use App\Http\Controllers\Hr\AttendanceController as HrAttendanceController;
 use App\Http\Controllers\Hr\LeaveController as HrLeaveController;
 use App\Http\Controllers\Hr\PayrollController as HrPayrollController;
 use App\Http\Controllers\Hr\SettingsController as HrSettingsController;
+use App\Http\Controllers\Hr\StaffManagementController as HrStaffManagementController;
 use Illuminate\Support\Facades\Route;
 
 // Guest routes (unauthenticated only)
@@ -112,6 +113,20 @@ Route::middleware('auth:staff')->group(function () {
         Route::put('/job-openings/{id}',         [HrJobOpeningController::class, 'update'])->whereNumber('id')->name('job-openings.update');
         Route::delete('/job-openings/{id}',      [HrJobOpeningController::class, 'destroy'])->whereNumber('id')->name('job-openings.destroy');
         Route::post('/job-openings/{id}/toggle', [HrJobOpeningController::class, 'toggle'])->whereNumber('id')->name('job-openings.toggle');
+
+        // Staff Section (self-service — Dashboard + Attendance tabs)
+        Route::get('/staff-section',                     [HrStaffManagementController::class, 'index'])->name('staff');
+        Route::get('/staff-section/dashboard/yearly',    [HrStaffManagementController::class, 'dashboardYearly'])->name('staff.dashboard.yearly');
+        Route::get('/staff-section/dashboard/hours',     [HrStaffManagementController::class, 'dashboardHours'])->name('staff.dashboard.hours');
+        Route::get('/staff-section/attendance/overview', [HrStaffManagementController::class, 'attendanceOverview'])->name('staff.attendance.overview');
+        Route::get('/staff-section/attendance/history',  [HrStaffManagementController::class, 'attendanceHistory'])->name('staff.attendance.history');
+        Route::post('/staff-section/attendance/check-in', [HrStaffManagementController::class, 'checkIn'])->name('staff.attendance.check-in');
+        Route::post('/staff-section/attendance/check-out',[HrStaffManagementController::class, 'checkOut'])->name('staff.attendance.check-out');
+        Route::get('/staff-section/leave/data',          [HrStaffManagementController::class, 'leaveData'])->name('staff.leave.data');
+        Route::get('/staff-section/leave/rows',          [HrStaffManagementController::class, 'leaveRows'])->name('staff.leave.rows');
+        Route::post('/staff-section/leave',              [HrStaffManagementController::class, 'leaveStore'])->name('staff.leave.store');
+        Route::delete('/staff-section/leave/{id}',       [HrStaffManagementController::class, 'leaveDestroy'])->whereNumber('id')->name('staff.leave.destroy');
+        Route::post('/staff-section/profile/password',   [HrStaffManagementController::class, 'changePassword'])->name('staff.profile.password');
 
         // Settings (vertical-tab hub — Job Category tab implemented)
         Route::get('/settings',                       [HrSettingsController::class, 'index'])->name('settings');

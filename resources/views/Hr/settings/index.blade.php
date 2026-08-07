@@ -20,7 +20,7 @@
 
     /* Vertical tab rail */
     .set-tabs { display:flex; flex-direction:column; gap:2px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-lg); padding:8px; }
-    .set-tab { display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:var(--radius-sm); font-size:13.5px; font-weight:500; color:var(--text-2); background:none; border:none; font-family:inherit; text-align:left; cursor:pointer; width:100%; }
+    .set-tab { display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:var(--radius-sm); font-size:13px; font-weight:500; color:var(--text-2); background:none; border:none; font-family:inherit; text-align:left; cursor:pointer; width:100%; }
     .set-tab svg { width:16px; height:16px; stroke:currentColor; fill:none; stroke-width:1.9; flex-shrink:0; }
     .set-tab:hover { background:var(--bg-page); color:var(--text-1); }
     .set-tab.active { background:var(--brand-red-soft); color:var(--brand-red-dark); font-weight:600; }

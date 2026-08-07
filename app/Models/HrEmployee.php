@@ -18,10 +18,17 @@ class HrEmployee extends Model
     const ACTIVE = 1;
     const INACTIVE = 0;
 
+    /** The staff/user account this employee is linked to. */
+    public function staff()
+    {
+        return $this->belongsTo(Staff::class, 'staff_id');
+    }
+
     // Validation rules for creating employee
     public static function createRules()
     {
         return [
+            'staff_id' => 'required|numeric',
             'full_name' => 'required|string|max:255',
             'employee_id' => 'required|string|unique:employees,employee_id',
             'mobile_number' => 'required|string|max:15',
